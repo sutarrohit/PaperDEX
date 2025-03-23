@@ -1,11 +1,11 @@
 {
     "$schema": "https://turbo.build/schema.json",
     "ui": "tui",
-    "globalDependencies": [".env", "DATABASE_URL", "DIRECT_URL"],
+    "globalDependencies": [".env"],
     "tasks": {
         "build": {
             "dependsOn": ["^build"],
-            "inputs": ["$TURBO_DEFAULT$", ".env*", "DATABASE_URL", "DIRECT_URL"],
+            "inputs": ["$TURBO_DEFAULT$", ".env.production.local", ".env.local", ".env.production", ".env"],
             "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
         },
         "lint": {
@@ -16,14 +16,13 @@
         },
         "dev": {
             "cache": false,
-            "persistent": true
+            "persistent": true,
+            "inputs": ["$TURBO_DEFAULT$", ".env.development.local", ".env.local", ".env.development", ".env"]
         },
-
         "start": {
             "cache": false,
             "persistent": true
         },
-
         "db:generate": {
             "cache": false,
             "persistent": true
