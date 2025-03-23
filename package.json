@@ -5,20 +5,13 @@
         "apps/*",
         "packages/*"
     ],
-    "prisma": {
-        "schema": "packages/db/prisma/schema.prisma"
-    },
     "scripts": {
         "build": "turbo run build",
         "dev": "turbo run dev",
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "check-types": "turbo run check-types",
-        "start": "turbo run start",
-        "db:migrate": "turbo run db:migrate",
-        "db:deploy": "turbo run db:deploy",
-        "db:generate": "turbo run db:generate",
-        "postinstall": "turbo run db:generate"
+        "start": "turbo run start"
     },
     "devDependencies": {
         "prettier": "^3.5.3",

@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Image from "next/image";
 import { useState } from "react";
-import { joinWaitlistAction } from "@/actions/join";
 
 function isValidEmail(email: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -16,40 +15,43 @@ export default function Home() {
     const [email, setEmail] = useState<null | string>(null);
     const [loading, setLoading] = useState(false);
 
-    async function joinWaitlist(email: string | null) {
+    async function joinWaitlist(email: string) {
+        if (!isValidEmail(email)) {
+            toast.error("Please enter a valid email address.", {
+                style: { background: "#ff0000", color: "#ffffff" },
+                position: "top-right"
+            });
+            return;
+        }
+
         try {
-            if (!email) return;
-
-            if (!isValidEmail(email)) {
-                toast.error("Please enter valid Email", {
-                    style: {
-                        background: "#ff0000", // Red background for errors
-                        color: "#ffffff" // White text
-                    },
-                    position: "top-right"
-                });
-                return;
-            }
             setLoading(true);
-            const response = await joinWaitlistAction(email);
-
-            if (response) {
-                setEmail(null);
-                setLoading(false);
-                toast.success(response.message || "Successfully joined the waitlist!", {
-                    position: "top-right",
-                    style: {
-                        background: "#00ff00",
-                        color: "#000000"
-                    }
-                });
-            }
-        } catch (error: any) {
-            toast.error(error?.message || "failed", {
-                style: {
-                    background: "#ff0000", // Red background for errors
-                    color: "#ffffff" // White text
+            const response = await fetch("/api/join-waitlist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Handle specific error messages from the API
+                throw new Error(data.error || "Failed to join the waitlist.");
+            }
+
+            // Success case
+            setEmail(null);
+            toast.success(data.message || "Successfully joined the waitlist!", {
+                style: { background: "#00ff00", color: "#000000" },
+                position: "top-right"
+            });
+
+            return data;
+        } catch (error: any) {
+            toast.error(error.message || "Failed to join the waitlist.", {
+                style: { background: "#ff0000", color: "#ffffff" },
                 position: "top-right"
             });
         } finally {
@@ -90,7 +92,7 @@ export default function Home() {
                     <Button
                         disabled={loading}
                         onClick={() => {
-                            joinWaitlist(email);
+                            joinWaitlist(email as string);
                         }}
                         className='cursor-pointer'
                     >
