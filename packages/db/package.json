@@ -20,6 +20,6 @@
         "prisma": "^6.5.0"
     },
     "dependencies": {
-        "@prisma/client": "latest"
+        "@prisma/client": "^6.5.0"
     }
 }
