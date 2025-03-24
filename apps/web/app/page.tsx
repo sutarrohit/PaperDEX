@@ -12,7 +12,7 @@ function isValidEmail(email: string) {
 }
 
 export default function Home() {
-    const [email, setEmail] = useState<null | string>(null);
+    const [email, setEmail] = useState<string>("");
     const [loading, setLoading] = useState(false);
 
     async function joinWaitlist(email: string) {
@@ -42,7 +42,7 @@ export default function Home() {
             }
 
             // Success case
-            setEmail(null);
+            setEmail("");
             toast.success(data.message || "Successfully joined the waitlist!", {
                 style: { background: "#00ff00", color: "#000000" },
                 position: "top-right"
@@ -85,6 +85,8 @@ export default function Home() {
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
+                        value={email}
+                    
                         className='sm:w-[300px]'
                         type='email'
                         placeholder='you@example.com'
