@@ -1,84 +1,61 @@
-# Turborepo starter
+# PaperDEX
 
-This Turborepo starter is maintained by the Turborepo core team.
+**PaperDEX** is a demo trading platform where users can log in and receive free demo tokens to practice trading cryptocurrencies. It provides a simulated trading environment, allowing users to test their trading skills and strategies without risking real money.
 
-## Using this example
+## Features
+- **Demo Tokens:** Receive free demo tokens upon registration.
+- **Simulated Trading:** Practice trading cryptocurrencies in a real-time simulated market.
+- **User-Friendly Interface:** Simple and intuitive design for easy navigation.
+- **Trade Analysis:** Track your trades and analyze your performance.
+- **Secure Authentication:** Secure login and user management.
 
-Run the following command:
+## Tech Stack
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express
+- **Database:** PostgreSQL (using Prisma ORM)
+- **Blockchain:** SKALE (for simulated crypto transactions)
+- **Authentication:** JWT
+- **Deployment:** Docker, Kubernetes
 
-```sh
-npx create-turbo@latest
-```
+## Installation
+Follow these steps to set up PaperDEX locally:
 
-## What's inside?
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/PaperDEX.git
+    cd PaperDEX
+    ```
 
-This Turborepo includes the following packages/apps:
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-### Apps and Packages
+3. Set up environment variables:
+    - Create a `.env` file in the root directory.
+    - Provide the necessary variables (e.g., database URL, JWT secret).
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+4. Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Usage
+- **Sign Up:** Create a new account using your email.
+- **Receive Demo Tokens:** Get free tokens upon registration.
+- **Start Trading:** Buy and sell cryptocurrencies using demo tokens.
+- **Track Performance:** View your trade history and monitor your gains or losses.
 
-### Utilities
+## Contributing
+Contributions are welcome! Feel free to fork this repo and submit a pull request.
 
-This Turborepo has some additional tools already setup for you:
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Contact
+For any questions or feedback, contact us at [support@paperdex.com](mailto:support@paperdex.com).
 
-### Build
+---
 
-To build all apps and packages, run the following command:
+Happy Trading with PaperDEX! 🚀
 
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
