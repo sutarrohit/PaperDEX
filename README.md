@@ -1,44 +1,65 @@
 # PaperDEX
 
-**PaperDEX** is a demo trading platform where users can log in and receive free demo tokens to practice trading cryptocurrencies. It provides a simulated trading environment, allowing users to test their trading skills and strategies without risking real money.
+PaperDEX is a demo trading platform where users can log in and receive free demo tokens to practice trading cryptocurrencies. It provides a simulated trading environment, allowing you to test your trading skills and strategies without risking real money.
 
 ## Features
-- **Demo Tokens:** Receive free demo tokens upon registration.
-- **Simulated Trading:** Practice trading cryptocurrencies in a real-time simulated market.
-- **User-Friendly Interface:** Simple and intuitive design for easy navigation.
-- **Trade Analysis:** Track your trades and analyze your performance.
-- **Secure Authentication:** Secure login and user management.
+- **Demo Trading:** Trade cryptocurrencies using demo tokens.
+- **Real-Time Market Data:** Simulated market prices for realistic trading.
+- **Track Portfolio:** Monitor your demo assets and portfolio growth.
+- **User Authentication:** Secure login and user management.
+- **Leaderboard:** Compete with other users and track your ranking.
 
 ## Tech Stack
-- **Frontend:** React, TypeScript, Tailwind CSS
-- **Backend:** Node.js, Express
-- **Database:** PostgreSQL (using Prisma ORM)
-- **Blockchain:** SKALE (for simulated crypto transactions)
+- **Frontend:** React, TypeScript, TailwindCSS
+- **Backend:** Node.js, Express, Prisma
+- **Database:** PostgreSQL
+- **API:** Binance API (for simulated market data)
 - **Authentication:** JWT
-- **Deployment:** Docker, Kubernetes
+- **Package Manager:** pnpm
 
 ## Installation
-Follow these steps to set up PaperDEX locally:
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/PaperDEX.git
-    cd PaperDEX
-    ```
+Make sure you have `pnpm` installed. If not, install it using the following command:
+```bash
+npm install -g pnpm
+```
 
-2. Install dependencies:
-    ```bash
-    npm install
-    ```
+### Clone the Repository
+```bash
+git clone https://github.com/your-repo/paperdex.git
+cd paperdex
+```
 
-3. Set up environment variables:
-    - Create a `.env` file in the root directory.
-    - Provide the necessary variables (e.g., database URL, JWT secret).
+### Install Dependencies
+```bash
+pnpm install
+```
 
-4. Start the development server:
-    ```bash
-    npm run dev
-    ```
+### Configure Environment Variables
+Create a `.env` file in the root directory and provide the required environment variables:
+```env
+DATABASE_URL=your_database_url
+JWT_SECRET=your_jwt_secret
+BINANCE_API_KEY=your_binance_api_key
+BINANCE_API_SECRET=your_binance_api_secret
+```
+
+### Run Migrations
+```bash
+pnpm prisma migrate dev
+```
+
+### Start the Development Server
+```bash
+pnpm dev
+```
+The app will be available at `http://localhost:3000`
+
+## Scripts
+- `pnpm dev` - Start the development server
+- `pnpm build` - Build the project for production
+- `pnpm lint` - Run linter
+- `pnpm test` - Run tests
 
 ## Usage
 - **Sign Up:** Create a new account using your email.
@@ -51,9 +72,6 @@ Contributions are welcome! Feel free to fork this repo and submit a pull request
 
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## Contact
-For any questions or feedback, contact us at [support@paperdex.com](mailto:support@paperdex.com).
 
 ---
 
