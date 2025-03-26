@@ -61,15 +61,6 @@ The app will be available at `http://localhost:3000`
 - `pnpm lint` - Run linter
 - `pnpm test` - Run tests
 
-## Usage
-- **Sign Up:** Create a new account using your email.
-- **Receive Demo Tokens:** Get free tokens upon registration.
-- **Start Trading:** Buy and sell cryptocurrencies using demo tokens.
-- **Track Performance:** View your trade history and monitor your gains or losses.
-
-## Contributing
-Contributions are welcome! Feel free to fork this repo and submit a pull request.
-
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
