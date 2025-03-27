@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@radix-ui/react-slot": "^1.1.2",
-        "@repo/ui": "workspace:*",
+        "@paperdex/ui": "workspace:*",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^0.483.0",
@@ -25,8 +25,8 @@
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
-        "@repo/eslint-config": "workspace:*",
-        "@repo/typescript-config": "workspace:*",
+        "@paperdex/eslint-config": "workspace:*",
+        "@paperdex/typescript-config": "workspace:*",
         "@tailwindcss/postcss": "^4",
         "@types/node": "^20",
         "@types/react": "^19",
