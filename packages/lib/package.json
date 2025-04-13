@@ -8,7 +8,10 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "dependencies": {},
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "resend": "^4.2.0"
+    },
     "devDependencies": {
         "@paperdex/eslint-config": "workspace:*",
         "@paperdex/typescript-config": "workspace:*"
