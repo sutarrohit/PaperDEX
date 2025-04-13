@@ -1,0 +1,19 @@
+{
+    "name": "@paperdex/lib",
+    "version": "1.0.0",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {},
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "resend": "^4.2.0"
+    },
+    "devDependencies": {
+        "@paperdex/eslint-config": "workspace:*",
+        "@paperdex/typescript-config": "workspace:*"
+    }
+}
