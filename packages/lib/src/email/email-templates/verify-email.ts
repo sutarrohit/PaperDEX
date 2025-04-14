@@ -189,7 +189,6 @@ export const verifyEmailTemplate = (url: string, name?: string) => {
                 <!-- Body content -->
                 <tr>
                   <td class="content-cell">
-                    <h1>Verify your email address</h1>
                      <p>Hi ${name},</p>
                     <p>Thanks for signing up for PaperDEX! We're excited to have you as an early user.</p>
                     <!-- Action -->
@@ -202,7 +201,7 @@ export const verifyEmailTemplate = (url: string, name?: string) => {
                             <w:anchorlock/>
                             <center style="color:#ffffff; font-family:sans-serif;font-size:15px;">Verify Email</center>
                           </v:roundrect><![endif]-->
-                          <a href="${url}"style="display: inline-block; width: 200px; background-color: #414EF9; border-radius: 3px; color: #ffffff; font-family: sans-serif; font-size: 15px; line-height: 45px; text-align: center; text-decoration: none; -webkit-text-size-adjust: none; mso-hide: all;">Verify Email</a>                          </div>
+                          <a href="${url}" style="display: inline-block; width: 200px; background-color: #414EF9; border-radius: 3px; color: #ffffff; font-family: sans-serif; font-size: 15px; line-height: 45px; text-align: center; text-decoration: none; -webkit-text-size-adjust: none; mso-hide: all;">Verify Email</a>                          </div>
                         </td>
                       </tr>
                     </table>
@@ -228,8 +227,7 @@ export const verifyEmailTemplate = (url: string, name?: string) => {
                 <tr>
                   <td class="content-cell">
                     <p class="sub center">
-                      PaperDEX Labs, Inc.
-                      <br>325 9th St, San Francisco, CA 94103
+                      PaperDEX Labs, Inc. <br>
                     </p>
                   </td>
                 </tr>

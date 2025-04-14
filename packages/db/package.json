@@ -1,33 +1,32 @@
 {
-  "name": "@paperdex/db",
-  "version": "1.0.0",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:seed": "tsx src/seed.ts",
-    "dev": "tsup src/* --watch",
-    "format": "prisma format",
-    "db:generate": "prisma generate",
-    "lint": "eslint . --max-warnings 0",
-    "prebuild": "pnpm run generate",
-    "predev": "pnpm run generate",
-    "studio": "prisma studio"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@prisma/client": "^6.5.0"
-  },
-  "devDependencies": {
-    "@paperdex/eslint-config": "workspace:*",
-    "@paperdex/typescript-config": "workspace:*",
-    "prisma": "^6.5.0",
-    "tsup": "^8.0.2"
-  }
-
+    "name": "@paperdex/db",
+    "version": "1.0.0",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "db:migrate:deploy": "prisma migrate deploy",
+        "db:migrate:dev": "prisma migrate dev",
+        "db:push": "prisma db push",
+        "db:seed": "tsx src/seed.ts",
+        "dev": "tsup src/* --watch",
+        "format": "prisma format",
+        "db:generate": "prisma generate --schema=prisma/schema.prisma",
+        "lint": "eslint . --max-warnings 0",
+        "studio": "prisma studio"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@paperdex/lib": "workspace:*",
+        "@prisma/client": "^6.5.0"
+    },
+    "devDependencies": {
+        "@paperdex/eslint-config": "workspace:*",
+        "@paperdex/typescript-config": "workspace:*",
+        "@types/node": "^22.14.0",
+        "prisma": "^6.5.0",
+        "tsup": "^8.0.2"
+    }
 }

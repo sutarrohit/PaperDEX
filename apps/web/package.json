@@ -11,8 +11,13 @@
         "check-types": "tsc --noEmit"
     },
     "dependencies": {
-        "@radix-ui/react-slot": "^1.1.2",
+        "@better-fetch/fetch": "^1.1.18",
+        "@paperdex/auth-service": "workspace:*",
         "@paperdex/ui": "workspace:*",
+        "@radix-ui/react-checkbox": "^1.1.5",
+        "@radix-ui/react-label": "^2.1.3",
+        "@radix-ui/react-slot": "^1.1.2",
+        "better-auth": "^1.2.5",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^0.483.0",
