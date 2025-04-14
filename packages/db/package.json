@@ -11,7 +11,7 @@
         "db:seed": "tsx src/seed.ts",
         "dev": "tsup src/* --watch",
         "format": "prisma format",
-        "db:generate": "prisma generate",
+        "db:generate": "prisma generate --schema=prisma/schema.prisma",
         "lint": "eslint . --max-warnings 0",
         "studio": "prisma studio"
     },
