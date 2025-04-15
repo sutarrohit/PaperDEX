@@ -2,15 +2,16 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@paperdex/db";
 import { sendEmail, verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib";
+import { openAPI } from "better-auth/plugins";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const NEXT_PUBLIC_CLIENT_SERVICE = process.env.NEXT_PUBLIC_CLIENT_SERVICE!;
-const NEXT_PUBLIC_AUTH_SERVICE = process.env.NEXT_PUBLIC_AUTH_SERVICE!;
+const NEXT_PUBLIC_USER_SERVICE = process.env.NEXT_PUBLIC_USER_SERVICE!;
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
-    baseURL: `${NEXT_PUBLIC_AUTH_SERVICE}/api/auth`,
+    baseURL: `${NEXT_PUBLIC_USER_SERVICE}/api/auth`,
     trustedOrigins: [NEXT_PUBLIC_CLIENT_SERVICE],
 
     database: prismaAdapter(prisma, {
@@ -32,6 +33,8 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
             allowDifferentEmails: false
         }
     },
+
+    plugins: [openAPI()],
 
     emailAndPassword: {
         enabled: true,
@@ -72,7 +75,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-            redirectURI: `${NEXT_PUBLIC_AUTH_SERVICE}/api/auth/callback/google`
+            redirectURI: `${NEXT_PUBLIC_USER_SERVICE}/api/auth/callback/google`
         }
     }
 });

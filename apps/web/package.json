@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@better-fetch/fetch": "^1.1.18",
-        "@paperdex/auth-service": "workspace:*",
+        "@paperdex/user-service": "workspace:*",
         "@paperdex/ui": "workspace:*",
         "@radix-ui/react-checkbox": "^1.1.5",
         "@radix-ui/react-label": "^2.1.3",

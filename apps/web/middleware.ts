@@ -6,7 +6,7 @@ export default async function authMiddleware(request: NextRequest) {
 
 // import { betterFetch } from "@better-fetch/fetch";
 // import { NextResponse, type NextRequest } from "next/server";
-// import type { Session } from "@paperdex/auth-service";
+// import type { Session } from "@paperdex/user-service";
 
 // const authRoutes = ["/sign-in", "/sign-up"];
 // const passwordRoutes = ["/reset-password", "/forgot-password"];
