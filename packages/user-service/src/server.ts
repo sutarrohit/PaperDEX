@@ -48,7 +48,7 @@ app.get("/health", (req, res) => {
     });
 });
 
-const PORT = process.env.AUTH_SERVICE_PORT || 4001;
+const PORT = process.env.USER_SERVICE_PORT || 4001;
 
 app.listen(PORT, () => {
     console.log("Auth Server started on port", PORT);
