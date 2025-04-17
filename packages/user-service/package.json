@@ -1,10 +1,14 @@
 {
     "name": "@paperdex/user-service",
     "version": "1.0.0",
+    "private": "true",
     "exports": {
         ".": "./src/auth.ts"
     },
     "scripts": {
+        "build": "tsup ./src",
+        "start": "nodemon dist/server.js",
+        "lint": "eslint . --max-warnings 0",
         "dev": "nodemon --exec ts-node src/server.ts",
         "generate:schema": "pnpm dlx @better-auth/cli generate --output ../../packages/db/prisma/schema.prisma"
     },
@@ -32,6 +36,7 @@
         "morgan": "^1.10.0",
         "nodemon": "^3.1.9",
         "ts-node": "^10.9.2",
+        "tsup": "^8.0.2",
         "typescript": "^5.8.3"
     }
 }
