@@ -39,7 +39,8 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
-        sendResetPassword: async ({ user, url }, request) => {
+
+        sendResetPassword: async ({ user, url }) => {
             // Change callback url to frontend URL
             const parsedUrl = new URL(url);
             const originalCallback = parsedUrl.searchParams.get("callbackURL") || "/reset-password";
