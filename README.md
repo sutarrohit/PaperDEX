@@ -37,13 +37,32 @@ PaperDEX/
 
 ````
 
-## Concepts Behind PaperDEX
+## Getting Started
 
--   🧪 Simulates trading without real money
--   📡 Leverages real-time data from Binance
--   ⚖️ Keeps isolated services for scalability
--   🏗 Uses microservice architecture from day one
+To get started with PaperDEX, follow these steps:
 
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/sutaro/PaperDEX.git
+   cd PaperDEX
+   ```
+
+2. **Set up environment variables**:
+   - Navigate to each workspace (inside `apps/` or `packages/`)
+   - Copy the `.env.example` file to `.env` in each relevant workspace
+   - Update the environment variables as needed
+
+3. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+
+4. **Run the application**:
+   ```bash
+   pnpm dev
+   ```
+
+Note: Make sure you have [pnpm](https://pnpm.io/) installed on your system before proceeding.
 
 ## Contributing
 
