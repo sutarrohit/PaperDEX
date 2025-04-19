@@ -12,7 +12,6 @@ It supports **market** and **limit** order types and fetches real-time order boo
 - **Database ORM**: [Prisma](https://www.prisma.io/)
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **Authentication**: [better-auth](https://www.better-auth.com/)
-- **Services**: Microservices architecture
 
 
 ## Features
@@ -21,7 +20,6 @@ It supports **market** and **limit** order types and fetches real-time order boo
 - 💵 Virtual Wallets for USDT, BTC, and more
 - 📈 Real-time Order Book (Binance mirror)
 - 📊 Market & Limit Orders
-- ⚙️ Trading Engine for order matching
 
 
 ## Monorepo Structure
@@ -44,6 +42,9 @@ To get started with PaperDEX, follow these steps:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/sutaro/PaperDEX.git
+   ```
+
+     ```bash
    cd PaperDEX
    ```
 
