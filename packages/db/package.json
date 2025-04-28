@@ -13,7 +13,7 @@
         "format": "prisma format",
         "db:generate": "prisma generate",
         "lint": "eslint . --max-warnings 0",
-        "studio": "prisma studio"
+        "db:studio": "prisma studio"
     },
     "keywords": [],
     "author": "",

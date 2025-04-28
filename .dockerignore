@@ -1,0 +1,17 @@
+# .dockerignore
+
+# Ignore build outputs
+**/dist
+**/.next
+**/build
+**/node_modules
+
+# Ignore development files
+**/.env.local
+**/.git
+**/.vscode
+**/docker-compose.override.yml
+
+# Turbo/Vite caches
+**/.turbo
+**/.cache
