@@ -18,6 +18,10 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         provider: "postgresql"
     }),
 
+    advanced: {
+        generateId: false
+    },
+
     session: {
         expiresIn: 60 * 60 * 24 * 7,
         updateAge: 60 * 60 * 4,
