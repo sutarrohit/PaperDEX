@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": "true",
     "exports": {
-        ".": "./src/auth.ts"
+        ".": "./src/lib/auth.ts"
     },
     "scripts": {
         "build": "tsup ./src",
@@ -33,6 +33,7 @@
         "@types/express": "^5.0.1",
         "@types/morgan": "^1.9.9",
         "@types/node": "^22.14.0",
+        "@types/uuid": "^10.0.0",
         "morgan": "^1.10.0",
         "nodemon": "^3.1.9",
         "ts-node": "^10.9.2",

@@ -20,12 +20,14 @@
     "license": "ISC",
     "dependencies": {
         "@paperdex/lib": "workspace:*",
-        "@prisma/client": "^6.5.0"
+        "@prisma/client": "^6.5.0",
+        "uuid": "^11.1.0"
     },
     "devDependencies": {
         "@paperdex/eslint-config": "workspace:*",
         "@paperdex/typescript-config": "workspace:*",
         "@types/node": "^22.14.0",
+        "@types/uuid": "^10.0.0",
         "prisma": "^6.5.0",
         "tsup": "^8.0.2"
     }

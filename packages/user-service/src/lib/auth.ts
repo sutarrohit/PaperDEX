@@ -4,6 +4,7 @@ import { prisma } from "@paperdex/db";
 import { sendEmail, verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib";
 import { openAPI } from "better-auth/plugins";
 import dotenv from "dotenv";
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
@@ -11,6 +12,8 @@ const NEXT_PUBLIC_CLIENT_SERVICE = process.env.NEXT_PUBLIC_CLIENT_SERVICE!;
 const NEXT_PUBLIC_USER_SERVICE = process.env.NEXT_PUBLIC_USER_SERVICE!;
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
+    appName: "PaperDEX",
+
     baseURL: `${NEXT_PUBLIC_USER_SERVICE}/api/auth`,
     trustedOrigins: [NEXT_PUBLIC_CLIENT_SERVICE],
 
@@ -39,6 +42,38 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     },
 
     plugins: [openAPI()],
+
+    // user: {
+    //     modelName: "User", // Must match your Prisma model name
+    //     createUser: async (db: any, userData: any) => {
+    //         return await db.user.create({
+    //             data: {
+    //                 ...userData,
+    //                 wallet: {
+    //                     create: {
+    //                         id: uuidv4(),
+    //                         // Add any default balances if needed
+    //                         balances: {
+    //                             create: [
+    //                                 {
+    //                                     id: uuidv4(),
+    //                                     name: "USDT",
+    //                                     symbol: "USDT",
+    //                                     balance: 0,
+    //                                     icon: "/icons/usdt.svg"
+    //                                 }
+    //                             ]
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     },
+    //     fields: {
+    //         email: "email",
+    //         name: "name"
+    //     }
+    // },
 
     emailAndPassword: {
         enabled: true,
