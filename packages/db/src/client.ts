@@ -1,7 +1,56 @@
 import { PrismaClient } from "../generated/client";
+import { v4 as uuidv4 } from "uuid";
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
+export const prisma: PrismaClient = globalForPrisma.prisma ?? new PrismaClient();
 
-export const prisma = globalForPrisma.prisma || new PrismaClient();
+const wallet = {
+    create: {
+        id: uuidv4(),
+        balances: {
+            create: [
+                {
+                    id: uuidv4(),
+                    name: "USDT",
+                    symbol: "USDT",
+                    balance: 10000,
+                    icon: "/icons/usdt.svg"
+                }
+            ]
+        }
+    }
+};
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+// Apply the middleware *after* the instance is potentially created
+prisma.$use(async (params, next) => {
+    if (params.model === "User" && params.action === "create") {
+        // Check if wallet data is already being provided
+        if (!params.args.data?.wallet && !params.args.data?.walletId) {
+            // If not, modify the arguments to include creating a new wallet
+            if (params.args?.data) {
+                params.args.data = {
+                    ...params.args.data,
+                    wallet: wallet
+                };
+            } else if (params.args) {
+                // Handle case where args exists but data doesn't (less likely for create)
+                params.args.data = {
+                    wallet: wallet
+                };
+            } else {
+                // Handle case where args itself doesn't exist (very unlikely for create)
+                params.args = {
+                    data: {
+                        wallet: wallet
+                    }
+                };
+            }
+        }
+    }
+
+    return next(params);
+});
+
+if (process.env.NODE_ENV !== "production") {
+    globalForPrisma.prisma = prisma;
+}

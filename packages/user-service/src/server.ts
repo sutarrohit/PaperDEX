@@ -5,7 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./auth";
+import { auth } from "./lib/auth";
 
 process.on("uncaughtException", (error: Error) => {
     console.log(error, "uncaughtException shutting down the application");
@@ -23,10 +23,10 @@ app.use(
     })
 );
 
-app.use((req, res, next) => {
-    console.log("request headers========>", req.headers);
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log("request headers========>", req.headers);
+//     next();
+// });
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
