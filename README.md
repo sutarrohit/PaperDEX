@@ -1,84 +1,75 @@
-# Turborepo starter
+# PaperDEX
 
-This Turborepo starter is maintained by the Turborepo core team.
+**PaperDEX** is a paper trading cryptocurrency exchange that allows users to simulate real-world crypto trading using virtual funds. </br>
+It supports **market** and **limit** order types and fetches real-time order book data from Binance for an authentic trading experience.
 
-## Using this example
 
-Run the following command:
+## Tech Stack
 
-```sh
-npx create-turbo@latest
+- **Monorepo Management**: [Turborepo](https://turbo.build/)
+- **Front End**: [Next.js](https://nextjs.org/)
+- **Backend Framework**: [Express.js (per service)](https://expressjs.com/)
+- **Database ORM**: [Prisma](https://www.prisma.io/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **Authentication**: [better-auth](https://www.better-auth.com/)
+
+
+## Features
+
+- 🔐 User Authentication (Register, Login)
+- 💵 Virtual Wallets for USDT, BTC, and more
+- 📈 Real-time Order Book (Binance mirror)
+- 📊 Market & Limit Orders
+
+
+## Monorepo Structure
 ```
 
-## What's inside?
+PaperDEX/
+├── apps/
+│ └── web/ # Frontend (Next.js or your framework of choice)
+├── packages/
+│ ├── user-service/ # Express-based Auth API
+│ ├── order-service/ # Handles order placement
+│ └── db/ # Shared Prisma client and schema
 
-This Turborepo includes the following packages/apps:
+````
 
-### Apps and Packages
+## Getting Started
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@paperdex/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@paperdex/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@paperdex/typescript-config`: `tsconfig.json`s used throughout the monorepo
+To get started with PaperDEX, follow these steps:
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/sutaro/PaperDEX.git
+   ```
 
-### Utilities
+     ```bash
+   cd PaperDEX
+   ```
 
-This Turborepo has some additional tools already setup for you:
+2. **Set up environment variables**:
+   - Navigate to each workspace (inside `apps/` or `packages/`)
+   - Copy the `.env.example` file to `.env` in each relevant workspace
+   - Update the environment variables as needed
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+3. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
 
-### Build
+4. **Run the application**:
+   ```bash
+   pnpm dev
+   ```
 
-To build all apps and packages, run the following command:
+Note: Make sure you have [pnpm](https://pnpm.io/) installed on your system before proceeding.
 
-```
-cd my-turborepo
-pnpm build
-```
+## Contributing
 
-### Develop
+PRs, ideas, and discussions are welcome! Please open an issue if you have suggestions or find bugs.
 
-To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
-pnpm dev
-```
+## License
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+MIT © 2025 PaperDEX Team
