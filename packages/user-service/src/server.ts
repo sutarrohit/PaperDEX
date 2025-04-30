@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
+import { AppError, globalErrorHandler, healthCheck } from "@paperdex/lib";
 
 process.on("uncaughtException", (error: Error) => {
     console.log(error, "uncaughtException shutting down the application");
@@ -13,7 +14,6 @@ process.on("uncaughtException", (error: Error) => {
 });
 
 dotenv.config();
-
 const app = express();
 
 app.use(
@@ -23,33 +23,25 @@ app.use(
     })
 );
 
-// app.use((req, res, next) => {
-//     console.log("request headers========>", req.headers);
-//     next();
-// });
-
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(cookieParser());
 app.use(express.json());
 
-// To secure HTTP header
+// To secure HTTP header & HTTP request logger middleware
 app.use(helmet());
-
-// HTTP request logger middleware
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
-app.get("/health", (req, res) => {
-    res.status(200).json({
-        status: "success",
-        message: "Auth Service is healthy",
-        uptime: process.uptime(),
-        timestamp: new Date().toISOString()
-    });
+app.get("/api/v1/health", healthCheck("User Service is up and running"));
+app.all("*splat", (req, res, next) => {
+    const err = new AppError(`Can't find ${req.originalUrl} on this server`, 404);
+    next(err);
 });
 
-const PORT = process.env.USER_SERVICE_PORT || 4001;
+// Global Error Handling
+app.use(globalErrorHandler);
 
+const PORT = process.env.USER_SERVICE_PORT || 4001;
 app.listen(PORT, () => {
     console.log("Auth Server started on port", PORT);
 });

@@ -10,10 +10,12 @@
     "license": "ISC",
     "dependencies": {
         "dotenv": "^16.4.7",
+        "express": "^5.1.0",
         "resend": "^4.2.0"
     },
     "devDependencies": {
         "@paperdex/eslint-config": "workspace:*",
-        "@paperdex/typescript-config": "workspace:*"
+        "@paperdex/typescript-config": "workspace:*",
+        "@types/express": "^5.0.1"
     }
 }
