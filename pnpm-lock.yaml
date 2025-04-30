@@ -172,6 +172,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
+      express:
+        specifier: ^5.1.0
+        version: 5.1.0
       resend:
         specifier: ^4.2.0
         version: 4.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -182,6 +185,9 @@ importers:
       '@paperdex/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/express':
+        specifier: ^5.0.1
+        version: 5.0.1
 
   packages/order-service:
     dependencies:
@@ -191,6 +197,9 @@ importers:
       '@paperdex/lib':
         specifier: workspace:*
         version: link:../lib
+      '@paperdex/user-service':
+        specifier: workspace:*
+        version: link:../user-service
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7

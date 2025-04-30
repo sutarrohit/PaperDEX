@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
+import { globalErrorHandler, AppError, healthCheck } from "@paperdex/lib";
+
+import orderRoutes from "./routes/orders";
 
 process.on("uncaughtException", (error: Error) => {
     console.log(error, "uncaughtException shutting down the application");
@@ -21,31 +24,25 @@ app.use(
     })
 );
 
-app.use((req, res, next) => {
-    console.log("request headers========>", req.headers);
-    next();
-});
-
 app.use(cookieParser());
 app.use(express.json());
 
-// To secure HTTP header
+// To secure HTTP header & HTTP request logger middleware
 app.use(helmet());
-
-// HTTP request logger middleware
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
-app.get("/health", (req, res) => {
-    res.status(200).json({
-        status: "success",
-        message: "Order Service is healthy",
-        uptime: process.uptime(),
-        timestamp: new Date().toISOString()
-    });
+app.use("/api/v1/order", orderRoutes);
+
+app.get("/api/v1/health", healthCheck("Order Service is up and running"));
+app.all("*splat", (req, res, next) => {
+    const err = new AppError(`Can't find ${req.originalUrl} on this server`, 404);
+    next(err);
 });
 
-const PORT = process.env.ORDER_SERVICE_PORT || 4002;
+// Global Error Handling
+app.use(globalErrorHandler);
 
+const PORT = process.env.ORDER_SERVICE_PORT || 4002;
 app.listen(PORT, () => {
     console.log("Order Server started on port", PORT);
 });

@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "@paperdex/db": "workspace:*",
+        "@paperdex/user-service": "workspace:*",
         "@paperdex/lib": "workspace:*",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
