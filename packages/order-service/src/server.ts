@@ -6,7 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { globalErrorHandler, AppError, healthCheck } from "@paperdex/lib";
 
-import orderRoutes from "./routes/orders";
+import orderRoutes from "./routes/ordersRoute";
 
 process.on("uncaughtException", (error: Error) => {
     console.log(error, "uncaughtException shutting down the application");
