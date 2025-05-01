@@ -215,6 +215,9 @@ importers:
       helmet:
         specifier: ^8.1.0
         version: 8.1.0
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@paperdex/eslint-config':
         specifier: workspace:*
