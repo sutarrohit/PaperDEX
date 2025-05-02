@@ -1,6 +1,7 @@
 import { OrderSide } from "@paperdex/db";
 import { Decimal } from "../../../db/generated/client/runtime/library";
 import { AppError } from "@paperdex/lib";
+import { getTokenPrice } from "../store/tokenPriceStore";
 
 type calculateTradeEffects = {
   baseToken: string;
@@ -11,8 +12,8 @@ type calculateTradeEffects = {
 
 export const calculateTradeEffects = ({ baseToken, quoteToken, side, quantity }: calculateTradeEffects) => {
   try {
-    const baseTokenPrice = new Decimal(2500); // TODO: Replace with real API fetch using baseToken
-    const quoteTokenPrice = new Decimal(1); // TODO: Replace with real API fetch using quoteToken
+    const baseTokenPrice = new Decimal(getTokenPrice(baseToken!).price!);
+    const quoteTokenPrice = new Decimal(getTokenPrice(quoteToken!).price!);
 
     if (!baseTokenPrice || !quoteTokenPrice) throw new AppError("Token price data not available", 400);
 

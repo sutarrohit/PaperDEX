@@ -34,6 +34,7 @@ export const marketOrder = async ({ userId, symbol, side, type, quantity, price 
 
   try {
     const order = await prisma.$transaction(async (tx) => {
+      // Check user balance
       const [quoteBalance, baseBalance] = await Promise.all([
         tx.tokenBalance.findUnique({
           where: { walletId_symbol: { walletId, symbol: quoteToken } },
