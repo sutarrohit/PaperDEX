@@ -4,9 +4,9 @@ import { getAllOrders, getOrder, newOrder, cancelOrder } from "../controllers/or
 
 const orderRoutes: Router = express.Router();
 
-orderRoutes.route("allOrders").get(protectedRoute, getAllOrders);
+orderRoutes.route("/allOrders").get(protectedRoute, getAllOrders);
 orderRoutes.route("/order").get(protectedRoute, getOrder);
 orderRoutes.route("/order").post(protectedRoute, newOrder);
-orderRoutes.route("cancelOrder").delete(protectedRoute, newOrder);
+orderRoutes.route("/cancelOrder").post(protectedRoute, cancelOrder);
 
 export default orderRoutes;
