@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { protectedRoute } from "../services/protectRoute";
 import { getAllOrders, getOrder, newOrder, cancelOrder } from "../controllers/orderControllers";
+import { TokenPriceStore } from "../store/tokenPriceStore";
 
 const orderRoutes: Router = express.Router();
 

@@ -5,6 +5,7 @@ import { AppError } from "@paperdex/lib";
 import { v4 as uuidv4 } from "uuid";
 import { calculateTradeEffects } from "./tradeService";
 import { insufficientBalanceError } from "@paperdex/lib";
+import { tokenInfo } from "@paperdex/lib";
 
 type CreateOrderSchema = {
   userId: string;
@@ -69,6 +70,10 @@ export const marketOrder = async ({ userId, symbol, side, type, quantity, price 
         throw insufficientBalanceError(quoteToken, quoteTokenDelta);
       }
 
+      const token = tokenInfo.find((token) => token.symbol === baseToken);
+
+      if (!token) throw new AppError("Base token is not found.", 404);
+
       // Update or create base token
       const updatedBase = await tx.tokenBalance.upsert({
         where: { walletId_symbol: { walletId, symbol: baseToken } },
@@ -77,11 +82,11 @@ export const marketOrder = async ({ userId, symbol, side, type, quantity, price 
         },
         create: {
           id: uuidv4(),
-          name: baseToken,
-          symbol: baseToken,
-          balance: baseTokenDelta,
-          icon: `/icons/${baseToken.toLowerCase()}.svg`,
           walletId,
+          balance: baseTokenDelta,
+          name: token?.name,
+          symbol: token?.symbol,
+          icon: token?.icon,
         },
       });
 
