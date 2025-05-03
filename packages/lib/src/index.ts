@@ -6,3 +6,4 @@ export * from "./errors/globalErrorHandler";
 export * from "./utility-functions/healthCheck";
 export * from "./errors/customErrorFunctions";
 export * from "./constants/tokenSet";
+export * from "./constants/tokenInfo";

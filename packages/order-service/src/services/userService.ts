@@ -23,9 +23,9 @@ export const getUserDetails = async (userId: string): Promise<UserWithWalletAndB
     }),
   );
 
-  if (error || !data) {
+  if (error || !data || !data.wallet) {
     throw new AppError("User Not Found.", 404);
   }
 
-  return data;
+  return data as UserWithWalletAndBalances;
 };
