@@ -13,11 +13,19 @@
 
 export const TokenPriceStore: Record<string, number> = {};
 
-export const getTokenPrice = (token: string) => {
-  const tokenName = token === "USDT" ? `${token.toUpperCase()}DAI` : `${token.toUpperCase()}USDT`;
+export const getTokenPrice = (tokens: string[] | []) => {
+  if (tokens?.length === 0)
+    return Object.keys(TokenPriceStore).map((token) => ({
+      token: token,
+      price: TokenPriceStore[token],
+    }));
 
-  return {
-    token,
-    price: TokenPriceStore[tokenName],
-  };
+  return tokens.map((token) => {
+    if (!token) return { token, price: undefined };
+    const tokenName = token === "USDT" ? `${token.toUpperCase()}DAI` : `${token.toUpperCase()}USDT`;
+    return {
+      token,
+      price: TokenPriceStore[tokenName],
+    };
+  });
 };

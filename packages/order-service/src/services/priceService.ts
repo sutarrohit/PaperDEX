@@ -1,4 +1,4 @@
-import Websocket from "ws";
+import WebSocket from "ws";
 import { TokenPriceStore } from "../store/tokenPriceStore";
 import { tokenSet } from "@paperdex/lib";
 
@@ -19,29 +19,50 @@ interface BinanceWSMessage {
   data: BinanceTradeEvent;
 }
 
+let binanceWS: WebSocket | null = null;
+let reconnectAttempts = 0;
+const MAX_RECONNECT_ATTEMPTS = 5;
+const RECONNECT_DELAY_MS = 5000;
+
 export const fetchTokenPrices = () => {
   const wsUrl = `wss://stream.binance.com:9443/stream?streams=${tokenSet}`;
-  const binanceWS = new Websocket(wsUrl);
+
+  // Clean up previous connection if it exists
+  if (binanceWS) {
+    binanceWS.removeAllListeners();
+    binanceWS.close();
+  }
+
+  binanceWS = new WebSocket(wsUrl);
 
   binanceWS.on("open", () => {
     console.log("Connected to Binance WebSocket server");
+    reconnectAttempts = 0; // Reset reconnect attempts on successful connection
   });
 
   binanceWS.on("close", (code: number, reason: Buffer) => {
     console.log(`Binance connection closed. Code: ${code}, Reason: ${reason.toString()}`);
+    if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+      reconnectAttempts++;
+      console.log(`Attempting to reconnect (${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`);
+      setTimeout(fetchTokenPrices, RECONNECT_DELAY_MS);
+    } else {
+      console.error("Max reconnection attempts reached. Giving up.");
+    }
   });
 
   binanceWS.on("error", (error: Error) => {
-    console.log("Binance WS error", error);
+    console.error("Binance WS error", error);
+    binanceWS?.close(); // Ensure the connection is closed so we can reconnect
   });
 
-  binanceWS.onmessage = (event: any) => {
+  binanceWS.on("message", (data: WebSocket.Data) => {
     try {
-      const message: BinanceWSMessage = JSON.parse(event?.data);
+      const message: BinanceWSMessage = JSON.parse(data.toString());
       const { s: symbol, p: price } = message.data;
       TokenPriceStore[symbol] = Number(price);
     } catch (error) {
       console.error("Failed to parse WebSocket message:", error);
     }
-  };
+  });
 };

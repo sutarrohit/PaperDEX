@@ -8,6 +8,7 @@ import { globalErrorHandler, AppError, healthCheck } from "@paperdex/lib";
 import { fetchTokenPrices } from "./services/priceService";
 
 import orderRoutes from "./routes/ordersRoute";
+import tokenRoutes from "./routes/tokenRoutes";
 
 process.on("uncaughtException", (error: Error) => {
   console.log(error, "uncaughtException shutting down the application");
@@ -33,6 +34,7 @@ app.use(helmet());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/token", tokenRoutes);
 
 app.get("/api/v1/health", healthCheck("Order Service is up and running"));
 app.all("*splat", (req, res, next) => {
