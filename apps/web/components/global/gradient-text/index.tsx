@@ -11,11 +11,11 @@ const GradientText = ({ className, element, children }: Props) => {
 
   switch (element) {
     case "H1":
-      return <h1 className={cn(className, gradientClass)}>{children}</h1>;
+      return <h1 className={cn(gradientClass, className)}>{children}</h1>;
     case "H2":
-      return <h2 className={cn(className, gradientClass)}>{children}</h2>;
+      return <h2 className={cn(gradientClass, className)}>{children}</h2>;
     default:
-      return <p className={cn(className, gradientClass)}>{children}</p>;
+      return <p className={cn(gradientClass, className)}>{children}</p>;
   }
 };
 

@@ -12,8 +12,10 @@ type calculateTradeEffects = {
 
 export const calculateTradeEffects = ({ baseToken, quoteToken, side, quantity }: calculateTradeEffects) => {
   try {
-    const baseTokenPrice = new Decimal(getTokenPrice(baseToken!).price!);
-    const quoteTokenPrice = new Decimal(getTokenPrice(quoteToken!).price!);
+    // @ts-ignore
+    const baseTokenPrice = new Decimal(getTokenPrice(baseToken!)[0]?.price!);
+    // @ts-ignore
+    const quoteTokenPrice = new Decimal(getTokenPrice(quoteToken!)[0]?.price!);
 
     if (!baseTokenPrice || !quoteTokenPrice) throw new AppError("Token price data not available", 400);
 

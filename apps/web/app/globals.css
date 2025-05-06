@@ -255,6 +255,22 @@
   --sidebar-ring: oklch(0.645 0.246 16.439);
 }
 
+/* For webkit browsers like Chrome, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Common */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE 10+ */
+  overflow: auto;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -281,6 +297,11 @@
   background-size: 50% 70%;
   background-repeat: no-repeat;
   background-position: top center;
+}
+
+.radial--blur {
+  -webkit-backdrop-filter: blur(100px);
+  filter: blur(100px);
 }
 
 @media only screen and (max-width: 800px) {
