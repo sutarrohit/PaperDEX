@@ -1,7 +1,7 @@
 "use client";
 import BackdropGradient from "@/components/global/backdrop-gradient";
 import GradientText from "@/components/global/gradient-text";
-import { liveToken } from "@/constants/LiveTokens";
+import { liveTokenSet } from "@/constants";
 import Image from "next/image";
 import GradientButton from "@/components/global/gradient-button";
 import { getTokenPrice } from "./fetch";
@@ -17,10 +17,10 @@ const LiveToken = () => {
       </GradientText>
 
       <div className="w-full md:w-[90%] lg:w-[80%] xl:w-[55%] h-[500px]">
-        <BackdropGradient className="w-full h-full opacity-50  mx-0 items-center bg-orange-400/20 md:top-[-40px] md:left-[-250px]">
+        <BackdropGradient className="w-full h-full opacity-20  mx-0 items-center md:top-[-40px] md:left-[-250px]">
           <div className="flex w-full border bg-black/0 backdrop-blur-sm rounded-[20px] overflow-x-auto overflow-y-auto hide-scrollbar shadow-2xl">
             <div className="w-full flex flex-col h-[500px] px-2 py-4 md:p-4">
-              {liveToken?.map((token, index) => {
+              {liveTokenSet?.map((token, index) => {
                 return (
                   <div key={index} className="w-full px-2 py-4 md:p-4 flex justify-between gap-4">
                     <div className="flex items-center gap-2 min-w-[220px]">

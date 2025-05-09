@@ -47,6 +47,8 @@ export const useAuthSignIn = () => {
 };
 
 export const useAuthSignUp = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -76,7 +78,8 @@ export const useAuthSignUp = () => {
     },
     onSuccess: () => {
       reset();
-      toast.success("Signed up successfully");
+      toast.success("Signed up successfully", { duration: 5000 });
+      router.push("/sign-in");
     },
   });
 
@@ -112,7 +115,7 @@ export const useAuthForgotPassword = () => {
     },
     onSuccess: () => {
       reset();
-      toast.success("Password reset email sent");
+      toast.success("If an account exists, a reset link has been sent to your email.", { duration: 5000 });
     },
   });
 
