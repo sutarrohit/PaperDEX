@@ -4,7 +4,6 @@ import { prisma } from "@paperdex/db";
 import { sendEmail, verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib";
 import { openAPI } from "better-auth/plugins";
 import dotenv from "dotenv";
-import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
@@ -36,7 +35,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   account: {
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "github", "email-password"],
+      trustedProviders: ["google", "email-password"],
       allowDifferentEmails: false,
     },
   },
@@ -47,13 +46,8 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     enabled: true,
     requireEmailVerification: true,
 
-    sendResetPassword: async ({ user, url }) => {
-      // Change callback url to frontend URL
-      const parsedUrl = new URL(url);
-      const originalCallback = parsedUrl.searchParams.get("callbackURL") || "/reset-password";
-      parsedUrl.searchParams.set("callbackURL", `${NEXT_PUBLIC_CLIENT_SERVICE}${originalCallback}`);
-      const resetPasswordUrl = parsedUrl.toString();
-
+    sendResetPassword: async ({ user, token }) => {
+      const resetPasswordUrl = `${process.env.NEXT_PUBLIC_CLIENT_SERVICE}/reset-password?token=${token}`;
       const html = resetPasswordTemplate(resetPasswordUrl, user.name);
       const subject = "Reset your password";
 

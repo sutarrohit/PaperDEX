@@ -1,4 +1,4 @@
-export const liveToken = [
+export const liveTokenSet = [
   {
     name: "Ether",
     symbol: "ETH",

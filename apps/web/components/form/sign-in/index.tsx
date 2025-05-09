@@ -37,9 +37,16 @@ const SignInForm = () => {
       </div>
 
       <div className="space-y-2">
-        <Label className="flex " htmlFor={`input-password`}>
-          Password
-        </Label>
+        <div className="flex justify-between gap-2">
+          <Label className="flex " htmlFor={`input-password`}>
+            Password
+          </Label>
+
+          <Link href="./forgot-password" className="underline text-[14px]">
+            Forgot password?
+          </Link>
+        </div>
+
         <Input
           id={`input-password`}
           type="password"
