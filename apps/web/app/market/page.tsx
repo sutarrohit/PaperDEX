@@ -1,34 +1,38 @@
+"use client";
 import MenuBar from "@/components/global/menu-bar";
-import React from "react";
-// import MarketOverview from "@/components/global/market-overview";
+import { useState } from "react";
+import MarketTable from "./_components/MarketTable";
 
-const marketMenu: { name: string; symbol: string }[] = [
+const marketMenu: { label: string; symbol: string }[] = [
   {
-    name: "All Crypto",
+    label: "All Crypto",
     symbol: "",
   },
   {
-    name: "Spot",
+    label: "Spot Market",
     symbol: "",
   },
   {
-    name: "Future",
+    label: "Future Market",
     symbol: "",
   },
 ];
 
-console.log("marketMenu", marketMenu);
-
 const Market = () => {
+  const [currentLabel, setCurrentLabel] = useState<string>("All Crypto");
+
   const changeMenu = <T extends string>(market: T) => {
-    console.log("menu", market);
+    setCurrentLabel(market);
   };
 
   return (
-    <div className="w-full px-2 ">
-      {/* <p className="text-[28px] font-semibold">Market Overview</p> */}
-
-      <MenuBar menuList={marketMenu} onSetSection={changeMenu} />
+    <div className="w-full px-2 mt-10 flex flex-col gap-4">
+      <div className="overflow-x-auto hide-scrollbar">
+        <div className="w-fit">
+          <MenuBar menuList={marketMenu} onSetSection={changeMenu} currentLabel={currentLabel} />
+        </div>
+      </div>
+      <MarketTable />
     </div>
   );
 };

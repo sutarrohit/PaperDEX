@@ -1,0 +1,134 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+
+import * as React from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import type { tokenMarket } from ".";
+
+export const columns: ColumnDef<tokenMarket>[] = [
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <div className="text-start">
+          <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+            Name
+            <ArrowUpDown />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full ">
+        <Image
+          src={row.original.icon}
+          alt={row.getValue("name")}
+          width={50}
+          height={50}
+          className="w-[28px] h-[28px] rounded-full"
+        />
+        <span className="pl-1 font-semibold">{row.original?.symbol}</span>
+        <span className="text-[12px] text-muted-foreground">{row.getValue("name")}</span>
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "price",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Price
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("price")}</div>,
+  },
+
+  {
+    accessorKey: "priceChange_1hr",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          1h %
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className={Number(row.original.priceChange_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+        {row.getValue("priceChange_1hr")} %
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "priceChange_24hr",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          24h %
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className={Number(row.original.priceChange_24hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+        {row.getValue("priceChange_24hr")} %
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "priceChange_30d",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          7d %
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className={Number(row.original.priceChange_30d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+        {row.getValue("priceChange_30d")} %
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "volume_24",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          volume_24
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+  },
+
+  {
+    accessorKey: "marketCap",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Market Cap
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+  },
+];
