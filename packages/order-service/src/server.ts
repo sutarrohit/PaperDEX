@@ -5,7 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import { globalErrorHandler, AppError, healthCheck } from "@paperdex/lib";
-import { fetchTokenPrices } from "./services/priceService";
+import { WSserver } from "./services/price-service";
 
 import orderRoutes from "./routes/ordersRoute";
 import tokenRoutes from "./routes/tokenRoutes";
@@ -48,7 +48,7 @@ app.use(globalErrorHandler);
 const PORT = process.env.ORDER_SERVICE_PORT || 4002;
 app.listen(PORT, () => {
   console.log("Order Server started on port", PORT);
-  fetchTokenPrices();
+  WSserver();
 });
 
 process.on("unhandledRejection", (error: Error) => {

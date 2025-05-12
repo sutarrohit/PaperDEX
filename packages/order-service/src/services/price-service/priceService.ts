@@ -1,6 +1,5 @@
 import WebSocket from "ws";
-import { TokenPriceStore } from "../store/tokenPriceStore";
-import { tokenSet } from "@paperdex/lib";
+import { TokenPriceStore } from "../../store/tokenPriceStore";
 
 interface BinanceTradeEvent {
   e: "trade"; // Event type
@@ -24,7 +23,7 @@ let reconnectAttempts = 0;
 const MAX_RECONNECT_ATTEMPTS = 5;
 const RECONNECT_DELAY_MS = 5000;
 
-export const fetchTokenPrices = () => {
+export const fetchTokenPrices = (tokenSet: string) => {
   const wsUrl = `wss://stream.binance.com:9443/stream?streams=${tokenSet}`;
 
   // Clean up previous connection if it exists
@@ -60,7 +59,14 @@ export const fetchTokenPrices = () => {
     try {
       const message: BinanceWSMessage = JSON.parse(data.toString());
       const { s: symbol, p: price } = message.data;
-      TokenPriceStore[symbol] = Number(price);
+
+      const existing = TokenPriceStore.find((item) => item.token === symbol);
+
+      if (existing) {
+        existing.price = Number(price);
+      } else {
+        TokenPriceStore.push({ token: symbol, price: Number(price) });
+      }
     } catch (error) {
       console.error("Failed to parse WebSocket message:", error);
     }
