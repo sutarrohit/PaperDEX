@@ -11,21 +11,22 @@
  * ==========================================
  */
 
-export const TokenPriceStore: Record<string, number> = {};
+export type IntervalKey = "change_1hr" | "change_1d" | "change_1w";
+
+export type TokenPriceStoreType = {
+  token?: string;
+  price?: number;
+} & Partial<Record<IntervalKey, number>>;
+
+export const TokenPriceStore: TokenPriceStoreType[] = [];
 
 export const getTokenPrice = (tokens: string[] | []) => {
-  if (tokens?.length === 0)
-    return Object.keys(TokenPriceStore).map((token) => ({
-      token: token,
-      price: TokenPriceStore[token],
-    }));
+  if (tokens?.length === 0) return TokenPriceStore;
 
-  return tokens.map((token) => {
-    if (!token) return { token, price: undefined };
-    const tokenName = token === "USDT" ? `${token.toUpperCase()}DAI` : `${token.toUpperCase()}USDT`;
-    return {
-      token,
-      price: TokenPriceStore[tokenName],
-    };
-  });
+  return tokens
+    .map((token) => {
+      const tokenName = token === "USDT" ? `${token.toUpperCase()}DAI` : `${token.toUpperCase()}USDT`;
+      return TokenPriceStore.find((tokenInfo) => tokenInfo.token === tokenName);
+    })
+    .filter((tokenInfo): tokenInfo is TokenPriceStoreType => Boolean(tokenInfo)); // removes undefined
 };

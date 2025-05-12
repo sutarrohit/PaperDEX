@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased`}>
+      <body className={`${outfit.className} antialiased bg-black`}>
         <Providers>
           {children}
           <Toaster />
