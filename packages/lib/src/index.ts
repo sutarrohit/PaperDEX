@@ -7,3 +7,5 @@ export * from "./utility-functions/healthCheck";
 export * from "./errors/customErrorFunctions";
 export * from "./constants/tokenSet";
 export * from "./constants/tokenInfo";
+export * from "./utility-functions/truncateNumbers";
+export * from "./utility-functions/getTokenName";

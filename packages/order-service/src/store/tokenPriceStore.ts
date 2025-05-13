@@ -11,11 +11,15 @@
  * ==========================================
  */
 
+import { getTokenName } from "@paperdex/lib";
+
 export type IntervalKey = "change_1hr" | "change_1d" | "change_1w";
 
 export type TokenPriceStoreType = {
   token?: string;
   price?: number;
+  market_cap?: number;
+  volume_24hr?: number;
 } & Partial<Record<IntervalKey, number>>;
 
 export const TokenPriceStore: TokenPriceStoreType[] = [];
@@ -25,7 +29,7 @@ export const getTokenPrice = (tokens: string[] | []) => {
 
   return tokens
     .map((token) => {
-      const tokenName = token === "USDT" ? `${token.toUpperCase()}DAI` : `${token.toUpperCase()}USDT`;
+      const tokenName = getTokenName(token);
       return TokenPriceStore.find((tokenInfo) => tokenInfo.token === tokenName);
     })
     .filter((tokenInfo): tokenInfo is TokenPriceStoreType => Boolean(tokenInfo)); // removes undefined

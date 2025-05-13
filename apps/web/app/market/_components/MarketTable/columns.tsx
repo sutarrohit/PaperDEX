@@ -38,7 +38,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
           height={50}
           className="w-[28px] h-[28px] rounded-full"
         />
-        <span className="pl-1 font-semibold">{row.original?.symbol}</span>
+        <span className="pl-1">{row.original?.symbol}</span>
         <span className="text-[12px] text-muted-foreground">{row.getValue("name")}</span>
       </div>
     ),
@@ -68,7 +68,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+      <div className={Number(row.original.priceChange_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
         {row.getValue("priceChange_1hr")} %
       </div>
     ),
@@ -85,7 +85,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_24hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+      <div className={Number(row.original.priceChange_24hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
         {row.getValue("priceChange_24hr")} %
       </div>
     ),
@@ -102,7 +102,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_30d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81] font-semibold"}>
+      <div className={Number(row.original.priceChange_30d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
         {row.getValue("priceChange_30d")} %
       </div>
     ),
@@ -113,7 +113,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          volume_24
+          volume(24h)
           <ArrowUpDown />
         </Button>
       );
