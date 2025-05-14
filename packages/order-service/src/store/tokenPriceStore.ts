@@ -11,16 +11,7 @@
  * ==========================================
  */
 
-import { getTokenName } from "@paperdex/lib";
-
-export type IntervalKey = "change_1hr" | "change_1d" | "change_1w";
-
-export type TokenPriceStoreType = {
-  token?: string;
-  price?: number;
-  market_cap?: number;
-  volume_24hr?: number;
-} & Partial<Record<IntervalKey, number>>;
+import { getTokenName, TokenPriceStoreType } from "@paperdex/lib";
 
 export const TokenPriceStore: TokenPriceStoreType[] = [];
 

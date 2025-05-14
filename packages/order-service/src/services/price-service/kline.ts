@@ -1,5 +1,6 @@
 import WebSocket from "ws";
-import { TokenPriceStore, IntervalKey } from "../../store/tokenPriceStore";
+import { TokenPriceStore } from "../../store/tokenPriceStore";
+import { IntervalKey } from "@paperdex/lib";
 
 interface BinanceKline {
   e: "kline";

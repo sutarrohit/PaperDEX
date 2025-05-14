@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import type { tokenMarket } from ".";
+import numeral from "numeral";
+import { customFormat } from "@/utils/adjustDecimal";
 
 export const columns: ColumnDef<tokenMarket>[] = [
   {
@@ -58,7 +60,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
   },
 
   {
-    accessorKey: "priceChange_1hr",
+    accessorKey: "change_1hr",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -68,14 +70,14 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {row.getValue("priceChange_1hr")} %
+      <div className={Number(row.original.change_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
+        {customFormat(row.getValue("change_1hr"))} %
       </div>
     ),
   },
 
   {
-    accessorKey: "priceChange_24hr",
+    accessorKey: "change_1d",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -85,14 +87,14 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_24hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {row.getValue("priceChange_24hr")} %
+      <div className={Number(row.original.change_1d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
+        {customFormat(row.getValue("change_1d"))} %
       </div>
     ),
   },
 
   {
-    accessorKey: "priceChange_30d",
+    accessorKey: "change_1w",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -102,14 +104,14 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className={Number(row.original.priceChange_30d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {row.getValue("priceChange_30d")} %
+      <div className={Number(row.original.change_1w) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
+        {customFormat(row.getValue("change_1w"))} %
       </div>
     ),
   },
 
   {
-    accessorKey: "volume_24",
+    accessorKey: "volume_24hr",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -118,10 +120,11 @@ export const columns: ColumnDef<tokenMarket>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => <div>{numeral(row?.getValue("volume_24hr")).format("0.00a").toUpperCase()}</div>,
   },
 
   {
-    accessorKey: "marketCap",
+    accessorKey: "market_cap",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -130,5 +133,6 @@ export const columns: ColumnDef<tokenMarket>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => <div>{numeral(row?.getValue("market_cap")).format("0.00a").toUpperCase()}</div>,
   },
 ];

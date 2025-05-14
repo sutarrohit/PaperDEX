@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, RequestHandler } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { AppError, catchAsync } from "@paperdex/lib";
 import { getUserDetails } from "../services/userService";
 import { OrderStatus, OrderSide, OrderType, prisma } from "@paperdex/db";
@@ -6,9 +6,9 @@ import { marketOrder } from "../services/orderService";
 
 // Get all account orders, active, canceled, or filled.
 export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res: Response) => {
-  const page = parseInt((req.query.page as string) || "1");
-  const pageSize = Math.min(parseInt((req.query.size as string) || "10"), 10);
-  const skip = (page - 1) * pageSize;
+  const pageIndex = parseInt((req.query.pageIndex as string) || "1");
+  const pageSize = Math.min(parseInt((req.query.pageSize as string) || "10"), 10);
+  const skip = (pageIndex - 1) * pageSize;
 
   const orderStatus = req.query.orderStatus as OrderStatus | null;
   const orderType = req.query.orderType as OrderType | null;
@@ -38,7 +38,7 @@ export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res:
   res.json({
     status: "success",
     size: orderCount,
-    currentPage: page,
+    currentPage: pageIndex,
     pageSize: pageSize,
     data: orders,
   });
@@ -67,7 +67,9 @@ export const newOrder: RequestHandler = catchAsync(async (req: Request, res: Res
   const { side, type, symbol, quantity, price } = req.body;
   if (!side || !type || !symbol || !quantity) throw new AppError("Missing required fields", 400);
 
-  const user = await getUserDetails(req.user?.user.id!);
+  if (!req?.user) throw new AppError("User not found", 404);
+
+  const user = await getUserDetails(req?.user?.user.id as string);
   const market = await prisma.market.findUnique({
     where: { symbol: symbol },
   });

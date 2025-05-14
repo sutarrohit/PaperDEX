@@ -1,128 +1,132 @@
-export const tokenInfo = [
+export type IntervalKey = "change_1hr" | "change_1d" | "change_1w";
+
+export type TokenPriceStoreType = {
+  token?: string;
+  price?: number;
+  market_cap?: number;
+  volume_24hr?: number;
+} & Partial<Record<IntervalKey, number>>;
+
+export type tokenInfoType = {
+  id: string;
+  name: string;
+  symbol: string;
+  icon: string;
+} & Partial<TokenPriceStoreType>;
+
+export const tokenInfo: tokenInfoType[] = [
   {
-    name: "Dai Stablecoin",
-    symbol: "DAI",
-    balance: 10000,
-    icon: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png",
-  }, // DAI[2][6]
-  {
-    name: "Tether USD",
-    symbol: "USDT",
-    balance: 0,
-    icon: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png",
-  }, // USDT[3]
-  {
-    name: "Ether",
-    symbol: "ETH",
-    balance: 0,
-    icon: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-  }, // ETH[4]
-  {
+    id: crypto.randomUUID(),
     name: "Bitcoin",
     symbol: "BTC",
-    balance: 0,
-    icon: "https://raw.githubusercontent.com/ubeswap/default-token-list/master/assets/asset_WBTC.png",
-  }, // BTC[5]
+    icon: "https://bin.bnbstatic.com/static/assets/logos/BTC.png",
+  },
   {
+    id: crypto.randomUUID(),
+    name: "Ethereum",
+    symbol: "ETH",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ETH.png",
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Tether",
+    symbol: "USDT",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
+  },
+  {
+    id: crypto.randomUUID(),
     name: "BNB",
     symbol: "BNB",
-    balance: 0,
-    icon: "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/smartchain/assets/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/logo.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/BNB.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Solana",
     symbol: "SOL",
-    balance: 0,
-    icon: "https://assets.coingecko.com/coins/images/22876/thumb/SOL_wh_small.png?1644224316",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SOL.png",
   },
   {
-    name: "Cardano",
-    symbol: "ADA",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/ada.png",
-  },
-  {
+    id: crypto.randomUUID(),
     name: "XRP",
     symbol: "XRP",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/xrp.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XRP.png",
   },
   {
-    name: "Polkadot",
-    symbol: "DOT",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/dot.png",
+    id: crypto.randomUUID(),
+    name: "Cardano",
+    symbol: "ADA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ADA.png",
   },
   {
-    name: "Chainlink",
-    symbol: "LINK",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/link.png",
-  },
-  {
+    id: crypto.randomUUID(),
     name: "Avalanche",
     symbol: "AVAX",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/avax.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AVAX.png",
   },
   {
+    id: crypto.randomUUID(),
+    name: "Polkadot",
+    symbol: "DOT",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/DOT.png",
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Chainlink",
+    symbol: "LINK",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/LINK.png",
+  },
+  {
+    id: crypto.randomUUID(),
     name: "TRON",
     symbol: "TRX",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/trx.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/TRX.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Polygon",
     symbol: "MATIC",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/matic.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/MATIC.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Litecoin",
     symbol: "LTC",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/ltc.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/LTC.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Shiba Inu",
     symbol: "SHIB",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/shib.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SHIB.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Uniswap",
     symbol: "UNI",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/uni.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/UNI.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Cosmos",
     symbol: "ATOM",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/atom.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ATOM.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Monero",
     symbol: "XMR",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/xmr.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XMR.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "NEAR Protocol",
     symbol: "NEAR",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/near.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/NEAR.png",
   },
   {
+    id: crypto.randomUUID(),
     name: "Aptos",
     symbol: "APT",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/apt.png",
-  },
-  {
-    name: "Pepe",
-    symbol: "PEPE",
-    balance: 0,
-    icon: "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@latest/128/color/pepe.png",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/APT.png",
   },
 ];
