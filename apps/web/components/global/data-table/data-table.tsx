@@ -12,6 +12,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  PaginationState,
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -20,31 +21,66 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data?: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+import { useQuery } from "@tanstack/react-query";
+
+export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [pageCount, setPageCount] = React.useState(0);
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const {
+    data: marketData,
+    // error,
+    // isLoading,
+  } = useQuery({
+    queryKey: ["market-table", pagination],
+    queryFn: async () => {
+      const response = await fetch(
+        `http://localhost:4002/api/v1/token/tokenMarketData?pageIndex=${pagination.pageIndex + 1}&pageSize=${pagination.pageSize}`,
+      );
+      return response.json();
+    },
+    refetchInterval: 5000,
+  });
+
+  React.useEffect(() => {
+    if (marketData) {
+      if (marketData.totalPages) {
+        setPageCount(marketData.totalPages);
+      }
+    }
+  }, [marketData, pagination.pageSize]);
+
   const table = useReactTable({
-    data,
+    data: marketData?.data ?? [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    manualPagination: true,
+    pageCount,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   });
 

@@ -1,6 +1,5 @@
 import { getTokenName } from "@paperdex/lib";
 import { TokenPriceStore } from "../../store/tokenPriceStore";
-import numeral from "numeral";
 
 type CoinMarket = {
   id: string;
@@ -39,14 +38,10 @@ export const fetchVolumeMcap = async (volumeMcap: string) => {
   const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${volumeMcap}`);
   const data: CoinMarket[] = await response.json();
 
-
   data.map((token) => {
     const tokenName = getTokenName(token.symbol);
 
     const existing = TokenPriceStore.find((tokenInfo) => tokenInfo?.token === tokenName);
-
-    console.log(numeral(token?.market_cap).format("0.00a").toUpperCase()); // "2.04T"
-    console.log(numeral(token?.total_volume).format("0.00a").toUpperCase()); // "2.04T"
 
     if (existing) {
       existing.market_cap = token?.market_cap ?? 0;
