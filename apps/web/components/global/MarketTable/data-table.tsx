@@ -14,19 +14,28 @@ import {
   useReactTable,
   PaginationState,
 } from "@tanstack/react-table";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data?: TData[];
+  isLandingPage?: boolean;
 }
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getMarketData } from "@/lib/api/market-api";
+import { ChevronDown } from "lucide-react";
 
-export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, isLandingPage = false }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -41,15 +50,10 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
   const {
     data: marketData,
     // error,
-    // isLoading,
-  } = useQuery({
-    queryKey: ["market-table", pagination],
-    queryFn: async () => {
-      const response = await fetch(
-        `http://localhost:4002/api/v1/token/tokenMarketData?pageIndex=${pagination.pageIndex + 1}&pageSize=${pagination.pageSize}`,
-      );
-      return response.json();
-    },
+    isLoading,
+  } = useSuspenseQuery({
+    queryKey: ["market-table", pagination.pageIndex, pagination.pageSize],
+    queryFn: async () => getMarketData(pagination.pageIndex, pagination.pageSize),
     refetchInterval: 5000,
   });
 
@@ -62,7 +66,7 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
   }, [marketData, pagination.pageSize]);
 
   const table = useReactTable({
-    data: marketData?.data ?? [],
+    data: marketData?.data || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -84,21 +88,53 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
     },
   });
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4 w-full justify-end">
-        <Input
-          placeholder="Search Names..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-          className="max-w-xs"
-        />
+        {!isLandingPage && (
+          <>
+            <Input
+              placeholder="Search Names..."
+              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+              onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+              className="max-w-xs"
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="ml-auto">
+                  Columns <ChevronDown />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )}
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-lg border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table?.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="">
                 {headerGroup.headers.map((header) => {
                   return (
@@ -111,9 +147,13 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="">
+            {table?.getRowModel().rows?.length ? (
+              table?.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className={`${isLandingPage && "border-transparent"}`}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-end pr-5 py-4 ">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -131,25 +171,23 @@ export function DataTable<TData, TValue>({ columns }: DataTableProps<TData, TVal
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
-          selected.
+      {!isLandingPage && (
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+              Next
+            </Button>
+          </div>
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            Next
-          </Button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

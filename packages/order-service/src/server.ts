@@ -52,7 +52,7 @@ app.listen(PORT, () => {
 });
 
 process.on("unhandledRejection", (error: Error) => {
-  console.log(error.name, error.message);
+  console.log(error);
   console.log("unhandledRejection shutting down the application");
   process.exit(1);
 });

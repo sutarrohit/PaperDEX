@@ -3,18 +3,10 @@
 
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import type { tokenMarket } from ".";
+import type { tokenMarket } from "./index";
 import numeral from "numeral";
 import { customFormat } from "@/utils/adjustDecimal";
 
@@ -56,7 +48,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("price")}</div>,
+    cell: ({ row }) => <div>${row.getValue("price")}</div>,
   },
 
   {

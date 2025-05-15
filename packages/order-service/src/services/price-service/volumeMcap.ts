@@ -35,17 +35,21 @@ type CoinMarket = {
 };
 
 export const fetchVolumeMcap = async (volumeMcap: string) => {
-  const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${volumeMcap}`);
-  const data: CoinMarket[] = await response.json();
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${volumeMcap}`);
+    const data: CoinMarket[] = await response.json();
 
-  data.map((token) => {
-    const tokenName = getTokenName(token.symbol);
+    data.map((token) => {
+      const tokenName = getTokenName(token.symbol);
 
-    const existing = TokenPriceStore.find((tokenInfo) => tokenInfo?.token === tokenName);
+      const existing = TokenPriceStore.find((tokenInfo) => tokenInfo?.token === tokenName);
 
-    if (existing) {
-      existing.market_cap = token?.market_cap ?? 0;
-      existing.volume_24hr = token?.total_volume ?? 0;
-    }
-  });
+      if (existing) {
+        existing.market_cap = token?.market_cap ?? 0;
+        existing.volume_24hr = token?.total_volume ?? 0;
+      }
+    });
+  } catch (error) {
+    console.log("fetchVolumeMcap Error:", error);
+  }
 };
