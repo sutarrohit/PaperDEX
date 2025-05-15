@@ -1,7 +1,7 @@
 "use client";
 import MenuBar from "@/components/global/menu-bar";
 import { useState } from "react";
-import MarketTable from "./_components/MarketTable";
+import MarketTable from "../../components/global/MarketTable";
 
 const marketMenu: { label: string; symbol: string }[] = [
   {
