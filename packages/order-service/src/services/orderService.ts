@@ -16,7 +16,14 @@ type CreateOrderSchema = {
   price?: Decimal | null;
 };
 
-export const marketOrder = async ({ userId, symbol, side, type, quantity, price = null }: CreateOrderSchema) => {
+export const marketOrder = async ({
+  userId,
+  symbol,
+  side,
+  type,
+  quantity,
+  price: _price = null,
+}: CreateOrderSchema) => {
   const [baseToken, quoteToken] = symbol.split("/");
 
   if (!baseToken || !quoteToken) {
@@ -130,9 +137,11 @@ export const marketOrder = async ({ userId, symbol, side, type, quantity, price 
     });
 
     return order;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error executing market order:", error);
-    throw new AppError(error?.message || "Failed to process market order", 500);
+    if (error instanceof Error) throw new AppError(error?.message || "Failed to process market order", 500);
+
+    throw new AppError("Failed to process market order", 500);
   }
 };
 

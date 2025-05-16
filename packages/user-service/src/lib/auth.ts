@@ -1,7 +1,8 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@paperdex/db";
-import { sendEmail, verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib";
+import { verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib/template";
+import { sendEmail } from "@paperdex/lib/sendEmail";
 import { openAPI } from "better-auth/plugins";
 import dotenv from "dotenv";
 

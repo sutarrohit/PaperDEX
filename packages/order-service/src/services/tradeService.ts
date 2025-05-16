@@ -10,19 +10,19 @@ type calculateTradeEffects = {
   quantity: Decimal;
 };
 
-export const calculateTradeEffects = ({ baseToken, quoteToken, side, quantity }: calculateTradeEffects) => {
+export const calculateTradeEffects = ({ baseToken, quoteToken, side: _side, quantity }: calculateTradeEffects) => {
   try {
-    // @ts-ignore
-    const baseTokenPrice = new Decimal(getTokenPrice(baseToken!)[0]?.price!);
-    // @ts-ignore
-    const quoteTokenPrice = new Decimal(getTokenPrice(quoteToken!)[0]?.price!);
+    if (!baseToken || !quoteToken) throw new AppError("baseToken and quoteToken is not found", 404);
+
+    const baseTokenPrice = new Decimal(getTokenPrice([baseToken])[0]?.price as number);
+    const quoteTokenPrice = new Decimal(getTokenPrice([quoteToken])[0]?.price as number);
 
     if (!baseTokenPrice || !quoteTokenPrice) throw new AppError("Token price data not available", 400);
 
     quantity = new Decimal(quantity);
 
-    let baseTokenDelta = quantity;
-    let quoteTokenDelta = quantity.mul(baseTokenPrice).div(quoteTokenPrice);
+    const baseTokenDelta = quantity;
+    const quoteTokenDelta = quantity.mul(baseTokenPrice).div(quoteTokenPrice);
 
     return {
       baseTokenDelta,
