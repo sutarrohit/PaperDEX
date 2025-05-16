@@ -34,18 +34,20 @@ export interface DataTableProps<TData, TValue> {
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getMarketData } from "@/lib/api/market-api";
 import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function DataTable<TData, TValue>({ columns, isLandingPage = false }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
   const [pageCount, setPageCount] = React.useState(0);
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
+
+  const router = useRouter();
 
   const {
     data: marketData,
@@ -131,14 +133,14 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
         )}
       </div>
 
-      <div className="rounded-lg border">
+      <div className="rounded-lg overflow-hidden border">
         <Table>
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="text-end py-1">
+                    <TableHead key={header.id} className={`text-end py-2.5 ${!isLandingPage && "bg-[#141414]"} `}>
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   );
@@ -152,10 +154,14 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={`${isLandingPage && "border-transparent"}`}
+                  className={`cursor-pointer ${isLandingPage && "border-transparent cursor-default"} `}
+                  onClick={() => {
+                    const { symbol } = row.original as { symbol: string };
+                    router.push(`/trade/${symbol}_USDT?type=spot`);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-end pr-5 py-4 ">
+                    <TableCell key={cell.id} className="text-end pr-5 py-4">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
