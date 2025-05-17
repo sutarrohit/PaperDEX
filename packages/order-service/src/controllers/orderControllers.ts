@@ -35,7 +35,7 @@ export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res:
     prisma.order.count({ where: { userId: userId } }),
   ]);
 
-  res.json({
+  res.status(200).json({
     status: "success",
     size: orderCount,
     currentPage: pageIndex,
@@ -57,7 +57,7 @@ export const getOrder: RequestHandler = catchAsync(async (req: Request, res: Res
 
   if (!order) throw new AppError("Order not found", 404);
 
-  res.json({
+  res.status(200).json({
     status: "success",
     data: order,
   });
@@ -78,7 +78,7 @@ export const newOrder: RequestHandler = catchAsync(async (req: Request, res: Res
 
   const order = await marketOrder({ userId: user.id, symbol, side, type, quantity, price });
 
-  res.json({
+  res.status(200).json({
     status: "success",
     data: order,
   });
@@ -112,7 +112,7 @@ export const cancelOrder: RequestHandler = catchAsync(async (req: Request, res: 
     data: { status: "CANCELED" },
   });
 
-  res.json({
+  res.status(200).json({
     status: "success",
     data: canceledOrder,
   });

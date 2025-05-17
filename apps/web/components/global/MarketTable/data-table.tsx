@@ -134,7 +134,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
       </div>
 
       <div className="rounded-lg overflow-hidden border">
-        <Table>
+        <Table className="text-[16px]">
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -156,8 +156,10 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                   data-state={row.getIsSelected() && "selected"}
                   className={`cursor-pointer ${isLandingPage && "border-transparent cursor-default"} `}
                   onClick={() => {
-                    const { symbol } = row.original as { symbol: string };
-                    router.push(`/trade/${symbol}_USDT?type=spot`);
+                    if (!isLandingPage) {
+                      const { symbol } = row.original as { symbol: string };
+                      router.push(`/trade/${symbol}_USDT?type=spot`);
+                    }
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
