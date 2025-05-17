@@ -3,27 +3,28 @@ import { TokenPriceStore } from "../../store/tokenPriceStore";
 import { IntervalKey } from "@paperdex/lib";
 
 interface BinanceKline {
-  e: "kline";
-  E: number;
-  s: string;
+  e: "kline"; // Event type
+  E: number; // Event time (timestamp in milliseconds)
+  s: string; // Symbol (e.g., BTCUSDT)
   k: {
-    t: number;
-    T: number;
-    s: string;
-    i: string;
-    f: number;
-    L: number;
-    o: string;
-    c: string;
-    h: string;
-    l: string;
-    v: string;
-    n: number;
-    x: boolean;
-    q: string;
-    V: string;
-    Q: string;
-    B: string;
+    // Kline (candlestick) data
+    t: number; // Kline start time
+    T: number; // Kline close time
+    s: string; // Symbol
+    i: string; // Interval (e.g., 1m, 5m, 1h)
+    f: number; // First trade ID
+    L: number; // Last trade ID
+    o: string; // Open price
+    c: string; // Close price
+    h: string; // High price
+    l: string; // Low price
+    v: string; // Base asset volume
+    n: number; // Number of trades
+    x: boolean; // Is this kline closed?
+    q: string; // Quote asset volume
+    V: string; // Taker buy base asset volume
+    Q: string; // Taker buy quote asset volume
+    B: string; // Ignore (typically reserved for future use)
   };
 }
 
@@ -76,10 +77,14 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
   ws.on("message", (data: WebSocket.Data) => {
     try {
       const message: BinanceWSMessage = JSON.parse(data.toString());
-      const { o, c } = message.data.k;
+
+      const { o, c, h, l, i } = message.data.k;
 
       const openPrice = Number(o);
       const closePrice = Number(c);
+      const highPrice = Number(h);
+      const lowPrice = Number(l);
+
       const symbol = message.data.s;
 
       const priceChange = ((closePrice - openPrice) / openPrice) * 100;
@@ -87,8 +92,18 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
 
       if (existing) {
         existing[interval] = priceChange;
+        // Add 24hr high and low price
+        if (i === "1d") {
+          existing["high_24hr"] = highPrice;
+          existing["low_24hr"] = lowPrice;
+        }
       } else {
         TokenPriceStore.push({ token: symbol, [interval]: priceChange });
+        // Add 24hr high and low price
+        if (i === "1d") {
+          TokenPriceStore.push({ token: symbol, ["high_24hr"]: highPrice });
+          TokenPriceStore.push({ token: symbol, ["low_24hr"]: lowPrice });
+        }
       }
     } catch (error) {
       console.error(`[${interval}] Failed to parse message:`, error);

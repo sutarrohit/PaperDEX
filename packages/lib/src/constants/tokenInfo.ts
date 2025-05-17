@@ -5,6 +5,8 @@ export type TokenPriceStoreType = {
   price?: number;
   market_cap?: number;
   volume_24hr?: number;
+  high_24hr?: number;
+  low_24hr?: number;
 } & Partial<Record<IntervalKey, number>>;
 
 export type tokenInfoType = {

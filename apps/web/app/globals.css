@@ -89,6 +89,9 @@
   --primary-theme-darkGray: #27272a;
   --theme-textGray: #b4b0ae;
   --primary-theme-textWhite: #f7ece9;
+
+  --bg-card: #161616;
+  --card-text: #6a6a6a;
 }
 
 .dark {
@@ -129,6 +132,9 @@
   --primary-theme-darkGray: #27272a;
   --theme-textGray: #b4b0ae;
   --primary-theme-textWhite: #f7ece9;
+
+  --bg-card: #161616;
+  --card-text: #6a6a6a;
 }
 
 @layer base {

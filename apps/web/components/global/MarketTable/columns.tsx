@@ -48,7 +48,14 @@ export const columns: ColumnDef<tokenMarket>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>${row.getValue("price")}</div>,
+    cell: ({ row }) => (
+      <div>
+        {Number(row.getValue("price")).toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+        })}
+      </div>
+    ),
   },
 
   {
@@ -63,7 +70,12 @@ export const columns: ColumnDef<tokenMarket>[] = [
     },
     cell: ({ row }) => (
       <div className={Number(row.original.change_1hr) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {customFormat(row.getValue("change_1hr"))} %
+        {/* {customFormat(row.getValue("change_1hr"))} % */}
+        {Number(row.getValue("change_1hr")).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+        %
       </div>
     ),
   },
@@ -80,7 +92,11 @@ export const columns: ColumnDef<tokenMarket>[] = [
     },
     cell: ({ row }) => (
       <div className={Number(row.original.change_1d) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {customFormat(row.getValue("change_1d"))} %
+        {Number(row.getValue("change_1d")).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+        %
       </div>
     ),
   },
@@ -97,7 +113,11 @@ export const columns: ColumnDef<tokenMarket>[] = [
     },
     cell: ({ row }) => (
       <div className={Number(row.original.change_1w) < 0 ? "text-[#f6465d]" : " text-[#0ecb81]"}>
-        {customFormat(row.getValue("change_1w"))} %
+        {Number(row.getValue("change_1w")).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+        %
       </div>
     ),
   },

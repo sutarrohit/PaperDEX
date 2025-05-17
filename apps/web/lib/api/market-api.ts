@@ -6,3 +6,8 @@ export const getMarketData = async (pageIndex = 0, pageSize = 10) => {
   );
   return response.json();
 };
+
+export const getTradeData = async (tokenName: string) => {
+  const response = await fetch(`${ORDER_SERVICE_URL}/api/v1/token/tokenTradeData?token=${tokenName}`);
+  return response.json();
+};
