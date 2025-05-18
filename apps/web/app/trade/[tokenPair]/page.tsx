@@ -4,6 +4,7 @@ import TradeTokenHeading from "@/components/global/trade-token";
 import { getQueryClient } from "@/lib/getQueryClient";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getTradeData } from "@/lib/api/market-api";
+import TradeConsole from "../_components/TradeConsole";
 
 const Trade = async ({
   searchParams,
@@ -25,10 +26,13 @@ const Trade = async ({
     queryFn: () => getTradeData(tokenPair),
   });
 
+  const filterTokenPair = tokenPair.split("_").join("");
+
   return (
-    <div className="flex flex-col justify-center items-center relative container px-2 pt-4">
+    <div className="flex flex-col justify-center items-center relative container px-2 pt-10 gap-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <TradeTokenHeading tokenPair={tokenPair} type={type} />
+        <TradeConsole tokenPair={filterTokenPair} />
       </HydrationBoundary>
     </div>
   );

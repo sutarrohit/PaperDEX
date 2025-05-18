@@ -96,7 +96,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 w-full justify-end">
+      <div className="flex items-center py-4 w-full justify-end gap-4">
         {!isLandingPage && (
           <>
             <Input
@@ -158,7 +158,8 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                   onClick={() => {
                     if (!isLandingPage) {
                       const { symbol } = row.original as { symbol: string };
-                      router.push(`/trade/${symbol}_USDT?type=spot`);
+                      const filterSymbol = symbol.endsWith("USDT") ? `${symbol}_DAI` : `${symbol}_USDT`;
+                      router.push(`/trade/${filterSymbol}?type=spot`);
                     }
                   }}
                 >
