@@ -1,52 +1,3 @@
-// "use client";
-// import React, { useEffect, useRef, memo } from "react";
-
-// function TradingViewWidget({ tokenPair }: { tokenPair: string }) {
-//   const container = useRef<HTMLDivElement | null>(null);
-
-//   useEffect(() => {
-//     if (!container.current) return;
-
-//     // Clear existing child nodes (prevents duplicate charts)
-//     container.current.innerHTML = "";
-
-//     const script = document.createElement("script");
-//     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-//     script.type = "text/javascript";
-//     script.async = true;
-//     script.innerHTML = `
-//       {
-//         "autosize": true,
-//         "symbol": "BINANCE:${tokenPair}",
-//         "interval": "1",
-//         "timezone": "Etc/UTC",
-//         "theme": "dark",
-//         "style": "1",
-//         "locale": "en",
-//         "allow_symbol_change": true,
-//         "support_host": "https://www.tradingview.com",
-
-//       }`;
-
-//     container.current.appendChild(script);
-//   }, []);
-
-//   return (
-//     <div className="tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
-//       {/* No need to include .tradingview-widget-container__widget here manually */}
-//       <div className="tradingview-widget-copyright h-full">
-//         <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-//           <p className="blue-text w-full h-full flex justify-center items-center border border-pink-500">
-//             Track all markets on TradingView
-//           </p>
-//         </a>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default memo(TradingViewWidget);
-
 "use client";
 import React, { useEffect, useRef, memo } from "react";
 
@@ -101,7 +52,11 @@ function TradingViewWidget({ tokenPair }: TradingViewWidgetProps) {
   }, [tokenPair]); // Added tokenPair to dependency array to re-render if the pair changes
 
   return (
-    <div className="tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
+    <div
+      className="tradingview-widget-container overflow-hidden"
+      ref={container}
+      style={{ height: "100%", width: "100%" }}
+    >
       {/* The TradingView widget will be injected into this container div. */}
       {/* The TradingView attribution will be added by the widget script itself. */}
     </div>

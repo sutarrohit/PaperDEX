@@ -92,6 +92,7 @@
 
   --bg-card: #161616;
   --card-text: #6a6a6a;
+  --tasty-orange: #fe8a1d;
 }
 
 .dark {
@@ -135,6 +136,7 @@
 
   --bg-card: #161616;
   --card-text: #6a6a6a;
+  --tasty-orange: #fe8a1d;
 }
 
 @layer base {

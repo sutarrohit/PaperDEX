@@ -11,7 +11,7 @@ type Props = {
 const MenuBar = ({ menuList, onSetSection, currentLabel }: Props) => {
   return (
     <Card className="p-0 border border-[#37372c] rounded-lg">
-      <CardContent className="gap-2 items-center p-1.5 bg-[#27272a] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-60 flex rounded-xl">
+      <CardContent className="gap-2 items-center p-1 bg-[#27272a] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-60 flex rounded-xl">
         {menuList.map((menuItem, index) => (
           <div
             key={index}
@@ -19,7 +19,7 @@ const MenuBar = ({ menuList, onSetSection, currentLabel }: Props) => {
               onClick: () => onSetSection(menuItem.label),
             })}
             className={cn(
-              "rounded-[8px] flex gap-2 py-2 px-4 item-center text-[12px] cursor-pointer transition-all duration-200 ease-in-out border border-transparent ",
+              "rounded-[8px] flex gap-2 py-1.5 px-4 item-center text-[12px] cursor-pointer transition-all duration-200 ease-in-out border border-transparent ",
               currentLabel == menuItem.label ? "bg-[#09090b] border-[#37372c] items-center" : "",
             )}
           >
