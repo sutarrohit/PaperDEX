@@ -107,7 +107,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
+                <Button variant="outline" className="ml-auto cursor-pointer">
                   Columns <ChevronDown />
                 </Button>
               </DropdownMenuTrigger>
@@ -134,7 +134,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
       </div>
 
       <div className="rounded-lg overflow-hidden border">
-        <Table className="text-[16px]">
+        <Table className="">
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

@@ -1,6 +1,8 @@
 import { Request, Response, RequestHandler } from "express";
 import { TokenPriceStore } from "../store/tokenPriceStore";
+
 import { AppError, catchAsync, getTokenName, tokenInfo } from "@paperdex/lib";
+import { orderBooksStore } from "../store/orderBookStore";
 
 export const getTokenMarketData: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const rawPageIndex = req.query.pageIndex;
@@ -56,11 +58,23 @@ export const getTokenTradeData: RequestHandler = catchAsync(async (req: Request,
 
   const filterData = { ...tokenData, ...token };
 
-  console.log("filterToken===========", filterToken);
-  console.log("priceInfo=============>", tokenData);
-
   res.status(200).json({
     status: "success",
     data: filterData,
+  });
+});
+
+export const getOrderBook: RequestHandler = catchAsync(async (req: Request, res: Response) => {
+  const tokenName = req.query.token as string;
+  if (!tokenName) throw new AppError("Token not found.", 404);
+
+  const filterToken = tokenName.split("_").join("");
+  const orderBooks = orderBooksStore[filterToken.toLocaleLowerCase()];
+
+  if (!orderBooks) throw new AppError("Token not found", 404);
+
+  res.status(200).json({
+    status: "success",
+    data: orderBooks,
   });
 });

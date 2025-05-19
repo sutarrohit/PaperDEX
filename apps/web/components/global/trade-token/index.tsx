@@ -34,7 +34,13 @@ const TradeTokenHeading = ({ tokenPair, type }: Props) => {
       ) : (
         <div className="w-full flex gap-4 overflow-x-auto py-4 px-2 items-center">
           <div className="flex gap-3 items-center min-w-[120px]">
-            <Image src={data?.data.icon} alt={data?.data.token as string} width={50} height={50} className="w-8 h-8" />
+            <Image
+              src={data?.data?.icon}
+              alt={(data?.data?.token as string) || "icon"}
+              width={50}
+              height={50}
+              className="w-8 h-8"
+            />
             <div className="flex flex-col gap-0">
               <span className="text-[15px]">{data.data.token}</span>
               <span className=" text-[12px] text-[#6A6A6A]">{formatDate()}</span>
