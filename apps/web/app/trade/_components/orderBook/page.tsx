@@ -1,5 +1,5 @@
 "use client";
-import OrderBookComponent from "@/components/global/OrderBook";
+import OrderBookComponent from "@/components/global/order-book";
 import { getOrderBookData } from "@/lib/api/market-api";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {} from "@/lib/api/market-api";
