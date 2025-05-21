@@ -14,8 +14,8 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
   const [base, quote] = tokenPair.split("_");
 
   // Get visible orders
-  const visibleAsks = asks?.slice(0, 8) || [];
-  const visibleBids = bids?.slice(0, 8) || [];
+  const visibleAsks = asks?.slice(0, 7) || [];
+  const visibleBids = bids?.slice(0, 7) || [];
 
   // Calculate max quantity for each side separately
   const maxAskQty = Math.max(...visibleAsks.map(([, qty]) => parseFloat(qty)), 1);
@@ -47,7 +47,10 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
           const widthPercent = normalizeWidth(quantity, maxAskQty);
 
           return (
-            <div key={`ask-${index}`} className="relative flex justify-between px-1 py-1 w-full overflow-hidden">
+            <div
+              key={`ask-${index}`}
+              className="relative flex justify-between px-1  py-[2px] w-full overflow-hidden text-[13px]"
+            >
               <div
                 className="absolute h-full bg-[#321615] opacity-80 z-0 right-0 top-0 transition-all duration-200 ease-in-out"
                 style={{ width: `${widthPercent}%` }}
@@ -84,7 +87,10 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
           const widthPercent = normalizeWidth(quantity, maxBidQty);
 
           return (
-            <div key={`bid-${index}`} className="relative flex justify-between px-1 py-1 w-full overflow-hidden">
+            <div
+              key={`bid-${index}`}
+              className="relative flex justify-between px-1 py-[2px] w-full overflow-hidden text-[13px]"
+            >
               <div
                 className="absolute h-full bg-[#153132] opacity-80 z-0 right-0 top-0 transition-all duration-200 ease-in-out"
                 style={{ width: `${widthPercent}%` }}

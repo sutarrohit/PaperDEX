@@ -1,6 +1,7 @@
 import React from "react";
 import TradingViewWidget from "@/components/global/TradingChart";
 import OrderBook from "../orderBook/page";
+import TradingPanel from "@/components/global/trading-panel";
 
 const TradeConsole = ({ tokenPair }: { tokenPair: string }) => {
   const filterTokenPair = tokenPair.split("_").join("");
@@ -18,7 +19,9 @@ const TradeConsole = ({ tokenPair }: { tokenPair: string }) => {
 
         <div className="bg-[#161616] lg:col-span-3 h-full rounded-md"></div>
 
-        <div className="bg-[#161616] lg:row-span-full lg:col-start-4 h-full rounded-md"></div>
+        <div className="bg-[#161616] lg:row-span-full lg:col-start-4 h-full rounded-md">
+          <TradingPanel />
+        </div>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export const useAuthSignIn = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["sign-in"],
-    mutationFn: async ({ email, password }: { email: string; password: string }) => signInApi(email, password),
+    mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => signInApi(email, password),
 
     onError: (error: Error) => {
       toast.error(error.message || "Failed to sign in");
@@ -108,7 +108,7 @@ export const useAuthForgotPassword = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["forgot-password"],
-    mutationFn: ({ email }: { email: string }) => forgotPasswordApi(email),
+    mutationFn: ({ email }: z.infer<typeof forgotPasswordSchema>) => forgotPasswordApi(email),
 
     onError: (error: Error) => {
       toast.error(error.message || "Failed to send reset email");
