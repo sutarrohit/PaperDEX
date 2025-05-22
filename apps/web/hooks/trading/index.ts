@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createTrade } from "@/lib/api/trade-api";
 
-export const useCreateTrade = () => {
+export const useCreateTrade = (tokenPair: string, type: string) => {
   const {
     register,
     handleSubmit,
@@ -16,8 +16,11 @@ export const useCreateTrade = () => {
   } = useForm<z.infer<typeof TradingPanelSchema>>({
     resolver: zodResolver(TradingPanelSchema),
     defaultValues: {
-      type: "LIMIT",
+      type: "MARKET",
       side: "BUY",
+      mode: type === "SPOT" || type === "GRID" || type === "FUTURE" ? (type as "SPOT" | "GRID" | "FUTURE") : "SPOT",
+      price: null,
+      symbol: tokenPair,
     },
     mode: "onChange",
   });
@@ -39,6 +42,8 @@ export const useCreateTrade = () => {
   });
 
   const createNewTrade = handleSubmit((values) => {
+    console.log("values----------------------------------", values);
+
     mutate(values);
   });
 

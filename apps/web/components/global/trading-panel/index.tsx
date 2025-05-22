@@ -5,7 +5,7 @@ import TradingPanelForm from "@/components/form/trading-panel";
 
 import { Separator } from "@/components/ui/separator";
 
-const TradingPanel = () => {
+const TradingPanel = ({ tokenPair, type }: { tokenPair: string; type: string }) => {
   return (
     <Card className="w-full rounded-md p-3">
       <CardContent className="p-0">
@@ -14,7 +14,7 @@ const TradingPanel = () => {
           <Separator className="my-2" />
         </div>
 
-        <TradingPanelForm />
+        <TradingPanelForm tokenPair={tokenPair} type={type} />
       </CardContent>
     </Card>
   );
