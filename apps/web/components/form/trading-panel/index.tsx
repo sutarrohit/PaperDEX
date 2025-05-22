@@ -9,14 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/global/loader";
 
-const TradingPanelForm = () => {
-  const { createNewTrade, isPending, register, control, errors } = useCreateTrade();
+const TradingPanelForm = ({ tokenPair, type }: { tokenPair: string; type: string }) => {
+  const { createNewTrade, isPending, register, control, errors } = useCreateTrade(tokenPair, type);
 
   return (
     <form className="flex flex-col gap-4 w-full" onSubmit={createNewTrade}>
       {/* Order Type */}
       <div className="space-y-2">
-        <Label htmlFor="type">Order Type</Label>
         <Controller
           name="type"
           control={control}
@@ -48,7 +47,7 @@ const TradingPanelForm = () => {
             <div className="w-full flex gap-2 justify-between">
               <Button
                 type="button"
-                className={`cursor-pointer w-[49%] text-white ${field.value === "BUY" ? "bg-[#fe8a1d]  hover:bg-[#fe8a1d]/80" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60"}`}
+                className={`w-[49%] text-white ${field.value === "BUY" ? "bg-[#fe8a1d]  hover:bg-[#fe8a1d]" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60 cursor-pointer"}`}
                 onClick={() => field.onChange("BUY")}
               >
                 Buy
@@ -56,7 +55,7 @@ const TradingPanelForm = () => {
 
               <Button
                 type="button"
-                className={` cursor-pointer w-[49%] text-white ${field.value === "SELL" ? "bg-[#fe8a1d] hover:bg-[#fe8a1d]/80" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60"}`}
+                className={`w-[49%] text-white ${field.value === "SELL" ? "bg-[#fe8a1d] hover:bg-[#fe8a1d]" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60 cursor-pointer"}`}
                 onClick={() => field.onChange("SELL")}
               >
                 Sell
@@ -73,7 +72,7 @@ const TradingPanelForm = () => {
 
       {/* Quantity */}
       <div className="space-y-2">
-        <Label htmlFor="quantity">Quantity</Label>
+        <Label htmlFor="quantity">Total</Label>
         <Input
           type="number"
           step="any"

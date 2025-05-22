@@ -1,3 +1,4 @@
+import { handleResponse } from "@/utils/handleResponse";
 import { TradingPanelSchema } from "@/components/form/trading-panel/schema";
 import { z } from "zod";
 
@@ -12,5 +13,5 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
     body: JSON.stringify(data),
   });
 
-  return response.json();
+  return handleResponse(response);
 };
