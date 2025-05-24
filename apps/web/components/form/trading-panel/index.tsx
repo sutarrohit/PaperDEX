@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/global/loader";
 
-const TradingPanelForm = ({ tokenPair, type }: { tokenPair: string; type: string }) => {
-  const { createNewTrade, isPending, register, control, errors } = useCreateTrade(tokenPair, type);
+const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
+  const { createNewTrade, isPending, register, control, errors } = useCreateTrade(tokenPair, mode);
 
   return (
     <form className="flex flex-col gap-4 w-full" onSubmit={createNewTrade}>

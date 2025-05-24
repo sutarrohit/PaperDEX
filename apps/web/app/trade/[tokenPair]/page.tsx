@@ -14,8 +14,8 @@ const Trade = async ({ searchParams, params }: { params: Params; searchParams: S
   const resolvedParams = await params;
 
   const tokenPair = resolvedParams?.tokenPair || "BNB_USDT";
-  const typeParam = resolvedSearchParams?.type;
-  const type = Array.isArray(typeParam) ? typeParam[0] : typeParam || "spot";
+  const modeParam = resolvedSearchParams?.mode;
+  const mode = Array.isArray(modeParam) ? modeParam[0] : modeParam || "SPOT";
 
   const queryClient = getQueryClient();
 
@@ -32,8 +32,8 @@ const Trade = async ({ searchParams, params }: { params: Params; searchParams: S
   return (
     <div className="flex flex-col justify-center items-center relative container px-2 pt-10 gap-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <TradeTokenHeading tokenPair={tokenPair} type={type} />
-        <TradeConsole tokenPair={tokenPair} type={type} />
+        <TradeTokenHeading tokenPair={tokenPair} mode={mode} />
+        <TradeConsole tokenPair={tokenPair} mode={mode} />
       </HydrationBoundary>
     </div>
   );

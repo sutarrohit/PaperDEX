@@ -9,7 +9,7 @@ import numeral from "numeral";
 
 type Props = {
   tokenPair: string;
-  type?: string;
+  mode?: string;
 };
 
 type data = {
@@ -17,14 +17,14 @@ type data = {
   data: tokenInfoType;
 };
 
-const TradeTokenHeading = ({ tokenPair, type }: Props) => {
+const TradeTokenHeading = ({ tokenPair, mode }: Props) => {
   const { data } = useSuspenseQuery<data>({
     queryKey: ["tokenTradeData", tokenPair],
     queryFn: () => getTradeData(tokenPair),
     refetchInterval: 5000,
   });
 
-  console.log("type", type);
+  console.log("type", mode);
 
   return (
     <div className="bg-[#161616] w-full rounded-md">
