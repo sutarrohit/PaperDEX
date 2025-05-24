@@ -159,7 +159,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                     if (!isLandingPage) {
                       const { symbol } = row.original as { symbol: string };
                       const filterSymbol = symbol.endsWith("USDT") ? `${symbol}_DAI` : `${symbol}_USDT`;
-                      router.push(`/trade/${filterSymbol}?type=spot`);
+                      router.push(`/trade/${filterSymbol}?mode=spot`);
                     }
                   }}
                 >

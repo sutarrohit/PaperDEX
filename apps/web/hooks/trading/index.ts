@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createTrade } from "@/lib/api/trade-api";
 
-export const useCreateTrade = (tokenPair: string, type: string) => {
+export const useCreateTrade = (tokenPair: string, mode: string) => {
   const {
     register,
     handleSubmit,
@@ -18,7 +18,7 @@ export const useCreateTrade = (tokenPair: string, type: string) => {
     defaultValues: {
       type: "MARKET",
       side: "BUY",
-      mode: type === "SPOT" || type === "GRID" || type === "FUTURE" ? (type as "SPOT" | "GRID" | "FUTURE") : "SPOT",
+      mode: mode === "SPOT" || mode === "GRID" || mode === "FUTURE" ? (mode as "SPOT" | "GRID" | "FUTURE") : "SPOT",
       price: null,
       symbol: tokenPair,
     },

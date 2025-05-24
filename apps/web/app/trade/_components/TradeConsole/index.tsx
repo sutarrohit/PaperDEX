@@ -3,7 +3,7 @@ import TradingViewWidget from "@/components/global/TradingChart";
 import OrderBook from "../orderBook/page";
 import TradingPanel from "@/components/global/trading-panel";
 
-const TradeConsole = ({ tokenPair, type }: { tokenPair: string; type: string }) => {
+const TradeConsole = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
   const filterTokenPair = tokenPair.split("_").join("");
 
   return (
@@ -20,7 +20,7 @@ const TradeConsole = ({ tokenPair, type }: { tokenPair: string; type: string }) 
         <div className="bg-[#161616] lg:col-span-3 h-full rounded-md"></div>
 
         <div className="bg-[#161616] lg:row-span-full lg:col-start-4 h-full rounded-md">
-          <TradingPanel tokenPair={tokenPair} type={type} />
+          <TradingPanel tokenPair={tokenPair} mode={mode} />
         </div>
       </div>
     </div>
