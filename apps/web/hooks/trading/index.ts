@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createTrade } from "@/lib/api/trade-api";
+import { useEffect } from "react";
 
 export const useCreateTrade = (tokenPair: string, mode: string) => {
   const {
@@ -13,6 +14,8 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
     control,
     formState: { errors },
     reset,
+    watch,
+    setValue,
   } = useForm<z.infer<typeof TradingPanelSchema>>({
     resolver: zodResolver(TradingPanelSchema),
     defaultValues: {
@@ -24,6 +27,13 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
     },
     mode: "onChange",
   });
+
+  // ✅ Watch entire form and log when any field changes
+  const watchedValues = watch();
+
+  useEffect(() => {
+    console.log("Form updated:", watchedValues);
+  }, [watchedValues]);
 
   const { mutate, isPending } = useMutation({
     // Mock API call — replace with your real function
@@ -54,5 +64,7 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
     register,
     control,
     errors,
+    watch,
+    setValue,
   };
 };
