@@ -12,7 +12,7 @@ const LandingPageLayout = ({ children }: { children: React.ReactNode }) => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center w-full relative">
+    <div className="flex flex-col items-center justify-center w-full relative pb-10">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <LandingPageNavbar />
       </HydrationBoundary>

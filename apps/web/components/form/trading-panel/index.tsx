@@ -101,7 +101,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
                 min="0"
                 placeholder={watch("type") === "MARKET" ? "Market Price" : "0.00"}
                 disabled={watch("type") === "MARKET"}
-                className="bg-themeBlack border-themeGray text-themeTextGray h-10"
+                className="bg-themeBlack border-themeGray text-themeTextGray h-11"
                 {...register("price", {
                   valueAsNumber: true,
                 })}
@@ -120,17 +120,45 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
       {/* Quantity */}
       <div className="space-y-2">
         <Label htmlFor="quantity">Total</Label>
-        <Input
-          type="number"
-          step="any"
-          id="quantity"
-          placeholder="0.00"
-          className="bg-themeBlack border-themeGray text-themeTextGray h-10"
-          {...register("quantity", { valueAsNumber: true })}
-        />
+        <div className="w-full relative">
+          <Input
+            type="number"
+            step="any"
+            id="quantity"
+            placeholder="0.00"
+            className="bg-themeBlack border-themeGray text-themeTextGray h-11 pr-[30%]" // leave space for token selector
+            {...register("quantity", { valueAsNumber: true })}
+          />
+
+          <Controller
+            name="quantityToken"
+            control={control}
+            defaultValue="quote" // Sets the default value to "base"
+            render={({ field }) => (
+              <Select
+                onValueChange={field.onChange}
+                value={field.value} // Controlled value
+              >
+                <SelectTrigger className="w-fit bg-themeBlack absolute right-1 top-[2px] p-0 m-0 h-0 border-none shadow-none">
+                  <SelectValue placeholder="Token" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="base">{tokenPair.split("_")[0]}</SelectItem>
+                  <SelectItem value="quote">{tokenPair.split("_")[1]}</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+
         <ErrorMessage
           errors={errors}
           name="quantity"
+          render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="quantityToken"
           render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
         />
       </div>
@@ -140,8 +168,9 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         <Label htmlFor="symbol">Symbol</Label>
         <Input
           id="symbol"
-          placeholder="BTCUSDT"
-          className="bg-themeBlack border-themeGray text-themeTextGray h-10"
+          placeholder="BTC_USDT"
+          disabled={true}
+          className="bg-themeBlack border-themeGray text-themeTextGray h-11"
           {...register("symbol")}
         />
         <ErrorMessage
@@ -151,7 +180,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         />
       </div>
 
-      <Button type="submit" className=" cursor-pointer mt-4 w-full bg-[#fe8a1d] hover:bg-[#fe8a1d]/80 text-white ">
+      <Button type="submit" className=" cursor-pointer mt-4 w-full bg-[#fe8a1d] hover:bg-[#fe8a1d]/80 text-white h-11">
         <Loader loading={isPending}>Place Order</Loader>
       </Button>
     </form>

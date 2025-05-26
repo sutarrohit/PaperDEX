@@ -8,6 +8,8 @@ import { createTrade } from "@/lib/api/trade-api";
 import { useEffect } from "react";
 
 export const useCreateTrade = (tokenPair: string, mode: string) => {
+  const [base, quote] = tokenPair.split("_");
+
   const {
     register,
     handleSubmit,
@@ -24,6 +26,8 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
       mode: mode === "SPOT" || mode === "GRID" || mode === "FUTURE" ? (mode as "SPOT" | "GRID" | "FUTURE") : "SPOT",
       price: null,
       symbol: tokenPair,
+      quote: quote,
+      base: base,
     },
     mode: "onChange",
   });
@@ -32,7 +36,8 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
   const watchedValues = watch();
 
   useEffect(() => {
-    console.log("Form updated:", watchedValues);
+    console.log("Form updated=============:", watchedValues);
+    console.log("Form updated=============:", watchedValues.quote);
   }, [watchedValues]);
 
   const { mutate, isPending } = useMutation({
@@ -52,8 +57,6 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
   });
 
   const createNewTrade = handleSubmit((values) => {
-    console.log("values----------------------------------", values);
-
     mutate(values);
   });
 
