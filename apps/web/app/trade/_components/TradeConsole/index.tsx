@@ -2,6 +2,7 @@ import React from "react";
 import TradingViewWidget from "@/components/global/TradingChart";
 import OrderBook from "../orderBook/page";
 import TradingPanel from "@/components/global/trading-panel";
+import OrderHistory from "../orderHistory";
 
 const TradeConsole = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
   const filterTokenPair = tokenPair.split("_").join("");
@@ -17,7 +18,9 @@ const TradeConsole = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
           <OrderBook tokenPair={tokenPair} />
         </div>
 
-        <div className="bg-[#161616] lg:col-span-3 h-full rounded-md"></div>
+        <div className="bg-[#161616] lg:col-span-3 h-full rounded-md">
+          <OrderHistory />
+        </div>
 
         <div className="bg-[#161616] lg:row-span-full lg:col-start-4 h-full rounded-md">
           <TradingPanel tokenPair={tokenPair} mode={mode} />
