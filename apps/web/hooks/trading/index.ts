@@ -18,6 +18,7 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
     reset,
     watch,
     setValue,
+    getValues,
   } = useForm<z.infer<typeof TradingPanelSchema>>({
     resolver: zodResolver(TradingPanelSchema),
     defaultValues: {
@@ -26,6 +27,7 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
       mode: mode === "SPOT" || mode === "GRID" || mode === "FUTURE" ? (mode as "SPOT" | "GRID" | "FUTURE") : "SPOT",
       price: null,
       symbol: tokenPair,
+      quantityToken: "base",
       quote: quote,
       base: base,
     },
@@ -48,7 +50,11 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
       toast.error(error.message || "❌ Failed to perform trade.");
     },
     onSuccess: (data) => {
-      reset();
+      reset({
+        ...getValues(),
+        quantity: 0,
+        price: null,
+      });
       toast.success("✅ Trade executed successfully!", {
         description: `You placed a ${data.side} ${data.type} order for ${data.quantity} ${data.symbol}.`,
         duration: 5000,
