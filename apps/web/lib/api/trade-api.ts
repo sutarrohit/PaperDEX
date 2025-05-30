@@ -10,6 +10,7 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(data),
   });
 

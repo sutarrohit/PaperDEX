@@ -65,18 +65,20 @@ export const getOrder: RequestHandler = catchAsync(async (req: Request, res: Res
 
 export const newOrder: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const { side, type, symbol, quantity, price } = req.body;
-  if (!side || !type || !symbol || !quantity) throw new AppError("Missing required fields", 400);
 
+  if (!side || !type || !symbol || !quantity) throw new AppError("Missing required fields", 400);
   if (!req?.user) throw new AppError("User not found", 404);
 
+  const parsedSymbol = symbol.split("_").join("/");
   const user = await getUserDetails(req?.user?.user.id as string);
+
   const market = await prisma.market.findUnique({
-    where: { symbol: symbol },
+    where: { symbol: parsedSymbol },
   });
 
   if (!market || !market.isActive) throw new AppError("Invalid or inactive market", 404);
 
-  const order = await marketOrder({ userId: user.id, symbol, side, type, quantity, price });
+  const order = await marketOrder({ userId: user.id, symbol: parsedSymbol, side, type, quantity, price });
 
   res.status(200).json({
     status: "success",
