@@ -33,7 +33,7 @@ const TradeTokenHeading = ({ tokenPair, mode }: Props) => {
           <div>Data Not available</div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-6 py-3 px-4 md:px-2 items-center justify-end gap-2 md:gap-1">
-            <div className="flex gap-3 ">
+            <div className="flex gap-3 items-center">
               <Image
                 src={data?.data?.icon}
                 alt={(data?.data?.token as string) || "icon"}

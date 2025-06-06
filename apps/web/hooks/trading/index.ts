@@ -63,7 +63,10 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
   });
 
   const createNewTrade = handleSubmit((values) => {
-    mutate(values);
+    const parsedSymbol = values.symbol.split("_").join("/");
+    const data = { ...values, symbol: parsedSymbol };
+
+    mutate(data);
   });
 
   return {

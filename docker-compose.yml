@@ -1,72 +1,95 @@
 name: paperDEX
 
 services:
-    # web:
-    #     container_name: web
-    #     build:
-    #         context: .
-    #         dockerfile: ./apps/web/Dockerfile
-    #     # restart: always
-    #     ports:
-    #         - 3000:3000
-    #     volumes:
-    #         - ./apps/web:/apps
-    #         - /apps/web/node_modules
-    #         - /apps/web/.next
+  # web:
+  #     container_name: web
+  #     build:
+  #         context: .
+  #         dockerfile: ./apps/web/Dockerfile
+  #     # restart: always
+  #     ports:
+  #         - 3000:3000
+  #     volumes:
+  #         - ./apps/web:/apps
+  #         - /apps/web/node_modules
+  #         - /apps/web/.next
 
-    #     # networks:
-    #     #     - paperdex_network
-    #     # depends_on:
-    #     #     user-service:
-    #     #         condition: service_healthy
-    #     environment:
-    #         NEXT_PUBLIC_USER_SERVICE: "http://localhost:4001"
+  #     # networks:
+  #     #     - paperdex_network
+  #     # depends_on:
+  #     #     user-service:
+  #     #         condition: service_healthy
+  #     environment:
+  #         NEXT_PUBLIC_USER_SERVICE: "http://localhost:4001"
 
-    # user-service:
-    #     container_name: user-service
-    #     build:
-    #         context: .
-    #         dockerfile: ./packages/user-service/Dockerfile
-    #     restart: always
-    #     ports:
-    #         - 4001:4001
-    #     volumes:
-    #         - ./packages/user-service:/apps
-    #         - /apps/node_modules
-    #     networks:
-    #         - paperdex_network
-    #     depends_on:
-    #         database:
-    #             condition: service_healthy
-    #     healthcheck:
-    #         test: ["CMD", "curl -f http://localhost:4001/api/health || exit 1"]
-    #         interval: 10s
-    #         timeout: 5s
-    #         retries: 3
-    #         start_period: 5s
-    #     environment:
+  # user-service:
+  #     container_name: user-service
+  #     build:
+  #         context: .
+  #         dockerfile: ./packages/user-service/Dockerfile
+  #     restart: always
+  #     ports:
+  #         - 4001:4001
+  #     volumes:
+  #         - ./packages/user-service:/apps
+  #         - /apps/node_modules
+  #     networks:
+  #         - paperdex_network
+  #     depends_on:
+  #         database:
+  #             condition: service_healthy
+  #     healthcheck:
+  #         test: ["CMD", "curl -f http://localhost:4001/api/health || exit 1"]
+  #         interval: 10s
+  #         timeout: 5s
+  #         retries: 3
+  #         start_period: 5s
+  #     environment:
 
-    database:
-        container_name: postgresDB
-        image: postgres:17
-        volumes:
-            - postgres_database:/var/lib/postgresql/data
-        networks:
-            - paperdex_network
-        ports:
-            - "5432:5432"
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: paperdex
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U postgres"]
-            interval: 10s
-            timeout: 10s
-            retries: 5
+  database:
+    container_name: postgresDB
+    image: postgres:17
+    volumes:
+      - postgres_database:/var/lib/postgresql/data
+    networks:
+      - paperdex_network
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: paperdex
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    container_name: redis
+    image: redis:7.2
+    ports:
+      - "6379:6379"
+    networks:
+      - paperdex_network
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+
+  redisinsight:
+    container_name: redisinsight
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsight:/data
+    networks:
+      - paperdex_network
 
 volumes:
-    postgres_database:
+  postgres_database:
+  redis_data:
+  redisinsight:
 
 networks:
-    paperdex_network:
+  paperdex_network:

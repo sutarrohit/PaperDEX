@@ -2,7 +2,8 @@ import { Request, Response, RequestHandler } from "express";
 import { AppError, catchAsync } from "@paperdex/lib";
 import { getUserDetails } from "../services/userService";
 import { OrderStatus, OrderSide, OrderType, prisma } from "@paperdex/db";
-import { marketOrder } from "../services/orderService";
+import { OrderSchema } from "../utils/schema.ts/orderSchema";
+import { NewOrder } from "../classes/newOrder";
 
 // Get all account orders, active, canceled, or filled.
 export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res: Response) => {
@@ -63,29 +64,6 @@ export const getOrder: RequestHandler = catchAsync(async (req: Request, res: Res
   });
 });
 
-export const newOrder: RequestHandler = catchAsync(async (req: Request, res: Response) => {
-  const { side, type, symbol, quantity, price } = req.body;
-
-  if (!side || !type || !symbol || !quantity) throw new AppError("Missing required fields", 400);
-  if (!req?.user) throw new AppError("User not found", 404);
-
-  const parsedSymbol = symbol.split("_").join("/");
-  const user = await getUserDetails(req?.user?.user.id as string);
-
-  const market = await prisma.market.findUnique({
-    where: { symbol: parsedSymbol },
-  });
-
-  if (!market || !market.isActive) throw new AppError("Invalid or inactive market", 404);
-
-  const order = await marketOrder({ userId: user.id, symbol: parsedSymbol, side, type, quantity, price });
-
-  res.status(200).json({
-    status: "success",
-    data: order,
-  });
-});
-
 export const cancelOrder: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const { orderId } = req.body;
 
@@ -117,5 +95,37 @@ export const cancelOrder: RequestHandler = catchAsync(async (req: Request, res: 
   res.status(200).json({
     status: "success",
     data: canceledOrder,
+  });
+});
+
+export const newOrder: RequestHandler = catchAsync(async (req, res) => {
+  // ✅ Validate request body
+  const parsed = OrderSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    const errorMessages = parsed.error.errors
+      .map((e: { path: (string | number)[]; message: string }) => `${e.path.join(".")}: ${e.message}`)
+      .join("; ");
+    throw new AppError(`Validation failed: ${errorMessages}`, 400);
+  }
+
+  if (!req?.user) throw new AppError("User not found", 404);
+  const user = await getUserDetails(req.user.user.id as string);
+
+  const { symbol } = parsed.data;
+  const market = await prisma.market.findUnique({
+    where: { symbol },
+  });
+
+  if (!market || !market.isActive) {
+    throw new AppError("Invalid or inactive market", 404);
+  }
+
+  const newOrder = new NewOrder();
+  const order = await newOrder.createNewOrder(parsed.data, user.id);
+
+  res.status(200).json({
+    status: "success",
+    data: order,
   });
 });
