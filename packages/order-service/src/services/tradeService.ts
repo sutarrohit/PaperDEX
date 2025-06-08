@@ -12,6 +12,8 @@ type calculateTradeEffects = {
 
 export const calculateTradeEffects = ({ baseToken, quoteToken, side: _side, quantity }: calculateTradeEffects) => {
   try {
+    console.log("baseToken, quoteToken, side: _side, quantity", baseToken, quoteToken, _side, quantity);
+
     if (!baseToken || !quoteToken) throw new AppError("baseToken and quoteToken is not found", 404);
 
     const baseTokenPrice = new Decimal(getTokenPrice([baseToken])[0]?.price as number);
