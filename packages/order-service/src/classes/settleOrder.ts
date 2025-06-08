@@ -43,20 +43,6 @@ export class SettleOrders {
             filledQuantity: order.quantity,
           },
         });
-
-        // return tx.order.create({
-        //   data: {
-        //     userId: order.userId,
-        //     symbol: order.symbol,
-        //     side: order.side,
-        //     type: order.type,
-        //     mode: order.mode,
-        //     status: OrderStatus.FILLED,
-        //     quantity: parsedQuantity,
-        //     price: baseTokenPrice,
-        //     filledQuantity: order.quantity,
-        //   },
-        // });
       });
 
       return settleOrder;

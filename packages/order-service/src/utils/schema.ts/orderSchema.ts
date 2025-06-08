@@ -8,6 +8,7 @@ export const OrderSchema = z
     symbol: z.string(),
     quantity: z.number().positive(),
     price: z.number().nullable(), // validated conditionally below
+    priceDirection: z.enum(["UP", "DOWN"]),
   })
   .refine(
     (data) => {

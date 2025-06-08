@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import WebSocket from "ws";
 import { orderBookSet } from "@paperdex/lib";
 import { orderBooksStore } from "../../store/orderBookStore";
@@ -68,6 +69,10 @@ export const orderBook = () => {
         .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
         .slice(0, 20)
         .map(([price, quantity]) => [price, quantity] as [string, string]);
+
+      console.log("symbol====================>", symbol);
+      console.log("formattedBids====================>", formattedBids);
+      console.log("formattedAsks====================>", formattedAsks);
 
       orderBooksStore[symbol] = {
         bids: formattedBids,

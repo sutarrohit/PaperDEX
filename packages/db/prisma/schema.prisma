@@ -103,18 +103,20 @@ model TokenBalance {
 
 // Represents an order placed by a user (buy/sell). 
 model Order {
-  id             String      @id @default(uuid())
-  user           User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String         @id @default(uuid())
+  user           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String?
   side           OrderSide
   type           OrderType
-  status         OrderStatus @default(PENDING)
+  mode           OrderMode
+  status         OrderStatus    @default(PENDING)
   symbol         String
-  quantity       Decimal     @db.Decimal(38, 18)
-  price          Decimal?    @db.Decimal(38, 18)
-  filledQuantity Decimal     @default(0) @db.Decimal(38, 18)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  quantity       Decimal        @db.Decimal(38, 18)
+  price          Decimal?       @db.Decimal(38, 18)
+  priceDirection PriceDirection
+  filledQuantity Decimal        @default(0) @db.Decimal(38, 18)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@map("orders")
 }
@@ -160,10 +162,21 @@ enum OrderSide {
   SELL
 }
 
+enum PriceDirection {
+  UP
+  DOWN
+}
+
 enum OrderStatus {
   PENDING
   PARTIALLY_FILLED
   FILLED
   CANCELED
   REJECTED
+}
+
+enum OrderMode {
+  SPOT
+  FUTURE
+  OPTIONS
 }
