@@ -8,7 +8,13 @@ CREATE TYPE "OrderType" AS ENUM ('MARKET', 'LIMIT', 'STOP_LIMIT');
 CREATE TYPE "OrderSide" AS ENUM ('BUY', 'SELL');
 
 -- CreateEnum
+CREATE TYPE "PriceDirection" AS ENUM ('UP', 'DOWN');
+
+-- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'PARTIALLY_FILLED', 'FILLED', 'CANCELED', 'REJECTED');
+
+-- CreateEnum
+CREATE TYPE "OrderMode" AS ENUM ('SPOT', 'FUTURE', 'OPTIONS');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -94,10 +100,12 @@ CREATE TABLE "orders" (
     "userId" TEXT,
     "side" "OrderSide" NOT NULL,
     "type" "OrderType" NOT NULL,
+    "mode" "OrderMode" NOT NULL,
     "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
     "symbol" TEXT NOT NULL,
     "quantity" DECIMAL(38,18) NOT NULL,
     "price" DECIMAL(38,18),
+    "priceDirection" "PriceDirection" NOT NULL,
     "filledQuantity" DECIMAL(38,18) NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
