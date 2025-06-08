@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
@@ -10,6 +11,7 @@ import { WSserver } from "./services/price-service";
 import orderRoutes from "./routes/ordersRoute";
 import tokenRoutes from "./routes/tokenRoutes";
 import { orderBook } from "./services/price-service/orderBook";
+import { runMatcher } from "./classes/matchingEngine";
 
 process.on("uncaughtException", (error: Error) => {
   console.log(error, "uncaughtException shutting down the application");
@@ -50,7 +52,8 @@ const PORT = process.env.ORDER_SERVICE_PORT || 4002;
 app.listen(PORT, () => {
   console.log("Order Server started on port", PORT);
   WSserver();
-  orderBook();
+  // orderBook();
+  runMatcher();
 });
 
 process.on("unhandledRejection", (error: Error) => {

@@ -4,6 +4,7 @@ import { getUserDetails } from "../services/userService";
 import { OrderStatus, OrderSide, OrderType, prisma } from "@paperdex/db";
 import { OrderSchema } from "../utils/schema.ts/orderSchema";
 import { NewOrder } from "../classes/newOrder";
+import { getTokenPrice } from "../store/tokenPriceStore";
 
 // Get all account orders, active, canceled, or filled.
 export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res: Response) => {
@@ -100,7 +101,15 @@ export const cancelOrder: RequestHandler = catchAsync(async (req: Request, res: 
 
 export const newOrder: RequestHandler = catchAsync(async (req, res) => {
   // ✅ Validate request body
-  const parsed = OrderSchema.safeParse(req.body);
+  const { symbol: tokenSymbol, price, side } = req.body;
+  const priceDirection = determinePriceDirection({
+    symbol: tokenSymbol,
+    price,
+    side,
+  });
+
+  const orderData = { ...req.body, priceDirection };
+  const parsed = OrderSchema.safeParse(orderData);
 
   if (!parsed.success) {
     const errorMessages = parsed.error.errors
@@ -129,3 +138,24 @@ export const newOrder: RequestHandler = catchAsync(async (req, res) => {
     data: order,
   });
 });
+
+function determinePriceDirection(params: {
+  symbol: string;
+  price: number | null;
+  side: "BUY" | "SELL";
+}): "UP" | "DOWN" {
+  const tokenName = params.symbol.split("/")[0]!;
+  const latestTokenPrice = getTokenPrice([tokenName]);
+  const tokenPriceObj = latestTokenPrice[0];
+
+  if (!tokenPriceObj || tokenPriceObj?.price === undefined) {
+    throw new AppError("Internal server error", 500);
+  }
+
+  if (params.price === null) {
+    return "UP";
+  }
+
+  const marketPrice = tokenPriceObj.price;
+  return marketPrice >= params.price ? "DOWN" : "UP";
+}
