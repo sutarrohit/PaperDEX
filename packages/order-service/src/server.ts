@@ -52,7 +52,7 @@ const PORT = process.env.ORDER_SERVICE_PORT || 4002;
 app.listen(PORT, () => {
   console.log("Order Server started on port", PORT);
   WSserver();
-  // orderBook();
+  orderBook();
   runMatcher();
 });
 

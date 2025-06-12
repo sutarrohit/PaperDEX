@@ -70,10 +70,6 @@ export const orderBook = () => {
         .slice(0, 20)
         .map(([price, quantity]) => [price, quantity] as [string, string]);
 
-      console.log("symbol====================>", symbol);
-      console.log("formattedBids====================>", formattedBids);
-      console.log("formattedAsks====================>", formattedAsks);
-
       orderBooksStore[symbol] = {
         bids: formattedBids,
         asks: formattedAsks,

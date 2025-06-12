@@ -98,12 +98,13 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
           existing["low_24hr"] = lowPrice;
         }
       } else {
-        TokenPriceStore.push({ token: symbol, [interval]: priceChange });
-        // Add 24hr high and low price
+        // Create a single new entry with all properties
+        const newEntry = { token: symbol, [interval]: priceChange };
         if (i === "1d") {
-          TokenPriceStore.push({ token: symbol, ["high_24hr"]: highPrice });
-          TokenPriceStore.push({ token: symbol, ["low_24hr"]: lowPrice });
+          newEntry["high_24hr"] = highPrice;
+          newEntry["low_24hr"] = lowPrice;
         }
+        TokenPriceStore.push(newEntry);
       }
     } catch (error) {
       console.error(`[${interval}] Failed to parse message:`, error);
