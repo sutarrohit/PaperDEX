@@ -107,8 +107,8 @@ class MatchEngine {
 
     const currentPrice = tokenPriceObj.price;
 
-    console.log("buyOrders--------------------", symbol, ":", buyOrders, currentPrice);
-    console.log("sellOrders--------------------", symbol, ":", sellOrders, currentPrice);
+    // console.log("buyOrders--------------------", symbol, ":", buyOrders, currentPrice);
+    // console.log("sellOrders--------------------", symbol, ":", sellOrders, currentPrice);
 
     await Promise.all([
       this.processOrders(buyOrders, currentPrice, "BUY"),
