@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import http from "http";
 import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
@@ -12,6 +13,9 @@ import orderRoutes from "./routes/ordersRoute";
 import tokenRoutes from "./routes/tokenRoutes";
 import { orderBook } from "./services/price-service/orderBook";
 import { runMatcher } from "./classes/matchingEngine";
+
+import { WebSocketServer } from "ws";
+import { handleOrderbookStream, handlePriceStream } from "./services/websockets";
 
 process.on("uncaughtException", (error: Error) => {
   console.log(error, "uncaughtException shutting down the application");
@@ -48,8 +52,35 @@ app.all("*splat", (req, res, next) => {
 // Global Error Handling
 app.use(globalErrorHandler);
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// We use { noServer: true } because we will manually handle the upgrade event
+const wssPrice = new WebSocketServer({ noServer: true });
+const wssOrderbook = new WebSocketServer({ noServer: true });
+
+// Handle HTTP upgrade requests for WebSockets
+server.on("upgrade", function upgrade(request, socket, head) {
+  const pathname = new URL(request.url || "", `http://${request.headers.host}`).pathname;
+
+  if (pathname === "/stream/price") {
+    wssPrice.handleUpgrade(request, socket, head, function done(ws) {
+      wssPrice.emit("connection", ws, request);
+    });
+  } else if (pathname === "/stream/orderbook") {
+    wssOrderbook.handleUpgrade(request, socket, head, function done(ws) {
+      wssOrderbook.emit("connection", ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
+});
+
+handlePriceStream(wssPrice);
+handleOrderbookStream(wssOrderbook);
+
 const PORT = process.env.ORDER_SERVICE_PORT || 4002;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Order Server started on port", PORT);
   WSserver();
   orderBook();

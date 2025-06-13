@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -35,6 +36,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getMarketData } from "@/lib/api/market-api";
 import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getQueryClient } from "@/lib/getQueryClient";
 
 export function DataTable<TData, TValue>({ columns, isLandingPage = false }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -47,6 +49,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
     pageSize: 10,
   });
 
+  const queryClient = getQueryClient();
   const router = useRouter();
 
   const {
@@ -56,8 +59,26 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
   } = useSuspenseQuery({
     queryKey: ["market-table", pagination.pageIndex, pagination.pageSize],
     queryFn: async () => getMarketData(pagination.pageIndex, pagination.pageSize),
-    refetchInterval: 5000,
   });
+
+  React.useEffect(() => {
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE}/stream/price`);
+
+    socket.onopen = () => {
+      socket.send(JSON.stringify({ pageIndex: pagination.pageIndex + 1, pageSize: pagination.pageSize }));
+    };
+
+    socket.onmessage = (event) => {
+      const updatedData = JSON.parse(event.data);
+      if (!updatedData?.data) return;
+
+      queryClient.setQueryData(["market-table", pagination.pageIndex, pagination.pageSize], { ...updatedData });
+    };
+
+    return () => socket.close();
+  }, [pagination.pageIndex, pagination.pageSize, queryClient]);
+
+  console.log("setPageCount---------", pageCount);
 
   React.useEffect(() => {
     if (marketData) {
