@@ -14,7 +14,7 @@ const TradeConsole = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
           <TradingViewWidget tokenPair={filterTokenPair} />
         </div>
 
-        <div className="bg-[#161616] min-h-[250px] lg:row-span-2 rounded-sm">
+        <div className="bg-[#161616] min-h-[250px] lg:row-span-2 rounded-sm" suppressHydrationWarning={true}>
           <OrderBook tokenPair={tokenPair} />
         </div>
 

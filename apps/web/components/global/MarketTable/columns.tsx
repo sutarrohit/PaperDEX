@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import type { tokenMarket } from "./index";
 import numeral from "numeral";
-import { customFormat } from "@/utils/adjustDecimal";
 
 export const columns: ColumnDef<tokenMarket>[] = [
   {
@@ -24,7 +23,7 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full ">
+      <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full">
         <Image
           src={row.original.icon}
           alt={row.getValue("name")}
@@ -49,11 +48,13 @@ export const columns: ColumnDef<tokenMarket>[] = [
       );
     },
     cell: ({ row }) => (
-      <div>
-        {Number(row.getValue("price")).toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })}
+      <div className="w-full flex justify-end">
+        <div className="w-full lg:w-[128px] overflow-x-auto">
+          {Number(row.getValue("price")).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </div>
       </div>
     ),
   },
