@@ -4,35 +4,6 @@ import { TokenPriceStore } from "../../store/tokenPriceStore";
 import { getTokenName, tokenInfo } from "@paperdex/lib";
 import { parse } from "url";
 
-// export const handlePriceStream = (wss: WebSocketServer) => {
-//   const clients = new Set<WebSocket>();
-
-//   wss.on("connection", (ws) => {
-//     console.log("Client connected to /stream/orderbook");
-//     clients.add(ws);
-
-//     ws.send(JSON.stringify({ message: "Welcome to orderbook stream!" }));
-
-//     ws.on("close", () => {
-//       clients.delete(ws);
-//       console.log("Client disconnected from /stream/orderbook");
-//     });
-
-//     ws.on("error", (err) => {
-//       console.error("WebSocket error:", err);
-//     });
-//   });
-
-//   setInterval(() => {
-//     const data = JSON.stringify(TokenPriceStore);
-//     for (const client of clients) {
-//       if (client.readyState === client.OPEN) {
-//         client.send(data);
-//       }
-//     }
-//   }, 1000);
-// };
-
 type ClientWithPagination = {
   socket: WebSocket;
   pageIndex: number;
@@ -106,35 +77,6 @@ export const handlePriceStream = (wss: WebSocketServer) => {
   }, 1000);
 };
 
-// export const handleOrderbookStream = (wss: WebSocketServer) => {
-//   const clients = new Set<WebSocket>();
-
-//   wss.on("connection", (ws) => {
-//     console.log("Client connected to /stream/orderbook");
-//     clients.add(ws);
-
-//     ws.send(JSON.stringify({ message: "Welcome to orderbook stream!" }));
-
-//     ws.on("close", () => {
-//       clients.delete(ws);
-//       console.log("Client disconnected from /stream/orderbook");
-//     });
-
-//     ws.on("error", (err) => {
-//       console.error("WebSocket error:", err);
-//     });
-
-//     setInterval(() => {
-//       const data = JSON.stringify(orderBooksStore);
-//       for (const client of clients) {
-//         if (client.readyState === client.OPEN) {
-//           client.send(data);
-//         }
-//       }
-//     }, 1000);
-//   });
-// };
-
 export const handleOrderbookStream = (wss: WebSocketServer) => {
   // Keep track of clients and their subscribed token pair
   const clients = new Map<WebSocket, string>();
@@ -149,7 +91,7 @@ export const handleOrderbookStream = (wss: WebSocketServer) => {
       return;
     }
 
-    const normalizedToken = tokenPair.split("_").join("").toLowerCase();
+    const normalizedToken = tokenPair.split("_").join("").toLocaleLowerCase();
     clients.set(ws, normalizedToken);
 
     console.log(`Client connected to /stream/orderbook for pair: ${tokenPair}`);
@@ -168,13 +110,55 @@ export const handleOrderbookStream = (wss: WebSocketServer) => {
 
   setInterval(() => {
     for (const [client, tokenKey] of clients.entries()) {
-      console.log("tokenKey===================>", tokenKey);
-
       if (client.readyState === WebSocket.OPEN) {
         const orderBook = orderBooksStore[tokenKey];
         if (orderBook) {
           client.send(JSON.stringify({ [tokenKey]: orderBook }));
         }
+      }
+    }
+  }, 1000);
+};
+
+export const handleTokenTradeStream = (wss: WebSocketServer) => {
+  const clients = new Map<WebSocket, string>();
+
+  wss.on("connection", (ws, req) => {
+    const { query } = parse(req.url || "", true);
+    const tokenPair = query.token as string;
+
+    if (!tokenPair) {
+      ws.send(JSON.stringify({ error: "Missing 'token' query parameter" }));
+      ws.close();
+      return;
+    }
+
+    const normalizedToken = tokenPair.split("_").join("");
+    clients.set(ws, normalizedToken);
+
+    console.log(`Client connected to /stream/tokenTrade for token: ${tokenPair}`);
+    ws.send(JSON.stringify({ message: `Subscribed to ${tokenPair} token trade stream.` }));
+
+    ws.on("close", () => {
+      clients.delete(ws);
+      console.log(`Client disconnected from /stream/tokenTrade for token: ${tokenPair}`);
+    });
+
+    ws.on("error", (err) => {
+      console.error("WebSocket error:", err);
+    });
+  });
+
+  setInterval(() => {
+    for (const [client, tokenKey] of clients.entries()) {
+      if (client.readyState !== WebSocket.OPEN) continue;
+
+      const token = TokenPriceStore.find((t) => t.token === tokenKey);
+      const tokenData = tokenInfo.find((td) => getTokenName(td.symbol) === tokenKey);
+
+      if (token && tokenData) {
+        const data = { ...tokenData, ...token };
+        client.send(JSON.stringify({ data }));
       }
     }
   }, 1000);

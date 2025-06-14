@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form";
 import { TradingPanelSchema } from "@/components/form/trading-panel/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createTrade } from "@/lib/api/trade-api";
-import { useEffect } from "react";
 
 export const useCreateTrade = (tokenPair: string, mode: string) => {
   const [base, quote] = tokenPair.split("_");
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -35,12 +35,6 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
   });
 
   // ✅ Watch entire form and log when any field changes
-  const watchedValues = watch();
-
-  useEffect(() => {
-    console.log("Form updated=============:", watchedValues);
-    console.log("Form updated=============:", watchedValues.quote);
-  }, [watchedValues]);
 
   const { mutate, isPending } = useMutation({
     // Mock API call — replace with your real function
@@ -50,6 +44,12 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
       toast.error(error.message || "❌ Failed to perform trade.");
     },
     onSuccess: (data) => {
+      // ✅ Invalidate balance cache
+      const tokenName = tokenPair.split("_").join(",");
+      queryClient.invalidateQueries({
+        queryKey: ["tradeTokenBalance", tokenName],
+      });
+
       reset({
         ...getValues(),
         quantity: 0,

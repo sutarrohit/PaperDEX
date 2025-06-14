@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
+import { useTradeTokenStore } from "@/store/tradeToken";
 
 type Order = [string, string]; // [price, quantity]
 
@@ -8,15 +9,16 @@ interface OrderBookProps {
   bids: Order[];
   asks: Order[];
   tokenPair: string;
-  lastPrice: string;
 }
 
-const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, lastPrice }) => {
+const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair }) => {
   const [base, quote] = tokenPair.split("_");
 
+  const { data } = useTradeTokenStore();
+
   // Get visible orders
-  const visibleAsks = asks?.slice(0, 7) || [];
-  const visibleBids = bids?.slice(0, 7) || [];
+  const visibleAsks = asks?.slice(0, 8) || [];
+  const visibleBids = bids?.slice(0, 8) || [];
 
   // Calculate max quantity for each side separately
   const maxAskQty = Math.max(...visibleAsks.map(([, qty]) => parseFloat(qty)), 1);
@@ -51,7 +53,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
             return (
               <div
                 key={`ask-${index}`}
-                className="relative flex justify-between px-1  py-[2px] w-full overflow-hidden text-[13px]"
+                className="relative flex justify-between px-1 py-[2px] w-full overflow-hidden text-[12px]"
               >
                 <div
                   className="absolute h-full bg-[#321615] opacity-80 z-0 right-0 top-0 transition-all duration-200 ease-in-out"
@@ -61,6 +63,8 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
                   {parseFloat(price).toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 8,
+                    style: "currency",
+                    currency: "USD",
                   })}
                 </span>
                 <span className="z-10">
@@ -76,9 +80,11 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
 
         {/* Last Price */}
         <p className="text-white w-full text-start font-semibold">
-          {parseFloat(lastPrice).toLocaleString("en-US", {
+          {(data?.price ?? 0).toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 8,
+            style: "currency",
+            currency: "USD",
           })}
         </p>
 
@@ -91,7 +97,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
             return (
               <div
                 key={`bid-${index}`}
-                className="relative flex justify-between px-1 py-[2px] w-full overflow-hidden text-[13px]"
+                className="relative flex justify-between px-1 py-[2px] w-full overflow-hidden text-[12px]"
               >
                 <div
                   className="absolute h-full bg-[#153132] opacity-80 z-0 right-0 top-0 transition-all duration-200 ease-in-out"
@@ -101,6 +107,8 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair, l
                   {parseFloat(price).toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 8,
+                    style: "currency",
+                    currency: "USD",
                   })}
                 </span>
                 <span className="z-10">
