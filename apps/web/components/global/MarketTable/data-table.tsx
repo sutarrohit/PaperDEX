@@ -49,14 +49,11 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
     pageSize: 10,
   });
 
-  const queryClient = getQueryClient();
   const router = useRouter();
 
-  const {
-    data: marketData,
-    // error,
-    isLoading,
-  } = useSuspenseQuery({
+  const queryClient = getQueryClient();
+
+  const { data: marketData, isLoading } = useSuspenseQuery({
     queryKey: ["market-table", pagination.pageIndex, pagination.pageSize],
     queryFn: async () => getMarketData(pagination.pageIndex, pagination.pageSize),
   });
@@ -77,8 +74,6 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
 
     return () => socket.close();
   }, [pagination.pageIndex, pagination.pageSize, queryClient]);
-
-  console.log("setPageCount---------", pageCount);
 
   React.useEffect(() => {
     if (marketData) {

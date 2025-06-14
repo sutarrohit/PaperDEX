@@ -50,12 +50,7 @@ const OrderBook = ({ tokenPair }: { tokenPair: string }) => {
 
   return (
     <div className="bg-[#161616] flex items-center justify-center h-full w-full rounded-md">
-      <OrderBookComponent
-        bids={orderBook?.bids || []}
-        asks={orderBook?.asks || []}
-        tokenPair={tokenPair}
-        lastPrice="2398.71"
-      />
+      <OrderBookComponent bids={orderBook?.bids || []} asks={orderBook?.asks || []} tokenPair={tokenPair} />
     </div>
   );
 };

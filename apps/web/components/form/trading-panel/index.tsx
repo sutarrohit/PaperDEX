@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/global/loader";
+import { Card, CardContent } from "@/components/ui/card";
 
 const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
   const { createNewTrade, isPending, register, control, errors, watch, setValue } = useCreateTrade(tokenPair, mode);
@@ -16,7 +17,6 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
     <form
       className="flex flex-col gap-4 w-full"
       onSubmit={(data) => {
-        console.log("data", data);
         createNewTrade(data);
       }}
     >
@@ -50,41 +50,44 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         />
       </div>
 
-      {/* Side */}
-      <div className="w-full">
-        <Controller
-          name="side"
-          control={control}
-          render={({ field }) => (
-            <div className="w-full flex gap-2 justify-between">
-              <Button
-                type="button"
-                className={`w-[49%] text-white  ${field.value === "BUY" ? "bg-[#fe8a1d]  hover:bg-[#fe8a1d]" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60 cursor-pointer"}`}
-                onClick={() => {
-                  field.onChange("BUY");
-                }}
-              >
-                Buy
-              </Button>
-
-              <Button
-                type="button"
-                className={`w-[49%] text-white ${field.value === "SELL" ? "bg-[#fe8a1d] hover:bg-[#fe8a1d]" : "bg-[#fe8a1d]/50 hover:bg-[#fe8a1d]/60 cursor-pointer"}`}
-                onClick={() => {
-                  field.onChange("SELL");
-                }}
-              >
-                Sell
-              </Button>
-            </div>
-          )}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="side"
-          render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
-        />
-      </div>
+      <Card className="p-0 border border-[#37372c] rounded-lg w-full ">
+        <CardContent className="gap-2 items-center w-full p-0 bg-[#27272a] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-60 flex rounded-xl">
+          <Controller
+            name="side"
+            control={control}
+            render={({ field }) => (
+              <div className="relative w-full flex gap-2 p-1.5">
+                {/* Sliding active background */}
+                <div
+                  className={`absolute top-1 left-1 w-[49%] h-[calc(100%-8px)] rounded-[6px] bg-[#fe8a1d] transition-all duration-150 ${
+                    field.value === "SELL" ? "translate-x-full" : ""
+                  }`}
+                />
+                {/* Buttons */}
+                <button
+                  type="button"
+                  className={`w-[49%] z-10 text-white text-sm rounded-[6px] py-1 transition-colors ${field.value === "SELL" ? "cursor-pointer" : ""}`}
+                  onClick={() => field.onChange("BUY")}
+                >
+                  Buy
+                </button>
+                <button
+                  type="button"
+                  className={`w-[49%] z-10 text-white text-sm rounded-[6px] py-1 transition-colors ${field.value === "BUY" ? "cursor-pointer" : ""}`}
+                  onClick={() => field.onChange("SELL")}
+                >
+                  Sell
+                </button>
+              </div>
+            )}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="side"
+            render={({ message }) => <p className="text-red-400 text-sm mt-1">{message}</p>}
+          />
+        </CardContent>
+      </Card>
 
       {/* Price */}
       <div className="space-y-2">
@@ -126,11 +129,13 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
             step="any"
             id="quantity"
             placeholder="0.00"
-            className="bg-themeBlack border-themeGray text-themeTextGray h-11 pr-[30%]" // leave space for token selector
+            className="bg-themeBlack border-themeGray text-themeTextGray h-11 pr-[20%]" // leave space for token selector
             {...register("quantity", { valueAsNumber: true })}
           />
 
-          <Controller
+          <span className="absolute top-[11px] right-4 text-[14px]">{watch("base")}</span>
+
+          {/* <Controller
             name="quantityToken"
             control={control}
             defaultValue="quote" // Sets the default value to "base"
@@ -148,7 +153,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
                 </SelectContent>
               </Select>
             )}
-          />
+          /> */}
         </div>
 
         <ErrorMessage
@@ -180,7 +185,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         />
       </div>
 
-      <Button type="submit" className=" cursor-pointer mt-4 w-full bg-[#fe8a1d] hover:bg-[#fe8a1d]/80 text-white h-11">
+      <Button type="submit" className=" cursor-pointer mt-4 w-full bg-[#fe8a1d] hover:bg-[#fe8a1d]/80 text-white h-10">
         <Loader loading={isPending}>Place Order</Loader>
       </Button>
     </form>

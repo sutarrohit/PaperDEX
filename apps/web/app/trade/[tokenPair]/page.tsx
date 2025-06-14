@@ -1,10 +1,11 @@
 import React from "react";
-import TradeTokenHeading from "@/components/global/trade-token";
+import TradeTokenHeading from "../_components/heading";
 
 import { getQueryClient } from "@/lib/getQueryClient";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getTradeData, getOrderBookData } from "@/lib/api/market-api";
 import TradeConsole from "../_components/TradeConsole";
+// import { getTradeTokenBalance } from "@/lib/api/user-api";
 
 type Params = Promise<{ tokenPair: string }>;
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
@@ -28,6 +29,15 @@ const Trade = async ({ searchParams, params }: { params: Params; searchParams: S
     queryKey: ["orderBookData", tokenPair],
     queryFn: () => getOrderBookData(tokenPair),
   });
+
+  //  const tokenName = tokenPair.split("_").join(",");
+
+  // // console.log("tokenName======================", tokenName);
+
+  // queryClient.prefetchQuery({
+  //   queryKey: ["tradeTokenBalance", tokenName],
+  //   queryFn: () => getTradeTokenBalance(tokenName),
+  // });
 
   return (
     <div className="flex flex-col justify-center items-center relative container px-2 pt-10 gap-4">
