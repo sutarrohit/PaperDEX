@@ -49,7 +49,7 @@ const OrderBook = ({ tokenPair }: { tokenPair: string }) => {
   const orderBook = liveData || initialData.data;
 
   return (
-    <div className="bg-[#161616] flex items-center justify-center h-full w-full rounded-md">
+    <div className="bg-[#161616] flex items-center justify-center h-full w-full rounded-md ">
       <OrderBookComponent bids={orderBook?.bids || []} asks={orderBook?.asks || []} tokenPair={tokenPair} />
     </div>
   );

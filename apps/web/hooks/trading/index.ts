@@ -34,8 +34,6 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
     mode: "onChange",
   });
 
-  // ✅ Watch entire form and log when any field changes
-
   const { mutate, isPending } = useMutation({
     // Mock API call — replace with your real function
     mutationFn: (data: z.infer<typeof TradingPanelSchema>) => createTrade(data),
@@ -50,13 +48,17 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
         queryKey: ["tradeTokenBalance", tokenName],
       });
 
+      queryClient.invalidateQueries({
+        queryKey: ["order-history", "pending"],
+      });
+
       reset({
         ...getValues(),
         quantity: 0,
         price: null,
       });
       toast.success("✅ Trade executed successfully!", {
-        description: `You placed a ${data.side} ${data.type} order for ${data.quantity} ${data.symbol}.`,
+        description: `Your ${data?.data?.side.toUpperCase()} order for ${data?.data?.quantity} ${data?.data?.symbol} has been placed successfully.`,
         duration: 5000,
       });
     },

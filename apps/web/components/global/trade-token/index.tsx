@@ -50,7 +50,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
   const data = tradeTokenStore || initialData.data;
 
   return (
-    <div className="bg-[#161616] w-full rounded-md">
+    <div className="bg-[#161616] w-full rounded-md border">
       <div className="text-nowrap w-full md:w-fit">
         {!data ? (
           <div>Data Not available</div>

@@ -18,7 +18,7 @@ const TradeConsole = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
           <OrderBook tokenPair={tokenPair} />
         </div>
 
-        <div className="bg-[#161616] lg:col-span-3 h-full rounded-md">
+        <div className="bg-[#161616] lg:col-span-3 h-full rounded-md overflow-hidden">
           <OrderHistory />
         </div>
 

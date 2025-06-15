@@ -32,7 +32,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair })
   };
 
   return (
-    <Card className="w-full rounded-md p-3">
+    <Card className="w-full rounded-md p-3 h-full">
       <CardContent className="p-0">
         <div className="w-full">
           <p className="font-bold text-[#FE8A1D]">Order Book</p>
