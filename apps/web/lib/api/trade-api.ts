@@ -16,3 +16,18 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
 
   return handleResponse(response);
 };
+
+export const getOrderHistory = async (orderStatus: string | null, pageIndex = 0, pageSize = 10) => {
+  const response = await fetch(
+    `${ORDER_SERVICE_URL}/api/v1/order/allOrders?orderStatus=${orderStatus}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    },
+  );
+
+  return handleResponse(response);
+};

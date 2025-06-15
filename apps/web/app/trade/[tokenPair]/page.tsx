@@ -30,15 +30,6 @@ const Trade = async ({ searchParams, params }: { params: Params; searchParams: S
     queryFn: () => getOrderBookData(tokenPair),
   });
 
-  //  const tokenName = tokenPair.split("_").join(",");
-
-  // // console.log("tokenName======================", tokenName);
-
-  // queryClient.prefetchQuery({
-  //   queryKey: ["tradeTokenBalance", tokenName],
-  //   queryFn: () => getTradeTokenBalance(tokenName),
-  // });
-
   return (
     <div className="flex flex-col justify-center items-center relative container px-2 pt-10 gap-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
