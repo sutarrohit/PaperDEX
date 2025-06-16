@@ -49,7 +49,7 @@ export const useCreateTrade = (tokenPair: string, mode: string) => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["order-history", "pending"],
+        queryKey: ["order-history", "PENDING"],
       });
 
       reset({

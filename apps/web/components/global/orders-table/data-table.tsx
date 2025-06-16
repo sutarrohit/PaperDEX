@@ -49,6 +49,7 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
   } = useSuspenseQuery({
     queryKey: ["order-history", orderStatus, pagination.pageIndex, pagination.pageSize],
     queryFn: () => getOrderHistory(orderStatus, pagination.pageIndex, pagination.pageSize),
+    refetchInterval: 20000, // refetch every 20 seconds
   });
 
   React.useEffect(() => {

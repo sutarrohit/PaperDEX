@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, memo } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 
 interface TradingViewWidgetProps {
   tokenPair: string;
@@ -7,11 +7,13 @@ interface TradingViewWidgetProps {
 
 function TradingViewWidget({ tokenPair }: TradingViewWidgetProps) {
   const container = useRef<HTMLDivElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!container.current) return;
 
-    // Clear existing child nodes (prevents duplicate charts)
+    setIsLoading(true); // Start loading
+
     container.current.innerHTML = "";
 
     const script = document.createElement("script");
@@ -19,7 +21,6 @@ function TradingViewWidget({ tokenPair }: TradingViewWidgetProps) {
     script.type = "text/javascript";
     script.async = true;
 
-    // Construct the widget configuration object
     const widgetConfig = {
       autosize: true,
       symbol: `BINANCE:${tokenPair}`,
@@ -30,35 +31,43 @@ function TradingViewWidget({ tokenPair }: TradingViewWidgetProps) {
       locale: "en",
       allow_symbol_change: false,
       support_host: "https://www.tradingview.com",
-      // fullscreen: true, // You can keep this if you want it to load fullscreen initially
-      enabled_features: [
-        // Add this array
-        "header_widget_buttons_mode_fullsize", // Explicitly enable the fullscreen button
-      ],
-      disabled_features: [], // You can add features here to disable them
+      enabled_features: ["header_widget_buttons_mode_fullsize"],
+      disabled_features: [],
     };
 
-    // Convert the configuration object to a JSON string for innerHTML
     script.innerHTML = JSON.stringify(widgetConfig);
-
     container.current.appendChild(script);
 
-    // Optional: Clean up the script when the component unmounts or tokenPair changes
+    // Watch for widget iframe to load
+    const interval = setInterval(() => {
+      const iframe = container.current?.querySelector("iframe");
+      if (iframe) {
+        clearInterval(interval);
+        setIsLoading(false);
+      }
+    }, 300); // check every 300ms
+
     return () => {
+      clearInterval(interval);
       if (container.current) {
         container.current.innerHTML = "";
       }
     };
-  }, [tokenPair]); // Added tokenPair to dependency array to re-render if the pair changes
+  }, [tokenPair]);
 
   return (
-    <div
-      className="tradingview-widget-container overflow-hidden"
-      ref={container}
-      style={{ height: "100%", width: "100%" }}
-    >
-      {/* The TradingView widget will be injected into this container div. */}
-      {/* The TradingView attribution will be added by the widget script itself. */}
+    <div className="relative w-full h-full">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10 text-white text-sm">
+          Loading chart...
+        </div>
+      )}
+
+      <div
+        className="tradingview-widget-container overflow-hidden rounded-xs"
+        ref={container}
+        style={{ height: "100%", width: "100%", border: "none" }}
+      />
     </div>
   );
 }

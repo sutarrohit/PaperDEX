@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { TradeOrder } from "@/utils/types";
 import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<TradeOrder>[] = [
+import CancelOrder from "./cancelOrder";
+
+export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -120,12 +122,7 @@ export const columns: ColumnDef<TradeOrder>[] = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => {
-      return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Placed At
-          <ArrowUpDown />
-        </Button>
-      );
+      return <Button variant="ghost">{orderStatus === "FILLED" ? "Placed At" : "Edit Order"}</Button>;
     },
     cell: ({ row }) => {
       const rawDate = row.getValue("createdAt");
@@ -135,10 +132,12 @@ export const columns: ColumnDef<TradeOrder>[] = [
         year: "numeric",
       });
 
-      return (
+      return row.original.status === "FILLED" ? (
         <div className="w-full flex justify-end">
           <div className="w-full overflow-x-auto">{formattedDate}</div>
         </div>
+      ) : (
+        <CancelOrder orderId={row.original.id} />
       );
     },
   },

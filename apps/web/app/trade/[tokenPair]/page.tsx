@@ -31,7 +31,7 @@ const Trade = async ({ searchParams, params }: { params: Params; searchParams: S
   });
 
   return (
-    <div className="flex flex-col justify-center items-center relative container px-2 pt-10 gap-4">
+    <div className="flex flex-col justify-center items-center relative container px-2 pt-5 gap-2">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <TradeTokenHeading tokenPair={tokenPair} mode={mode} />
         <TradeConsole tokenPair={tokenPair} mode={mode} />
