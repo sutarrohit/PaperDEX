@@ -17,6 +17,19 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
   return handleResponse(response);
 };
 
+export const cancelOrder = async (orderId: string) => {
+  const response = await fetch(`${ORDER_SERVICE_URL}/api/v1/order/cancelOrder`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ orderId }),
+  });
+
+  return handleResponse(response);
+};
+
 export const getOrderHistory = async (orderStatus: string | null, pageIndex = 0, pageSize = 10) => {
   const response = await fetch(
     `${ORDER_SERVICE_URL}/api/v1/order/allOrders?orderStatus=${orderStatus}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,

@@ -26,7 +26,7 @@ export type TradeOrder = {
   side: "BUY" | "SELL";
   type: "LIMIT" | "MARKET"; // Add other types if applicable
   mode: "SPOT" | "FUTURES"; // Add other modes if applicable
-  status: "PENDING" | "COMPLETED" | "CANCELLED"; // Extend with other statuses if needed
+  status: "PENDING" | "PARTIALLY_FILLED" | "FILLED" | "CANCELED" | "REJECTED"; // Extend with other statuses if needed
   symbol: string;
   quantity: string;
   price: string;
