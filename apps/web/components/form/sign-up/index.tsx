@@ -9,9 +9,12 @@ import Link from "next/link";
 import { ErrorMessage } from "@hookform/error-message";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
+import { useSearchParams } from "next/navigation";
 
 const SignUpForm = () => {
-  const { isPending, signUpWithEmail, register, errors } = useAuthSignUp();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
+  const { isPending, signUpWithEmail, register, errors } = useAuthSignUp(redirect);
 
   return (
     <form className="flex flex-col gap-4 m-0" onSubmit={signUpWithEmail}>
@@ -126,7 +129,7 @@ const SignUpForm = () => {
           <Loader loading={isPending}>Create an account</Loader>
         </Button>
 
-        <LoginWithGoogle />
+        <LoginWithGoogle redirect={redirect} />
 
         <div className="w-full flex justify-center gap-1 text-[12px]">
           <span>Already have and account?</span>

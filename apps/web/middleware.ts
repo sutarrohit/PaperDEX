@@ -19,7 +19,19 @@ export default async function authMiddleware(request: NextRequest) {
   });
 
   if (!session) {
-    if (isProtectedRoute) return NextResponse.redirect(new URL("/sign-in", request.url));
+    if (isProtectedRoute) {
+      const pathname = request.nextUrl.pathname;
+      const filteredSearchParams = new URLSearchParams(request.nextUrl.search);
+      filteredSearchParams.delete("redirect");
+
+      const searchString = filteredSearchParams.toString();
+      const redirectTo = searchString ? `${pathname}?${searchString}` : pathname;
+
+      const signInUrl = new URL("/sign-in", request.url);
+      signInUrl.searchParams.set("redirect", redirectTo);
+
+      return NextResponse.redirect(signInUrl);
+    }
     return NextResponse.next();
   }
 

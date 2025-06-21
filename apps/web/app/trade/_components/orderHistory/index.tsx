@@ -12,27 +12,29 @@ const OrderHistory = () => {
 
   return (
     <Card className="w-full rounded-md p-3 h-full">
-      <CardContent className="p-0 flex flex-col h-full">
-        <div className="w-full flex gap-4">
-          <span
-            className="font-semibold text-[#FE8A1D] text-[14px] cursor-pointer"
-            onClick={() => {
-              setOrderStatus("PENDING");
-            }}
-          >
-            Open Order
-          </span>
-          <span
-            className="font-semibold text-[#FE8A1D] text-[14px] cursor-pointer"
-            onClick={() => {
-              setOrderStatus("FILLED");
-            }}
-          >
-            Order History
-          </span>
-        </div>
+      <CardContent className="p-0 flex flex-col h-full gap-[14px]">
+        <div className="relative w-full flex flex-col">
+          <div className="flex gap-4 transition-all duration-300">
+            <span
+              className={`font-semibold text-orange-500 text-[14px] cursor-pointer ${orderStatus === "PENDING" && "underline -underline-offset-[-10px]"} `}
+              onClick={() => {
+                setOrderStatus("PENDING");
+              }}
+            >
+              Open Order
+            </span>
+            <span
+              className={`font-semibold text-orange-500 text-[14px] cursor-pointer ${orderStatus === "FILLED" && "underline -underline-offset-[-10px]"} `}
+              onClick={() => {
+                setOrderStatus("FILLED");
+              }}
+            >
+              Order History
+            </span>
+          </div>
 
-        <Separator className="my-2" />
+          <Separator className="absolute my-2 top-[17px]" />
+        </div>
 
         <div className="flex-1 overflow-auto h-full">
           <OrderTable orderStatus={orderStatus} />

@@ -10,7 +10,7 @@ import { ResetPasswordSchema } from "@/components/form/reset-password/schema";
 import { forgotPasswordSchema } from "@/components/form/forgot-password/schema";
 import { forgotPasswordApi, resetPasswordApi, signInApi, singUpApi } from "@/lib/api/auth-api";
 
-export const useAuthSignIn = () => {
+export const useAuthSignIn = (redirect: string | null) => {
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ export const useAuthSignIn = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["sign-in"],
-    mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => signInApi(email, password),
+    mutationFn: async ({ email, password }: z.infer<typeof SignInSchema>) => signInApi(email, password, redirect),
 
     onError: (error: Error) => {
       toast.error(error.message || "Failed to sign in");
@@ -46,7 +46,7 @@ export const useAuthSignIn = () => {
   };
 };
 
-export const useAuthSignUp = () => {
+export const useAuthSignUp = (redirect: string | null) => {
   const router = useRouter();
 
   const {
@@ -71,7 +71,7 @@ export const useAuthSignUp = () => {
       lastName: string;
       email: string;
       password: string;
-    }) => singUpApi(firstName, lastName, email, password),
+    }) => singUpApi(firstName, lastName, email, password, "", redirect),
 
     onError: (error: Error) => {
       toast.error(error.message || "Failed to sign up");
