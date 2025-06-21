@@ -9,11 +9,12 @@ type GradientButton = {
 };
 
 const GradientButton = ({ name, link, className, container }: GradientButton) => {
+  console.log("link", link);
   return (
     <Link href={link}>
       <div
         className={cn(
-          "rounded-[26px] flex justify-center items-center text-[12px] font-bold h-[35px] p-[1px] w-[90px] md:w-[110px] bg-gradient-to-r  from-[#00c3ff] to-[#4d0199] ",
+          "rounded-[26px] flex justify-center items-center text-[12px] font-bold h-[35px] p-[1px] w-[90px] md:w-[110px] bg-gradient-to-r  from-orange-500 to-[#6513b7] ",
           className,
         )}
       >

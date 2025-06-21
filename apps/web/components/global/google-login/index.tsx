@@ -4,7 +4,7 @@ import { authClient } from "@/lib/authClient";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
-const LoginWithGoogle = () => {
+const LoginWithGoogle = ({ redirect }: { redirect: string | null }) => {
   const [loading, setLoading] = useState(false);
 
   return (
@@ -17,7 +17,7 @@ const LoginWithGoogle = () => {
           await authClient.signIn.social(
             {
               provider: "google",
-              callbackURL: "http://localhost:3000/dashboard",
+              callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
             },
             {
               onRequest: () => {

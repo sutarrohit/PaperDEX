@@ -7,15 +7,19 @@ import LoginWithGoogle from "@/components/global/google-login";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
+import { useSearchParams } from "next/navigation";
+
 import { ErrorMessage } from "@hookform/error-message";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 
 const SignInForm = () => {
-  const { isPending, signInWithEmail, register, errors } = useAuthSignIn();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
+  const { isPending, signInWithEmail, register, errors } = useAuthSignIn(redirect);
 
   return (
-    <form className="flex flex-col gap-4 m-0" onSubmit={signInWithEmail}>
+    <form className="flex flex-col gap-4 m-0" onSubmit={(data) => signInWithEmail(data)}>
       <div className="space-y-2">
         <Label className="flex " htmlFor={`input-email`}>
           Email
@@ -68,10 +72,10 @@ const SignInForm = () => {
           <Loader loading={isPending}>Login</Loader>
         </Button>
 
-        <LoginWithGoogle />
+        <LoginWithGoogle redirect={redirect} />
 
         <Separator orientation="horizontal" className="bg-[#27272a]" />
-        <Link href="/sign-up">
+        <Link href={`${redirect ? `/sign-up?redirect=${redirect}` : "/sign-up"}`}>
           <Button className="cursor-pointer w-full rounded-md">Create an Account</Button>
         </Link>
       </div>

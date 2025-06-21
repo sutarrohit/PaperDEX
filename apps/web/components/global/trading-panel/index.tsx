@@ -24,7 +24,7 @@ const TradingPanel = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
     <Card className="w-full rounded-md h-full p-3">
       <CardContent className="p-0">
         <div className="w-full">
-          <p className="font-bold text-[#fe8a1d] text-[15px]">Spot</p>
+          <p className="font-bold text-orange-500 text-[15px]">Spot</p>
           <Separator className="my-2" />
         </div>
 

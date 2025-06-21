@@ -1,7 +1,11 @@
 import { authClient } from "../authClient";
 
-export const signInApi = async (email: string, password: string) => {
-  const { data, error } = await authClient.signIn.email({ email, password, callbackURL: "/dashboard" });
+export const signInApi = async (email: string, password: string, redirect: string | null) => {
+  const { data, error } = await authClient.signIn.email({
+    email,
+    password,
+    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
+  });
 
   if (error) throw new Error(error?.message || "failed to sign in");
 
@@ -14,13 +18,14 @@ export const singUpApi = async (
   email: string,
   password: string,
   image: string = "",
+  redirect: string | null,
 ) => {
   const { data, error } = await authClient.signUp.email({
     email,
     password,
     name: `${firstName} ${lastName}`,
     image: image,
-    callbackURL: "/dashboard",
+    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
   });
 
   if (error) throw new Error(error?.message || "failed to sign up");

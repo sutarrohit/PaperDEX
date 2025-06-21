@@ -4,8 +4,24 @@ import { Button } from "@/components/ui/button";
 import { BadgePlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { headers } from "next/headers";
 
-const LandingHero = () => {
+const LandingHero = async () => {
+  const headersList = await headers();
+  const cookie = headersList.get("cookie");
+
+  // Parse cookie string into an object
+  let cookieMap;
+  if (cookie) {
+    cookieMap = Object.fromEntries(
+      cookie.split("; ").map((c) => {
+        const [key, ...v] = c.split("=");
+        return [key, v.join("=")];
+      }),
+    );
+  }
+  const sessionToken = cookieMap ? cookieMap["better-auth.session_token"] : "";
+
   return (
     <div className="flex flex-col justify-center items-center text-center mt-10 md:mt-20 w-full">
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center md:mx-20">
@@ -19,14 +35,14 @@ const LandingHero = () => {
         </p>
       </BackdropGradient>
 
-      <div className="flex  md:justify-center gap-5 mt-8">
-        <Button variant="outline" className="rounded-xl bg-transparent text-[14px]">
+      <div className="flex md:justify-center gap-5 mt-8">
+        <Button variant="outline" className="rounded-xl bg-transparent text-[14px] cursor-pointer">
           Watch Demo
         </Button>
 
-        <Link href="/sign-in">
-          <Button className="rounded-xl text-[14px] flex gap-2 w-full">
-            <BadgePlus /> Get Started
+        <Link href={`${!sessionToken ? "/market?redirect=market" : "/market"}`}>
+          <Button className="rounded-xl text-[14px] flex gap-2 w-full cursor-pointer">
+            <BadgePlus /> Go to Market
           </Button>
         </Link>
       </div>
