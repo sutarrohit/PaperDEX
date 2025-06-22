@@ -1,5 +1,4 @@
-
-# Stage 1: Builder - Install dependencies and build
+# Stage 1: Builder
 FROM node:18-alpine AS builder
 
 # Install pnpm globally
@@ -24,11 +23,15 @@ RUN pnpm install --frozen-lockfile --prod=false
 # 4. Copy all source code
 COPY packages/ ./packages/
 
-# 5. Build the user-service
+# 5. Generate Prisma client for db package
+RUN cd packages/db && \
+    pnpm exec prisma generate
+
+# 6. Build the order-service
 RUN cd packages/order-service && \
     pnpm run build
 
-# Stage 2: Runtime - Minimal production image
+# Stage 2: Runtime
 FROM node:18-alpine
 
 WORKDIR /app

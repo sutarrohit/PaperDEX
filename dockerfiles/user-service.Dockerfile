@@ -54,7 +54,11 @@ RUN pnpm install --frozen-lockfile --prod=false
 # 4. Copy all source code
 COPY packages/ ./packages/
 
-# 5. Build the user-service
+# 5. Generate Prisma client for db package
+RUN cd packages/db && \
+    pnpm exec prisma generate
+
+# 6. Build the user-service
 RUN cd packages/user-service && pnpm install && \
     pnpm run build
 
