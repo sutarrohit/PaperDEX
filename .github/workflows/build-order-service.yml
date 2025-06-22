@@ -1,0 +1,34 @@
+name: Build Order Service Docker Image
+
+on:
+  push:
+    branches: ["feat/github-actions"] # Changed to your branch
+    paths:
+      - "packages/order-service/**"
+      - "dockerfiles/order-service.Dockerfile"
+
+jobs:
+  build-order-service:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: dockerfiles/order-service.Dockerfile
+          tags: paperdex/order-service:local-build
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Verify image
+        run: |
+          docker image inspect paperdex/order-service:local-build
+          docker run --rm paperdex/order-service:local-build node --version
