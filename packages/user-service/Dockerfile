@@ -20,7 +20,7 @@ RUN npm install -g pnpm turbo
 COPY . .
 
 # Prune the monorepo to only include necessary dependencies for the order-service
-RUN turbo prune @paperdex/order-service --docker
+RUN turbo prune @paperdex/user-service --docker
 
 # ================================================
 # Stage 3: Installer stage - installs dependencies
@@ -64,4 +64,4 @@ USER expressjs
 COPY --from=installer /app .
 
 # Start the application
-CMD ["node", "packages/order-service/dist/server.js"]
+CMD ["node", "packages/user-service/dist/server.js"]

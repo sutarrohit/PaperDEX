@@ -5,7 +5,7 @@ on:
     branches: ["feat/github-actions"] # Changed to your branch
     paths:
       - "packages/user-service/**"
-      - "dockerfiles/user-service.Dockerfile"
+      - "packages/user-service/Dockerfile"
 
 jobs:
   build-user-service:
@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: dockerfiles/user-service.Dockerfile
+          file: packages/user-service/Dockerfile
           tags: paperdex/user-service:local-build
           load: true
           cache-from: type=gha

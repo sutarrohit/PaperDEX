@@ -5,7 +5,7 @@ on:
     branches: ["feat/github-actions"] # Changed to your branch
     paths:
       - "packages/order-service/**"
-      - "dockerfiles/order-service.Dockerfile"
+      - "packages/order-service/Dockerfile"
 
 jobs:
   build-order-service:
@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: dockerfiles/order-service.Dockerfile
+          file: packages/order-service/Dockerfile
           tags: paperdex/order-service:local-build
           load: true
           cache-from: type=gha
