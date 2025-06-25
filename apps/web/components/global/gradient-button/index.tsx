@@ -9,7 +9,6 @@ type GradientButton = {
 };
 
 const GradientButton = ({ name, link, className, container }: GradientButton) => {
-  console.log("link", link);
   return (
     <Link href={link}>
       <div

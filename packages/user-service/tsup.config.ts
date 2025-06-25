@@ -1,8 +1,8 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["./src/server.ts"],
-  noExternal: ["@paperdex/*"],
+  entry: ["./index.ts"],
+  noExternal: ["@paperdex"],
   splitting: false,
   bundle: true,
   outDir: "./dist",
