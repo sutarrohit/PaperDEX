@@ -39,8 +39,6 @@ export const fetchVolumeMcap = async (volumeMcap: string) => {
     const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${volumeMcap}`);
     const data: CoinMarket[] = (await response.json()) || [];
 
-    console.log("data", data);
-
     if (data.length === 0) return;
 
     data?.map((token) => {

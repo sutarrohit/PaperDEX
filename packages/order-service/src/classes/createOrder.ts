@@ -59,7 +59,7 @@ export class RedisSet {
 
   static async getClient(): Promise<RedisClientType> {
     if (!RedisSet.client) {
-      RedisSet.client = createClient();
+      RedisSet.client = createClient({ url: "redis://redis:6379" });
       RedisSet.client.on("error", (err) => console.error("Redis error:", err));
       await RedisSet.client.connect();
       console.log("Redis connected");

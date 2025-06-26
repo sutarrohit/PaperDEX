@@ -1,69 +1,24 @@
 name: paperDEX
 
 services:
-  # web:
-  #     container_name: web
-  #     build:
-  #         context: .
-  #         dockerfile: ./apps/web/Dockerfile
-  #     # restart: always
-  #     ports:
-  #         - 3000:3000
-  #     volumes:
-  #         - ./apps/web:/apps
-  #         - /apps/web/node_modules
-  #         - /apps/web/.next
-
-  #     # networks:
-  #     #     - paperdex_network
-  #     # depends_on:
-  #     #     user-service:
-  #     #         condition: service_healthy
-  #     environment:
-  #         NEXT_PUBLIC_USER_SERVICE: "http://localhost:4001"
-
-  # user-service:
-  #     container_name: user-service
-  #     build:
-  #         context: .
-  #         dockerfile: ./packages/user-service/Dockerfile
-  #     restart: always
-  #     ports:
-  #         - 4001:4001
-  #     volumes:
-  #         - ./packages/user-service:/apps
-  #         - /apps/node_modules
-  #     networks:
-  #         - paperdex_network
-  #     depends_on:
-  #         database:
-  #             condition: service_healthy
-  #     healthcheck:
-  #         test: ["CMD", "curl -f http://localhost:4001/api/health || exit 1"]
-  #         interval: 10s
-  #         timeout: 5s
-  #         retries: 3
-  #         start_period: 5s
-  #     environment:
-
-  database:
-    container_name: postgresDB
-    image: postgres:17
-    volumes:
-      - postgres_database:/var/lib/postgresql/data
-    networks:
-      - paperdex_network
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: paperdex
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+  # postgresDB:
+  #   container_name: postgresDB
+  #   image: postgres:17
+  #   volumes:
+  #     - postgres_database:/var/lib/postgresql/data
+  #   networks:
+  #     - paperdex_network
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: paperdex
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 10s
+  #     retries: 5
 
   redis:
     container_name: redis
@@ -86,6 +41,68 @@ services:
     networks:
       - paperdex_network
 
+  # order-service:
+  #   container_name: order-service
+  #   build:
+  #     context: .
+  #     dockerfile: ./packages/order-service/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 4002:4002
+  #   volumes:
+  #     - ./packages/order-service:/apps
+  #     - /apps/node_modules
+  #   networks:
+  #     - paperdex_network
+  #   depends_on:
+  #     - postgresDB
+  #     - redis
+  #   environment:
+  #     NODE_ENV: ${DOCKER_NODE_ENV}
+  #     USER_SERVICE_PORT: ${DOCKER_USER_SERVICE_PORT}
+  #     BETTER_AUTH_SECRET: ${DOCKER_BETTER_AUTH_SECRET}
+  #     GOOGLE_CLIENT_ID: ${DOCKER_GOOGLE_CLIENT_ID}
+  #     GOOGLE_CLIENT_SECRET: ${DOCKER_GOOGLE_CLIENT_SECRET}
+  #     RESEND_API_KEY: ${DOCKER_RESEND_API_KEY}
+  #     EMAIL_FROM: ${DOCKER_EMAIL_FROM}
+  #     BETTER_AUTH_URL: ${DOCKER_BETTER_AUTH_URL}
+  #     NEXT_PUBLIC_CLIENT_SERVICE: ${DOCKER_NEXT_PUBLIC_CLIENT_SERVICE}
+  #     NEXT_PUBLIC_USER_SERVICE: ${DOCKER_NEXT_PUBLIC_USER_SERVICE}
+  #     DATABASE_URL: ${DOCKER_DATABASE_URL}
+  #     DIRECT_URL: ${DOCKER_DIRECT_URL}
+  #     REDIS_URL: ${DOCKER_REDIS_URL}
+
+  # user-service:
+  #   container_name: user-service
+  #   build:
+  #     context: .
+  #     dockerfile: ./packages/user-service/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 4001:4001
+  #   volumes:
+  #     - ./packages/user-service:/apps
+  #     - /apps/node_modules
+  #   networks:
+  #     - paperdex_network
+  #   depends_on:
+  #     - postgresDB
+  #     - redis
+  #   environment:
+  #     NODE_ENV: ${DOCKER_NODE_ENV}
+  #     USER_SERVICE_PORT: ${DOCKER_USER_SERVICE_PORT}
+  #     BETTER_AUTH_SECRET: ${DOCKER_BETTER_AUTH_SECRET}
+  #     GOOGLE_CLIENT_ID: ${DOCKER_GOOGLE_CLIENT_ID}
+  #     GOOGLE_CLIENT_SECRET: ${DOCKER_GOOGLE_CLIENT_SECRET}
+  #     RESEND_API_KEY: ${DOCKER_RESEND_API_KEY}
+  #     EMAIL_FROM: ${DOCKER_EMAIL_FROM}
+  #     BETTER_AUTH_URL: ${DOCKER_BETTER_AUTH_URL}
+  #     NEXT_PUBLIC_CLIENT_SERVICE: ${DOCKER_NEXT_PUBLIC_CLIENT_SERVICE}
+  #     NEXT_PUBLIC_USER_SERVICE: ${DOCKER_NEXT_PUBLIC_USER_SERVICE}
+  #     DATABASE_URL: ${DOCKER_DATABASE_URL}
+  #     DIRECT_URL: ${DOCKER_DIRECT_URL}
+  #     REDIS_URL: ${DOCKER_REDIS_URL}
+
 volumes:
   postgres_database:
   redis_data:
@@ -93,3 +110,4 @@ volumes:
 
 networks:
   paperdex_network:
+    driver: bridge

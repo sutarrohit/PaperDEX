@@ -26,8 +26,6 @@ export class NewOrder {
   }
 
   private async createLimitOrder(orderData: OrderSchemaType, userId: string) {
-    console.log("This is Limit Order=========>", orderData, userId);
-
     const newOrder = await this.createOrder.createNewOrder({ ...orderData, userId });
     if (!newOrder) throw new AppError("Failed to create new order", 500);
 

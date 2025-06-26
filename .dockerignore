@@ -4,14 +4,31 @@
 **/dist
 **/.next
 **/build
+**/coverage
 **/node_modules
 
 # Ignore development files
+.env
 **/.env.local
 **/.git
 **/.vscode
 **/docker-compose.override.yml
 
-# Turbo/Vite caches
+# Turbo caches
 **/.turbo
 **/.cache
+.turbo/
+out/
+
+# Node.js related
+npm-debug.log
+.pnpm-store/
+.pnpm-state.json
+.pnpm-debug.log
+
+
+
+
+
+
+
