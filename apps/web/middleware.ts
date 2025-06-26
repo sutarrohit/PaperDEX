@@ -12,7 +12,7 @@ export default async function authMiddleware(request: NextRequest) {
   const isProtectedRoute = protectedRoutes.some((route) => pathName.startsWith(route));
 
   const { data: session } = await betterFetch<Session>("/api/auth/get-session", {
-    baseURL: process.env.BETTER_AUTH_URL || "http://localhost:4001",
+    baseURL: process.env.NEXT_PUBLIC_USER_SERVICE || "http://localhost:4001",
     headers: {
       cookie: request.headers.get("cookie") || "",
     },
