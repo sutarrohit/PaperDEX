@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 
 export type orderStatusType = "PENDING" | "FILLED";
-const OrderHistory = () => {
+const OrderHistory = ({ history = false }: { history: boolean }) => {
   const [orderStatus, setOrderStatus] = useState<orderStatusType>("PENDING");
 
   return (
@@ -36,8 +36,8 @@ const OrderHistory = () => {
           <Separator className="absolute my-2 top-[17px]" />
         </div>
 
-        <div className="flex-1 overflow-auto h-full">
-          <OrderTable orderStatus={orderStatus} />
+        <div className="flex-1 h-full">
+          <OrderTable orderStatus={orderStatus} history={history} />
         </div>
       </CardContent>
     </Card>

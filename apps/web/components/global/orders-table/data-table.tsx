@@ -16,20 +16,35 @@ import {
   PaginationState,
 } from "@tanstack/react-table";
 
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data?: TData[];
   orderStatus?: orderStatusType;
+  history: boolean;
 }
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/getQueryClient";
 import { orderStatusType } from "@/app/trade/_components/orderHistory";
 import { getOrderHistory } from "@/lib/api/trade-api";
+import { ChevronDown } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  orderStatus = "PENDING",
+  history = false,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -49,7 +64,7 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
   } = useSuspenseQuery({
     queryKey: ["order-history", orderStatus, pagination.pageIndex, pagination.pageSize],
     queryFn: () => getOrderHistory(orderStatus, pagination.pageIndex, pagination.pageSize),
-    refetchInterval: 20000, // refetch every 20 seconds
+    refetchInterval: 20000,
   });
 
   React.useEffect(() => {
@@ -71,11 +86,15 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
 
   React.useEffect(() => {
     if (marketData) {
-      if (marketData.pageSize) {
-        setPageCount(marketData.pageSize);
+      if (marketData.totalPages) {
+        setPageCount(marketData.totalPages);
       }
     }
   }, [marketData, pagination.pageSize]);
+
+  React.useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  }, [orderStatus]);
 
   const table = useReactTable({
     data: marketData?.data || [],
@@ -126,8 +145,44 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
   }
 
   return (
-    <div className="w-full h-full">
-      <div className="rounded-lg overflow-hidden border h-full lg:h-[180px] max-h-[432px] hide-scrollbar">
+    // Add flex, flex-col to the main container
+    <div className="w-full h-full flex flex-col">
+      {history && (
+        <div className="flex items-center pb-2 w-full justify-end gap-4">
+          <Input
+            placeholder="Search Names..."
+            value={(table.getColumn("symbol")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => table.getColumn("symbol")?.setFilterValue(event.target.value)}
+            className="max-w-xs"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto cursor-pointer">
+                Columns <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
+      {/* Add flex-grow and remove h-full here */}
+      <div className="rounded-lg overflow-hidden border min-h-[100px] flex-grow hide-scrollbar">
         <Table>
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (
@@ -148,7 +203,7 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
               table?.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className={`border-transparent`}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-end pr-5 py-3">
+                    <TableCell key={cell.id} className="text-end pr-5 py-2">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -164,6 +219,23 @@ export function DataTable<TData, TValue>({ columns, orderStatus = "PENDING" }: D
           </TableBody>
         </Table>
       </div>
+      {history && (
+        <div className="flex items-center justify-end space-x-2 pt-2  ">
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
