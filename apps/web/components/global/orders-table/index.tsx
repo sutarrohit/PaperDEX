@@ -5,9 +5,9 @@ import { getColumns } from "./columns";
 import { DataTable } from "./data-table";
 import { useMemo } from "react";
 
-const OrderTable = ({ orderStatus }: { orderStatus: orderStatusType }) => {
+const OrderTable = ({ orderStatus, history = false }: { orderStatus: orderStatusType; history: boolean }) => {
   const columns = useMemo(() => getColumns(orderStatus), [orderStatus]);
-  return <DataTable columns={columns} orderStatus={orderStatus} />;
+  return <DataTable columns={columns} orderStatus={orderStatus} history={history} />;
 };
 
 export default OrderTable;

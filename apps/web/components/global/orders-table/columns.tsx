@@ -12,23 +12,26 @@ import CancelOrder from "./cancelOrder";
 
 export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
   {
-    accessorKey: "name",
+    accessorKey: "symbol",
     header: ({ column }) => {
       return <div className="text-start">Asset</div>;
     },
-    cell: ({ row }) => (
-      <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full">
-        {/* <Image
+    cell: ({ row }) => {
+      return (
+        <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full">
+          {/* <Image
           src={row.original.symbol}
           alt={row.getValue("name")}
           width={50}
           height={50}
           className="w-[28px] h-[28px] rounded-full"
         /> */}
-        <span className="pl-1">{row.original?.symbol}</span>
-        <span className="text-[12px] text-muted-foreground">{row.getValue("name")}</span>
-      </div>
-    ),
+
+          <span className="pl-1">{row.original?.symbol}</span>
+          {/* <span className="text-[10px] text-muted-foreground">{row.getValue("symbol")}</span> */}
+        </div>
+      );
+    },
   },
 
   {

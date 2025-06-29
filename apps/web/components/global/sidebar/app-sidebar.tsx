@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { LayoutDashboard, Store, CreditCard, UserSearch, ChartBar, House, ChartCandlestick } from "lucide-react";
+import { LayoutDashboard, Store, UserSearch, History, House, ChartCandlestick } from "lucide-react";
 
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
@@ -26,24 +26,14 @@ export const dashboardData = {
       icon: LayoutDashboard,
     },
     {
-      name: "MCP HUB",
-      url: "/mcp-hub",
-      icon: Store,
+      name: "Tx History",
+      url: "/history",
+      icon: History,
     },
     {
       name: "User Info",
       url: "/user-info",
       icon: UserSearch,
-    },
-    {
-      name: "User Statistics",
-      url: "/user-statistics",
-      icon: ChartBar,
-    },
-    {
-      name: "Example Card",
-      url: "/example-card",
-      icon: CreditCard,
     },
   ],
 

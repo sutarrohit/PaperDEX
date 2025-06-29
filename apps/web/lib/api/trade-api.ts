@@ -14,6 +14,8 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
     body: JSON.stringify(data),
   });
 
+  console.log("Respinse-------------------", response);
+
   return handleResponse(response);
 };
 

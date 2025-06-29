@@ -13,6 +13,8 @@ import { Card, CardContent } from "@/components/ui/card";
 const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
   const { createNewTrade, isPending, register, control, errors, watch, setValue } = useCreateTrade(tokenPair, mode);
 
+  console.log("isPending-------------------", isPending);
+
   return (
     <form
       className="flex flex-col gap-4 w-full"

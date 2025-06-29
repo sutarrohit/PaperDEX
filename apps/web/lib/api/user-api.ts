@@ -13,3 +13,15 @@ export const getTokenBalance = async (tokenName: string) => {
 
   return handleResponse(response);
 };
+
+export const getUserStats = async () => {
+  const response = await fetch(`${ORDER_SERVICE_URL}/api/v1/user/account-stats`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  return handleResponse(response);
+};
