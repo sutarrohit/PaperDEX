@@ -2,6 +2,7 @@ import { Request, Response, RequestHandler } from "express";
 import { prisma } from "@paperdex/db";
 
 import { AppError, catchAsync } from "@paperdex/lib";
+import { calculateTokenBalance } from "../services/totalBalance";
 
 export const getUserAccount: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.user?.id;
@@ -50,5 +51,34 @@ export const getBalances: RequestHandler = catchAsync(async (req: Request, res: 
   res.status(200).json({
     status: "success",
     data: balances,
+  });
+});
+
+export const getUserStats: RequestHandler = catchAsync(async (req: Request, res: Response) => {
+  if (!req?.user?.user) throw new AppError("User not found.", 404);
+
+  const [pendingOrders] = await Promise.all([
+    prisma.order.count({
+      where: {
+        status: "PENDING",
+      },
+    }),
+  ]);
+
+  const userId = req?.user?.user?.id;
+  if (!userId) throw new AppError("User ID not found.", 404);
+
+  const totalBalance = await calculateTokenBalance(userId);
+
+  console.log("totalBalance", totalBalance);
+
+  const data = {
+    pendingTx: pendingOrders,
+    totalBalance: totalBalance,
+  };
+
+  res.status(200).json({
+    status: "success",
+    data: data,
   });
 });

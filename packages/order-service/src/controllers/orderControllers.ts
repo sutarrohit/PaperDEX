@@ -9,7 +9,7 @@ import { getTokenPrice } from "../store/tokenPriceStore";
 // Get all account orders, active, canceled, or filled.
 export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const pageIndex = parseInt((req.query.pageIndex as string) || "1");
-  const pageSize = Math.min(parseInt((req.query.pageSize as string) || "10"), 10);
+  const pageSize = Math.min(parseInt(req.query.pageSize as string), 10);
   const skip = (pageIndex - 1) * pageSize;
 
   const orderStatus = req.query.orderStatus as OrderStatus | null;
@@ -34,7 +34,7 @@ export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res:
       take: pageSize,
     }),
 
-    prisma.order.count({ where: { userId: userId } }),
+    prisma.order.count({ where: { userId: userId, ...(orderStatus && { status: orderStatus }) } }),
   ]);
 
   res.status(200).json({
@@ -42,6 +42,7 @@ export const getAllOrders: RequestHandler = catchAsync(async (req: Request, res:
     size: orderCount,
     currentPage: pageIndex,
     pageSize: pageSize,
+    totalPages: Math.ceil(orderCount / pageSize),
     data: orders,
   });
 });
