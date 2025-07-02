@@ -20,6 +20,7 @@ export class CreateOrder {
       if (!newOrder) throw new AppError("Failed to create new order", 500);
 
       await this.addOrderToSet({ ...order, orderId: newOrder?.id });
+      console.log("Limit order create----------------------");
       return newOrder;
     }
   }
@@ -55,11 +56,11 @@ export class CreateOrder {
 export class RedisSet {
   private static client: RedisClientType;
 
-  private constructor() {} // Prevent instantiation
+  private constructor() {}
 
   static async getClient(): Promise<RedisClientType> {
     if (!RedisSet.client) {
-      RedisSet.client = createClient({ url: "redis://redis:6379" });
+      RedisSet.client = createClient({ url: process.env.REDIS_URL || "redis://redis:6379" });
       RedisSet.client.on("error", (err) => console.error("Redis error:", err));
       await RedisSet.client.connect();
       console.log("Redis connected");

@@ -29,8 +29,6 @@ export function SectionCards({
     queryFn: () => getUserStats(),
   });
 
-  console.log("userStats----------------", userStats);
-
   return (
     <div
       className={cn(
@@ -50,7 +48,14 @@ export function SectionCards({
 
                   <div className="flex flex-col">
                     <div className="text-[18px]">{section.name}</div>
-                    <span className="text-[18px]">{userStats.data[section.id] ?? "0"}</span>
+                    <span className="text-[18px]">
+                      {section.id === "totalBalance"
+                        ? (userStats.data[section.id].toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          }) ?? "0")
+                        : (userStats.data[section.id] ?? "0")}
+                    </span>
                   </div>
                 </CardDescription>
               </CardHeader>
