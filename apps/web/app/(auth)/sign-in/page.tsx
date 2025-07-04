@@ -1,4 +1,5 @@
 import SignInForm from "@/components/form/sign-in";
+import { Suspense } from "react";
 
 const SignIn = async () => {
   return (
@@ -8,7 +9,9 @@ const SignIn = async () => {
         <p className="text-xs md:text-sm text-[#B4B0AE] mt-1">Enter your email below to login to your account</p>
       </div>
 
-      <SignInForm />
+      <Suspense fallback={<div>Loading form...</div>}>
+        <SignInForm />
+      </Suspense>
     </>
   );
 };

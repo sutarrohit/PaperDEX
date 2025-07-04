@@ -62,7 +62,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       const parsedUrl = new URL(url);
       const originalCallback = parsedUrl.searchParams.get("callbackURL") || "/dashboard";
       parsedUrl.searchParams.set("callbackURL", `${NEXT_PUBLIC_CLIENT_SERVICE}${originalCallback}`);
-      const verifyUrl = parsedUrl.toString();
+      const verifyUrl = parsedUrl?.toString();
 
       const html = verifyEmailTemplate(verifyUrl, user.name);
       const subject = "Verify your email address";

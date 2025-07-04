@@ -1,6 +1,6 @@
 import React from "react";
 import TradingViewWidget from "@/components/global/TradingChart";
-import OrderBook from "../orderBook/page";
+import OrderBook from "../orderBook";
 import TradingPanel from "@/components/global/trading-panel";
 import OrderHistory from "../orderHistory";
 

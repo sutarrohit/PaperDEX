@@ -26,7 +26,7 @@ const OrderBook = ({ tokenPair }: { tokenPair: string }) => {
 
   useEffect(() => {
     const normalizedToken = tokenPair.split("_").join("").toLowerCase();
-    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE}/stream/orderbook?pair=${tokenPair}`);
+    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE_WSS}/stream/orderbook?pair=${tokenPair}`);
 
     ws.onmessage = (event) => {
       try {

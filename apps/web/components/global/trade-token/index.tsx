@@ -27,7 +27,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
   const { updateData, data: tradeTokenStore } = useTradeTokenStore();
 
   useEffect(() => {
-    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE}/stream/tokenTrade?token=${tokenPair}`);
+    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE_WSS}/stream/tokenTrade?token=${tokenPair}`);
 
     ws.onmessage = (event) => {
       try {
@@ -57,13 +57,18 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-6 py-3 px-4 md:px-2 items-center justify-end gap-10 md:gap-1">
             <div className="flex gap-3 items-center">
-              <Image
-                src={data?.icon}
-                alt={(data?.token as string) || "icon"}
-                width={50}
-                height={50}
-                className="w-8 h-8 rounded-full"
-              />
+              {data?.icon ? (
+                <Image
+                  src={data?.icon || ""}
+                  alt={(data?.token as string) || "Image"}
+                  width={50}
+                  height={50}
+                  className="w-8 h-8 rounded-full"
+                />
+              ) : (
+                <div className="avatar-placeholder" />
+              )}
+
               <div className="flex flex-col gap-0">
                 <span className="text-[15px]">{data?.token}</span>
                 <span className=" text-[12px] text-[#6A6A6A]">{formatDate()}</span>

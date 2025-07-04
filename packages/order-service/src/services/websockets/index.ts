@@ -14,8 +14,6 @@ export const handlePriceStream = (wss: WebSocketServer) => {
   const clients = new Set<ClientWithPagination>();
 
   wss.on("connection", (ws) => {
-    console.log("Client connected to /stream/orderbook");
-
     const clientData: ClientWithPagination = {
       socket: ws,
       pageIndex: 1,
@@ -44,7 +42,7 @@ export const handlePriceStream = (wss: WebSocketServer) => {
     });
 
     ws.on("error", (err) => {
-      console.error("WebSocket error:", err);
+      console.error("WebSocket error:----------", err);
     });
   });
 

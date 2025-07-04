@@ -14,8 +14,6 @@ export const createTrade = async (data: z.infer<typeof TradingPanelSchema>) => {
     body: JSON.stringify(data),
   });
 
-  console.log("Respinse-------------------", response);
-
   return handleResponse(response);
 };
 
@@ -33,16 +31,23 @@ export const cancelOrder = async (orderId: string) => {
 };
 
 export const getOrderHistory = async (orderStatus: string | null, pageIndex = 0, pageSize = 10) => {
-  const response = await fetch(
-    `${ORDER_SERVICE_URL}/api/v1/order/allOrders?orderStatus=${orderStatus}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${ORDER_SERVICE_URL}/api/v1/order/allOrders?orderStatus=${orderStatus}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       },
-      credentials: "include",
-    },
-  );
+    );
 
-  return handleResponse(response);
+    if (!response.ok) throw new Error("Network response was not ok");
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error("Failed to fetch market data:", error);
+    return { status: "error", data: [] };
+  }
 };

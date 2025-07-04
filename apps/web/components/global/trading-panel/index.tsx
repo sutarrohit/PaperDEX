@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import TradingPanelForm from "@/components/form/trading-panel";
 
 import { Separator } from "@/components/ui/separator";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getTokenBalance } from "@/lib/api/user-api";
 import { GetTradeTokenBalanceResponse } from "@/utils/types";
 
@@ -12,7 +12,7 @@ const TradingPanel = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
   const [baseToken, quoteToken] = tokenPair.split("_");
   const tokenName = `${baseToken},${quoteToken}`;
 
-  const { data: balances } = useSuspenseQuery<GetTradeTokenBalanceResponse>({
+  const { data: balances } = useQuery<GetTradeTokenBalanceResponse>({
     queryKey: ["tradeTokenBalance", tokenName],
     queryFn: () => getTokenBalance(tokenName),
   });

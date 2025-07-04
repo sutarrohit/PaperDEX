@@ -7,6 +7,7 @@ import GradientButton from "@/components/global/gradient-button";
 import Link from "next/link";
 import User from "@/components/global/user-card";
 import { authClient } from "@/lib/authClient";
+import Navigator from "@/components/global/navigator";
 
 const LandingPageNavbar = () => {
   const { useSession } = authClient;
@@ -27,6 +28,9 @@ const LandingPageNavbar = () => {
           </GradientText>
         </div>
       </Link>
+
+      <Navigator orientation={"desktop"} />
+
       {session?.data ? <User /> : <GradientButton name={"Login"} link={"/sign-in"} />}
     </div>
   );

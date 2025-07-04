@@ -1,4 +1,5 @@
 import SignUpForm from "@/components/form/sign-up";
+import { Suspense } from "react";
 
 const SignUp = async () => {
   return (
@@ -8,7 +9,9 @@ const SignUp = async () => {
         <p className="text-xs md:text-sm text-[#B4B0AE] mt-1">Enter your information to create an account</p>
       </div>
 
-      <SignUpForm />
+      <Suspense fallback={<div>Loading form...</div>}>
+        <SignUpForm />
+      </Suspense>
     </>
   );
 };

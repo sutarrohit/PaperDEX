@@ -60,6 +60,7 @@ export const getUserStats: RequestHandler = catchAsync(async (req: Request, res:
   const [pendingOrders] = await Promise.all([
     prisma.order.count({
       where: {
+        userId: req?.user?.user.id,
         status: "PENDING",
       },
     }),
@@ -69,8 +70,6 @@ export const getUserStats: RequestHandler = catchAsync(async (req: Request, res:
   if (!userId) throw new AppError("User ID not found.", 404);
 
   const totalBalance = await calculateTokenBalance(userId);
-
-  console.log("totalBalance", totalBalance);
 
   const data = {
     pendingTx: pendingOrders,

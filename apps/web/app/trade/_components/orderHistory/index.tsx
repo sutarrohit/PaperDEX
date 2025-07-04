@@ -1,12 +1,12 @@
 "use client";
 
-import OrderTable from "@/components/global/orders-table";
+import OrderTable from "@/components/global/orders-table"; // Assuming this path is correct
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
 import { useState } from "react";
 
 export type orderStatusType = "PENDING" | "FILLED";
+
 const OrderHistory = ({ history = false }: { history: boolean }) => {
   const [orderStatus, setOrderStatus] = useState<orderStatusType>("PENDING");
 
@@ -21,7 +21,7 @@ const OrderHistory = ({ history = false }: { history: boolean }) => {
                 setOrderStatus("PENDING");
               }}
             >
-              Open Order
+              Open Orders
             </span>
             <span
               className={`font-semibold text-orange-500 text-[14px] cursor-pointer ${orderStatus === "FILLED" && "underline -underline-offset-[-10px]"} `}
@@ -32,11 +32,10 @@ const OrderHistory = ({ history = false }: { history: boolean }) => {
               Order History
             </span>
           </div>
-
           <Separator className="absolute my-2 top-[17px]" />
         </div>
 
-        <div className="flex-1 h-full">
+        <div className="flex-1 min-h-0">
           <OrderTable orderStatus={orderStatus} history={history} />
         </div>
       </CardContent>

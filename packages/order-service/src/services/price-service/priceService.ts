@@ -40,7 +40,7 @@ export const fetchTokenPrices = (tokenSet: string) => {
   });
 
   binanceWS.on("close", (code: number, reason: Buffer) => {
-    console.log(`Binance connection closed. Code: ${code}, Reason: ${reason.toString()}`);
+    console.log(`Binance connection closed. Code: ${code}, Reason: ${reason?.toString()}`);
     if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
       reconnectAttempts++;
       console.log(`Attempting to reconnect (${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`);
@@ -57,7 +57,7 @@ export const fetchTokenPrices = (tokenSet: string) => {
 
   binanceWS.on("message", (data: WebSocket.Data) => {
     try {
-      const message: BinanceWSMessage = JSON.parse(data.toString());
+      const message: BinanceWSMessage = JSON.parse(data?.toString());
       const { s: symbol, p: price } = message.data;
 
       const existing = TokenPriceStore.find((item) => item.token === symbol);

@@ -35,7 +35,7 @@ export const orderBook = () => {
   });
 
   binanceWS.on("close", (code: number, reason: Buffer) => {
-    console.log(`Binance connection closed. Code: ${code}, Reason: ${reason.toString()}`);
+    console.log(`Binance connection closed. Code: ${code}, Reason: ${reason?.toString()}`);
     if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
       reconnectAttempts++;
       console.log(`Attempting to reconnect (${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`);
@@ -52,7 +52,7 @@ export const orderBook = () => {
 
   binanceWS.on("message", (data: WebSocket.Data) => {
     try {
-      const message: BinanceWSMessage = JSON.parse(data.toString());
+      const message: BinanceWSMessage = JSON.parse(data?.toString());
 
       const streamSymbol = message.stream?.split("@")[0];
       if (!streamSymbol) return;

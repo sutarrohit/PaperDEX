@@ -7,6 +7,7 @@ const tokenRoutes: Router = express.Router();
 tokenRoutes.route("/tokenMarketData").get(getTokenMarketData);
 tokenRoutes.route("/tokenTradeData").get(getTokenTradeData);
 tokenRoutes.route("/orderBooks").get(getOrderBook);
+
 tokenRoutes.route("/tokenPrices").get((req, res) => {
   const response = getTokenPrice([]);
 

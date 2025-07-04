@@ -14,6 +14,8 @@ export class NewOrder {
   }
 
   async createNewOrder(orderData: OrderSchemaType, userId: string): Promise<Order | string> {
+    if (orderData.side === "BUY") await this.settleOrder.checkActualBalances({ ...orderData, userId });
+
     if (orderData.type === "MARKET") return this.createMarketOrder(orderData, userId);
     if (orderData.type === "LIMIT") return this.createLimitOrder(orderData, userId);
     throw new AppError(`Unsupported order type: ${orderData.type}`, 404);

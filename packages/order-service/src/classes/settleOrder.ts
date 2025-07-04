@@ -6,7 +6,7 @@ import { AppError } from "@paperdex/lib";
 import { v4 as uuidv4 } from "uuid";
 import { calculateTradeEffects } from "../services/tradeService";
 import { insufficientBalanceError, tokenInfo } from "@paperdex/lib";
-import { OrderWithUserIdANDOrderId } from "../utils/schema.ts/orderSchema";
+import { OrderWithUserIdANDOrderId, OrderWithUserId } from "../utils/schema.ts/orderSchema";
 
 export class SettleOrders {
   private prisma: PrismaClient;
@@ -83,6 +83,69 @@ export class SettleOrders {
         side === OrderSide.BUY ? quoteBalance?.balance : baseBalance?.balance,
       );
     }
+  }
+
+  async checkActualBalances(order: OrderWithUserId) {
+    const [baseToken, quoteToken] = order.symbol?.split("/") || [];
+
+    if (!baseToken || !quoteToken) {
+      throw new AppError("Invalid symbol format. Expected format: BASE/QUOTE", 400);
+    }
+
+    const parsedQuantity = new Decimal(order.quantity);
+    if (parsedQuantity.lte(0)) {
+      throw new AppError("Invalid quantity. Must be greater than zero", 400);
+    }
+
+    const user = await getUserDetails(order.userId);
+    const walletId = user?.wallet?.id;
+
+    if (!walletId) {
+      throw new AppError("User wallet not found", 404);
+    }
+
+    // Run balance fetch and pending orders in parallel
+    const [quoteTokenBalanceResult, allPendingOrders] = await Promise.all([
+      prisma.tokenBalance.findUnique({
+        where: { walletId_symbol: { walletId, symbol: quoteToken } },
+        select: { balance: true },
+      }),
+      prisma.order.findMany({
+        where: {
+          userId: order.userId,
+          status: "PENDING",
+        },
+        select: {
+          price: true,
+          quantity: true,
+        },
+      }),
+    ]);
+
+    // Calculate current quoteTokenDelta
+    const { quoteTokenDelta } = calculateTradeEffects({
+      baseToken,
+      quoteToken,
+      side: order.side,
+      quantity: parsedQuantity,
+    });
+
+    // Total pending value = Σ (price × quantity)
+    const totalPendingAmount = allPendingOrders.reduce((total: Decimal, pending) => {
+      const price = new Decimal(pending.price ?? 0);
+      const quantity = new Decimal(pending.quantity);
+      return total.plus(price.mul(quantity));
+    }, new Decimal(0));
+
+    // User's actual balance - all pending locked value
+    const userBalance = new Decimal(quoteTokenBalanceResult?.balance ?? 0);
+    const availableBalance = userBalance.minus(totalPendingAmount);
+
+    if (availableBalance.lt(quoteTokenDelta)) {
+      throw insufficientBalanceError(quoteToken, quoteTokenDelta, availableBalance);
+    }
+
+    return quoteTokenDelta;
   }
 
   private async updateBalances(
