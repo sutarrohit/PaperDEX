@@ -16,3 +16,25 @@ export { tokenSet, klineSet_1h, klineSet_1d, klineSet_1w, volumeMcap };
 
 export const orderBookSet =
   "usdtdai@depth20@1000ms/ethusdt@depth20@1000ms/btcusdt@depth20@1000ms/bnbusdt@depth20@1000ms/solusdt@depth20@1000ms/adausdt@depth20@1000ms/xrpusdt@depth20@1000ms/dotusdt@depth20@1000ms/linkusdt@depth20@1000ms/avaxusdt@depth20@1000ms/trxusdt@depth20@1000ms/maticusdt@depth20@1000ms/ltcusdt@depth20@1000ms/shibusdt@depth20@1000ms/uniusdt@depth20@1000ms/atomusdt@depth20@1000ms/xmrusdt@depth20@1000ms/nearusdt@depth20@1000ms/aptusdt@depth20@1000ms";
+
+export const tokenArraySet = [
+  "USDTDAI",
+  "ETHUSDT",
+  "BTCUSDT",
+  "BNBUSDT",
+  "SOLUSDT",
+  "ADAUSDT",
+  "XRPUSDT",
+  "DOTUSDT",
+  "LINKUSDT",
+  "AVAXUSDT",
+  "TRXUSDT",
+  "MATICUSDT",
+  "LTCUSDT",
+  "SHIBUSDT",
+  "UNIUSDT",
+  "ATOMUSDT",
+  "XMRUSDT",
+  "NEARUSDT",
+  "APTUSDT",
+];

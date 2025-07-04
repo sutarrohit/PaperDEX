@@ -20,7 +20,7 @@ export class CreateOrder {
       if (!newOrder) throw new AppError("Failed to create new order", 500);
 
       await this.addOrderToSet({ ...order, orderId: newOrder?.id });
-      console.log("Limit order create----------------------");
+
       return newOrder;
     }
   }

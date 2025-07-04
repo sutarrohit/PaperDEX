@@ -13,7 +13,6 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  PaginationState,
 } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -26,17 +25,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
+import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { getQueryClient } from "@/lib/getQueryClient";
+import { useMarketData } from "@/hooks/useMarketData";
+
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data?: TData[];
   isLandingPage?: boolean;
 }
-
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getMarketData } from "@/lib/api/market-api";
-import { ChevronDown } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { getQueryClient } from "@/lib/getQueryClient";
 
 export function DataTable<TData, TValue>({ columns, isLandingPage = false }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -44,27 +42,14 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pageCount, setPageCount] = React.useState(0);
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
 
   const router = useRouter();
 
   const queryClient = getQueryClient();
+  const { pagination, setPagination, marketData, isLoading } = useMarketData();
 
-  const {
-    data: marketData,
-    isLoading,
-    error,
-  } = useSuspenseQuery({
-    queryKey: ["market-table", pagination.pageIndex, pagination.pageSize],
-    queryFn: async () => getMarketData(pagination.pageIndex, pagination.pageSize),
-  });
-
-  console.log("error", error);
   React.useEffect(() => {
-    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE}/stream/price`);
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE_WSS}/stream/price`);
 
     socket.onopen = () => {
       socket.send(JSON.stringify({ pageIndex: pagination.pageIndex + 1, pageSize: pagination.pageSize }));
@@ -83,7 +68,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
   React.useEffect(() => {
     if (marketData) {
       if (marketData.totalPages) {
-        setPageCount(marketData.totalPages);
+        setPageCount(marketData?.totalPages);
       }
     }
   }, [marketData, pagination.pageSize]);
@@ -136,7 +121,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                 {table
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
-                  .map((column) => {
+                  ?.map((column) => {
                     return (
                       <DropdownMenuCheckboxItem
                         key={column.id}
@@ -157,9 +142,9 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
       <div className="rounded-lg overflow-hidden border">
         <Table className="">
           <TableHeader>
-            {table?.getHeaderGroups().map((headerGroup) => (
+            {table?.getHeaderGroups()?.map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers?.map((header) => {
                   return (
                     <TableHead key={header.id} className={`text-end py-2.5 ${!isLandingPage && "bg-[#141414]"} `}>
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -171,7 +156,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
           </TableHeader>
           <TableBody>
             {table?.getRowModel().rows?.length ? (
-              table?.getRowModel().rows.map((row) => (
+              table?.getRowModel().rows?.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -184,7 +169,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
                     }
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells()?.map((cell) => (
                     <TableCell key={cell.id} className="text-end pr-5 py-4">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>

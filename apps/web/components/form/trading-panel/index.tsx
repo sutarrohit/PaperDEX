@@ -9,11 +9,15 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/global/loader";
 import { Card, CardContent } from "@/components/ui/card";
+import TokenImage from "@/components/global/token-image";
+import Image from "next/image";
+import { tokenInfo } from "@/utils/tokenData";
 
 const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string }) => {
   const { createNewTrade, isPending, register, control, errors, watch, setValue } = useCreateTrade(tokenPair, mode);
 
-  console.log("isPending-------------------", isPending);
+  const filterToken = tokenPair.split("_").join("/");
+  const baseTokenURL = tokenInfo.find((token) => token.symbol === tokenPair?.split("_")[0])?.icon || "";
 
   return (
     <form
@@ -91,6 +95,31 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         </CardContent>
       </Card>
 
+      {/* Symbol */}
+      <div className="space-y-2">
+        <Label htmlFor="symbol">Symbol</Label>
+
+        <div className="w-full h-11 border justify-between rounded-sm flex items-center pl-[12px] pr-[6px] bg-[#1c1c1c]">
+          <span className="text-[14px] text-[#888]">{tokenPair}</span>
+          <div>
+            <TokenImage tokenSymbol={filterToken} className="w-[28px] h-[28px]" title={false} />
+          </div>
+        </div>
+
+        {/* <Input
+          id="symbol"
+          placeholder=""
+          disabled={true}
+          className="bg-themeBlack border-themeGray text-themeTextGray h-11"
+          {...register("symbol")}
+        /> */}
+        {/* <ErrorMessage
+          errors={errors}
+          name="symbol"
+          render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
+        /> */}
+      </div>
+
       {/* Price */}
       <div className="space-y-2">
         <Label htmlFor="price">Price</Label>
@@ -106,7 +135,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
                 min="0"
                 placeholder={watch("type") === "MARKET" ? "Market Price" : "0.00"}
                 disabled={watch("type") === "MARKET"}
-                className="bg-themeBlack border-themeGray text-themeTextGray h-11"
+                className="h-11"
                 {...register("price", {
                   valueAsNumber: true,
                 })}
@@ -135,7 +164,15 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
             {...register("quantity", { valueAsNumber: true })}
           />
 
-          <span className="absolute top-[11px] right-4 text-[14px]">{watch("base")}</span>
+          <div className="absolute top-[8px] right-3  text-[14px]">
+            <Image
+              src={baseTokenURL}
+              alt={watch("base")}
+              width={40}
+              height={40}
+              className={"w-[28px] h-[28px] rounded-full"}
+            />
+          </div>
 
           {/* <Controller
             name="quantityToken"
@@ -166,23 +203,6 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
         <ErrorMessage
           errors={errors}
           name="quantityToken"
-          render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
-        />
-      </div>
-
-      {/* Symbol */}
-      <div className="space-y-2">
-        <Label htmlFor="symbol">Symbol</Label>
-        <Input
-          id="symbol"
-          placeholder="BTC_USDT"
-          disabled={true}
-          className="bg-themeBlack border-themeGray text-themeTextGray h-11"
-          {...register("symbol")}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="symbol"
           render={({ message }) => <p className="text-red-400 text-sm">{message}</p>}
         />
       </div>

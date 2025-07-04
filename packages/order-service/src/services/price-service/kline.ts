@@ -57,7 +57,7 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
   });
 
   ws.on("close", (code: number, reason: Buffer) => {
-    console.log(`[${interval}] Connection closed. Code: ${code}, Reason: ${reason.toString()}`);
+    console.log(`[${interval}] Connection closed. Code: ${code}, Reason: ${reason?.toString()}`);
     const attempts = (reconnectAttemptsMap.get(interval) || 0) + 1;
 
     if (attempts <= MAX_RECONNECT_ATTEMPTS) {
@@ -76,7 +76,7 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
 
   ws.on("message", (data: WebSocket.Data) => {
     try {
-      const message: BinanceWSMessage = JSON.parse(data.toString());
+      const message: BinanceWSMessage = JSON.parse(data?.toString());
 
       const { o, c, h, l, i } = message.data.k;
 

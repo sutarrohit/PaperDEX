@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/authClient";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const User = ({ sidebar = false }: { sidebar?: boolean }) => {
   const { useSession, signOut } = authClient;
@@ -26,7 +27,7 @@ const User = ({ sidebar = false }: { sidebar?: boolean }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {!sidebar ? (
-          <Avatar className="h-8 w-8 rounded-lg">
+          <Avatar className="h-8 w-8 rounded-lg cursor-pointer">
             <AvatarImage src={data?.user?.image || "./logo-white.png"} alt={data?.user?.name} />
             <AvatarFallback className="rounded-lg bg-orange-500 cursor-pointer">
               {data?.user?.name?.split("")[0]?.toUpperCase() || "PD"}
@@ -37,9 +38,9 @@ const User = ({ sidebar = false }: { sidebar?: boolean }) => {
             size="lg"
             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
           >
-            <Avatar className="h-8 w-8 rounded-lg">
+            <Avatar className="h-8 w-8 rounded-lg cursor-pointer">
               <AvatarImage src={data?.user?.image || "./logo-white.png"} alt={data?.user?.name} />
-              <AvatarFallback className="rounded-lg bg-orange-500">
+              <AvatarFallback className="rounded-lg bg-orange-500 cursor-pointer">
                 {data?.user?.name?.split("")[0]?.toUpperCase() || "PD"}
               </AvatarFallback>
             </Avatar>
@@ -76,13 +77,12 @@ const User = ({ sidebar = false }: { sidebar?: boolean }) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <div className="flex justify-between gap-1  w-full">
-              <p className="flex items-center gap-2">
+            <Link href="/dashboard" className="w-full">
+              <div className="flex items-center gap-1 w-full">
                 <BadgeCheck />
                 Account
-              </p>
-              <Badge className="text-[10px] px-1 bg-black/40 text-white">coming soon</Badge>
-            </div>
+              </div>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <div className="flex justify-between gap-1  w-full">

@@ -6,7 +6,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 const DashboardLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const queryClient = getQueryClient();
 
-  // void queryClient.prefetchQuery({
+  // await queryClient.prefetchQuery({
   //   queryKey: ["user-stats"],
   //   queryFn: () => getUserStats(),
   // });

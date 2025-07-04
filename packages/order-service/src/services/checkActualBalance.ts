@@ -2,7 +2,7 @@ import { prisma } from "@paperdex/db";
 import { AppError } from "@paperdex/lib";
 import { getTokenPrice } from "../store/tokenPriceStore";
 
-export const calculateTokenBalance = async (userId: string): Promise<number> => {
+export const calculateActualBalance = async (userId: string): Promise<number> => {
   const wallet = await prisma.wallet.findUnique({
     where: { userId },
     select: {

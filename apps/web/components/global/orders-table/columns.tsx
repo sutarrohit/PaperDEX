@@ -7,7 +7,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TradeOrder } from "@/utils/types";
 import { Badge } from "@/components/ui/badge";
-
+import TokenImage from "../token-image";
 import CancelOrder from "./cancelOrder";
 
 export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
@@ -19,16 +19,7 @@ export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
     cell: ({ row }) => {
       return (
         <div className="capitalize flex items-center gap-2 w-[180px] lg:w-full">
-          {/* <Image
-          src={row.original.symbol}
-          alt={row.getValue("name")}
-          width={50}
-          height={50}
-          className="w-[28px] h-[28px] rounded-full"
-        /> */}
-
-          <span className="pl-1">{row.original?.symbol}</span>
-          {/* <span className="text-[10px] text-muted-foreground">{row.getValue("symbol")}</span> */}
+          <TokenImage tokenSymbol={row.original.symbol} />
         </div>
       );
     },

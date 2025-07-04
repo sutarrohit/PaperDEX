@@ -2,7 +2,7 @@
 import { Card, CardDescription, CardHeader } from "@/components/ui/card";
 import { getUserStats } from "@/lib/api/user-api";
 import { cn } from "@/lib/utils";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { type LucideIcon } from "lucide-react";
 
 export type sectionDataSchema = {
@@ -22,9 +22,10 @@ export function SectionCards({
 }) {
   const {
     data: userStats,
+    isLoading,
 
     // isError,
-  } = useSuspenseQuery({
+  } = useQuery({
     queryKey: ["user-stats"],
     queryFn: () => getUserStats(),
   });
@@ -50,11 +51,15 @@ export function SectionCards({
                     <div className="text-[18px]">{section.name}</div>
                     <span className="text-[18px]">
                       {section.id === "totalBalance"
-                        ? (userStats.data[section.id].toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          }) ?? "0")
-                        : (userStats.data[section.id] ?? "0")}
+                        ? isLoading
+                          ? "--"
+                          : (userStats?.data[section?.id].toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            }) ?? "0")
+                        : isLoading
+                          ? "--"
+                          : (userStats?.data[section?.id] ?? "0")}
                     </span>
                   </div>
                 </CardDescription>

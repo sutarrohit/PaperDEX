@@ -32,7 +32,7 @@ export interface DataTableProps<TData, TValue> {
   history: boolean;
 }
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/getQueryClient";
 import { orderStatusType } from "@/app/trade/_components/orderHistory";
 import { getOrderHistory } from "@/lib/api/trade-api";
@@ -61,14 +61,14 @@ export function DataTable<TData, TValue>({
     data: marketData,
     isLoading,
     // isError,
-  } = useSuspenseQuery({
+  } = useQuery({
     queryKey: ["order-history", orderStatus, pagination.pageIndex, pagination.pageSize],
     queryFn: () => getOrderHistory(orderStatus, pagination.pageIndex, pagination.pageSize),
     refetchInterval: 20000,
   });
 
   React.useEffect(() => {
-    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE}/stream/price`);
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE_WSS}/stream/price`);
 
     socket.onopen = () => {
       socket.send(JSON.stringify({ pageIndex: pagination.pageIndex + 1, pageSize: pagination.pageSize }));
@@ -121,7 +121,7 @@ export function DataTable<TData, TValue>({
 
   if (isLoading) {
     return (
-      <div className="w-full h-full border border-pink-500 flex justify-center items-center">
+      <div className="w-full h-full flex justify-center items-center">
         <svg
           aria-hidden="true"
           role="status"
@@ -146,7 +146,7 @@ export function DataTable<TData, TValue>({
 
   return (
     // Add flex, flex-col to the main container
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col ">
       {history && (
         <div className="flex items-center pb-2 w-full justify-end gap-4">
           <Input
