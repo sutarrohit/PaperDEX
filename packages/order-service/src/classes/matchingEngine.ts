@@ -5,6 +5,7 @@ import { RedisSet } from "./createOrder";
 import { getTokenPrice } from "../store/tokenPriceStore";
 import { SettleOrders } from "./settleOrder";
 import { OrderWithUserIdANDOrderId } from "../utils/schema.ts/orderSchema";
+import { supportedTokens } from "@paperdex/lib";
 
 class MatchEngine {
   static async matchOrders(symbol: string) {
@@ -43,32 +44,9 @@ class MatchEngine {
 }
 
 export async function runMatcher() {
-  const tradingPairs = [
-    "USDT/DAI",
-    "ETH/USDT",
-    "BTC/USDT",
-    "BNB/USDT",
-    "SOL/USDT",
-    "ADA/USDT",
-    "XRP/USDT",
-    "DOT/USDT",
-    "LINK/USDT",
-    "AVAX/USDT",
-    "TRX/USDT",
-    "MATIC/USDT",
-    "LTC/USDT",
-    "SHIB/USDT",
-    "UNI/USDT",
-    "ATOM/USDT",
-    "XMR/USDT",
-    "NEAR/USDT",
-    "APT/USDT",
-    "PEPE/USDT",
-  ];
-
   while (true) {
     await Promise.all(
-      tradingPairs.map(async (pair) => {
+      supportedTokens.map(async (pair) => {
         try {
           await MatchEngine.matchOrders(pair);
         } catch (err) {

@@ -57,16 +57,9 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   },
 
   emailVerification: {
-    sendVerificationEmail: async ({ user, url }) => {
-      // Change callback url to frontend URL
-      const parsedUrl = new URL(url);
-      const originalCallback = parsedUrl.searchParams.get("callbackURL") || "/dashboard";
-      parsedUrl.searchParams.set("callbackURL", `${NEXT_PUBLIC_CLIENT_SERVICE}${originalCallback}`);
-      const verifyUrl = parsedUrl?.toString();
-
-      const html = verifyEmailTemplate(verifyUrl, user.name);
+    sendVerificationEmail: async ({ url, user }) => {
+      const html = verifyEmailTemplate(url, user.name);
       const subject = "Verify your email address";
-
       sendEmail(user.email, subject, html);
     },
     sendOnSignUp: true,

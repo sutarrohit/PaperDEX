@@ -65,6 +65,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair })
                     maximumFractionDigits: 8,
                     style: "currency",
                     currency: "USD",
+                    maximumSignificantDigits: 7,
                   })}
                 </span>
                 <span className="z-10">
@@ -85,6 +86,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair })
             maximumFractionDigits: 8,
             style: "currency",
             currency: "USD",
+            maximumSignificantDigits: 7,
           })}
         </p>
 
@@ -109,6 +111,7 @@ const OrderBookComponent: React.FC<OrderBookProps> = ({ bids, asks, tokenPair })
                     maximumFractionDigits: 8,
                     style: "currency",
                     currency: "USD",
+                    maximumSignificantDigits: 7,
                   })}
                 </span>
                 <span className="z-10">

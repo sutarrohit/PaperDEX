@@ -78,7 +78,7 @@ export const useAuthSignUp = (redirect: string | null) => {
     },
     onSuccess: () => {
       reset();
-      toast.success("Signed up successfully", { duration: 5000 });
+      toast.success("Signed up successfully. Please check your email and verify your account.", { duration: 5000 });
       router.push("/sign-in");
     },
   });

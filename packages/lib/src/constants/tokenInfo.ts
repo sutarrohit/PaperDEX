@@ -33,15 +33,15 @@ export const tokenInfo: tokenInfoType[] = [
   },
   {
     id: randomUUID(),
-    name: "Tether",
-    symbol: "USDT",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
-  },
-  {
-    id: randomUUID(),
     name: "BNB",
     symbol: "BNB",
     icon: "https://bin.bnbstatic.com/static/assets/logos/BNB.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Tether",
+    symbol: "USDT",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
   },
   {
     id: randomUUID(),
@@ -51,21 +51,15 @@ export const tokenInfo: tokenInfoType[] = [
   },
   {
     id: randomUUID(),
-    name: "XRP",
-    symbol: "XRP",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/XRP.png",
-  },
-  {
-    id: randomUUID(),
     name: "Cardano",
     symbol: "ADA",
     icon: "https://bin.bnbstatic.com/static/assets/logos/ADA.png",
   },
   {
     id: randomUUID(),
-    name: "Avalanche",
-    symbol: "AVAX",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/AVAX.png",
+    name: "XRP",
+    symbol: "XRP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XRP.png",
   },
   {
     id: randomUUID(),
@@ -81,16 +75,17 @@ export const tokenInfo: tokenInfoType[] = [
   },
   {
     id: randomUUID(),
+    name: "Avalanche",
+    symbol: "AVAX",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AVAX.png",
+  },
+  {
+    id: randomUUID(),
     name: "TRON",
     symbol: "TRX",
     icon: "https://bin.bnbstatic.com/static/assets/logos/TRX.png",
   },
-  {
-    id: randomUUID(),
-    name: "Polygon",
-    symbol: "MATIC",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/MATIC.png",
-  },
+
   {
     id: randomUUID(),
     name: "Litecoin",
@@ -117,12 +112,6 @@ export const tokenInfo: tokenInfoType[] = [
   },
   {
     id: randomUUID(),
-    name: "Monero",
-    symbol: "XMR",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/XMR.png",
-  },
-  {
-    id: randomUUID(),
     name: "NEAR Protocol",
     symbol: "NEAR",
     icon: "https://bin.bnbstatic.com/static/assets/logos/NEAR.png",
@@ -132,5 +121,23 @@ export const tokenInfo: tokenInfoType[] = [
     name: "Aptos",
     symbol: "APT",
     icon: "https://bin.bnbstatic.com/static/assets/logos/APT.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Optimism",
+    symbol: "OP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/OP.png",
+  },
+  {
+    id: randomUUID(),
+    name: "DOGE",
+    symbol: "DOGE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/DOGE.png",
+  },
+  {
+    id: randomUUID(),
+    name: "CAKE",
+    symbol: "CAKE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/CAKE.png",
   },
 ];
