@@ -56,6 +56,7 @@ export function SectionCards({
                           : (userStats?.data[section?.id].toLocaleString("en-US", {
                               style: "currency",
                               currency: "USD",
+                              maximumSignificantDigits: 7,
                             }) ?? "0")
                         : isLoading
                           ? "--"

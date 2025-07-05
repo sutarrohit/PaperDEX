@@ -9,7 +9,7 @@ export const getTokenMarketData: RequestHandler = catchAsync(async (req: Request
   const rawPageSize = req.query.pageSize;
 
   const pageIndex = rawPageIndex ? parseInt(rawPageIndex as string) : 1;
-  const pageSize = rawPageSize ? parseInt(rawPageSize as string) : 10;
+  const pageSize = rawPageSize ? parseInt(rawPageSize as string) : 20;
 
   let paginatedTokenInfo;
 

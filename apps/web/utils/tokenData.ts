@@ -1,78 +1,83 @@
 export const tokenInfo = [
   {
-    symbol: "BTC",
+    symbol: "BTC", // bitcoin
     icon: "https://bin.bnbstatic.com/static/assets/logos/BTC.png",
   },
   {
-    symbol: "ETH",
+    symbol: "ETH", // ethereum
     icon: "https://bin.bnbstatic.com/static/assets/logos/ETH.png",
   },
   {
-    symbol: "USDT",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
-  },
-  {
-    symbol: "BNB",
+    symbol: "BNB", // binancecoin
     icon: "https://bin.bnbstatic.com/static/assets/logos/BNB.png",
   },
   {
-    symbol: "SOL",
+    symbol: "USDT", // tether
+    icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
+  },
+  {
+    symbol: "SOL", // solana
     icon: "https://bin.bnbstatic.com/static/assets/logos/SOL.png",
   },
   {
-    symbol: "XRP",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/XRP.png",
-  },
-  {
-    symbol: "ADA",
+    symbol: "ADA", // cardano
     icon: "https://bin.bnbstatic.com/static/assets/logos/ADA.png",
   },
   {
-    symbol: "AVAX",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/AVAX.png",
+    symbol: "XRP", // ripple
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XRP.png",
   },
   {
-    symbol: "DOT",
+    symbol: "DOT", // polkadot
     icon: "https://bin.bnbstatic.com/static/assets/logos/DOT.png",
   },
   {
-    symbol: "LINK",
+    symbol: "LINK", // chainlink
     icon: "https://bin.bnbstatic.com/static/assets/logos/LINK.png",
   },
   {
-    symbol: "TRX",
+    symbol: "AVAX", // avalanche-2
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AVAX.png",
+  },
+  {
+    symbol: "TRX", // tron
     icon: "https://bin.bnbstatic.com/static/assets/logos/TRX.png",
   },
+
   {
-    symbol: "MATIC",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/MATIC.png",
-  },
-  {
-    symbol: "LTC",
+    symbol: "LTC", // litecoin
     icon: "https://bin.bnbstatic.com/static/assets/logos/LTC.png",
   },
   {
-    symbol: "SHIB",
+    symbol: "SHIB", // shiba-inu
     icon: "https://bin.bnbstatic.com/static/assets/logos/SHIB.png",
   },
   {
-    symbol: "UNI",
+    symbol: "UNI", // uniswap
     icon: "https://bin.bnbstatic.com/static/assets/logos/UNI.png",
   },
   {
-    symbol: "ATOM",
+    symbol: "ATOM", // cosmos
     icon: "https://bin.bnbstatic.com/static/assets/logos/ATOM.png",
   },
   {
-    symbol: "XMR",
-    icon: "https://bin.bnbstatic.com/static/assets/logos/XMR.png",
-  },
-  {
-    symbol: "NEAR",
+    symbol: "NEAR", // near
     icon: "https://bin.bnbstatic.com/static/assets/logos/NEAR.png",
   },
   {
-    symbol: "APT",
+    symbol: "APT", // aptos
     icon: "https://bin.bnbstatic.com/static/assets/logos/APT.png",
+  },
+  {
+    symbol: "OP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/OP.png",
+  },
+  {
+    symbol: "DOGE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/DOGE.png",
+  },
+  {
+    symbol: "CAKE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/CAKE.png",
   },
 ];

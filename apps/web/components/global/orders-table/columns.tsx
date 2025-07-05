@@ -71,6 +71,7 @@ export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
           {Number(row.getValue("price")).toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
+            maximumSignificantDigits: 7,
           })}
         </div>
       </div>

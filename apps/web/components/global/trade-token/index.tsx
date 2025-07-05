@@ -82,6 +82,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
                 {data?.price?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
+                  maximumSignificantDigits: 7,
                 })}
               </span>
             </div>
@@ -103,6 +104,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
                 {data?.high_24hr?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
+                  maximumSignificantDigits: 7,
                 })}
               </span>
             </div>
@@ -113,6 +115,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
                 {data?.low_24hr?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
+                  maximumSignificantDigits: 7,
                 })}
               </span>
             </div>

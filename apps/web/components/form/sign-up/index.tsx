@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 const SignUpForm = () => {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || null;
+
   const { isPending, signUpWithEmail, register, errors } = useAuthSignUp(redirect);
 
   return (

@@ -41,6 +41,7 @@ const TradingPanel = ({ tokenPair, mode }: { tokenPair: string; mode: string }) 
               {Number(quoteTokensPrice?.balance || 0).toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
+                maximumSignificantDigits: 7,
               })}
             </span>
           </div>

@@ -135,6 +135,7 @@ const TopCoins = () => {
                           {Number(tokenData.price).toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
+                            maximumSignificantDigits: 7,
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 2,
                           })}

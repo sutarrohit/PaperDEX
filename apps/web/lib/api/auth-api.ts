@@ -25,7 +25,7 @@ export const singUpApi = async (
     password,
     name: `${firstName} ${lastName}`,
     image: image,
-    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
+    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/market"}`,
   });
 
   if (error) throw new Error(error?.message || "failed to sign up");
