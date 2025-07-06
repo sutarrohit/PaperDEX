@@ -43,7 +43,6 @@ export const tokenInfo = [
     symbol: "TRX", // tron
     icon: "https://bin.bnbstatic.com/static/assets/logos/TRX.png",
   },
-
   {
     symbol: "LTC", // litecoin
     icon: "https://bin.bnbstatic.com/static/assets/logos/LTC.png",
@@ -79,5 +78,125 @@ export const tokenInfo = [
   {
     symbol: "CAKE",
     icon: "https://bin.bnbstatic.com/static/assets/logos/CAKE.png",
+  },
+  {
+    symbol: "FIL", // filecoin
+    icon: "https://bin.bnbstatic.com/static/assets/logos/FIL.png",
+  },
+  {
+    symbol: "XLM", // stellar
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XLM.png",
+  },
+  {
+    symbol: "ETC", // ethereum-classic
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ETC.png",
+  },
+  {
+    symbol: "ALGO", // algorand
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ALGO.png",
+  },
+  {
+    symbol: "ARB", // arbitrum
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ARB.png",
+  },
+  {
+    symbol: "VET", // vechain
+    icon: "https://bin.bnbstatic.com/static/assets/logos/VET.png",
+  },
+  {
+    symbol: "ICP", // internet-computer
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ICP.png",
+  },
+  {
+    symbol: "AAVE", // aave
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AAVE.png",
+  },
+  {
+    symbol: "AXS", // axie-infinity
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AXS.png",
+  },
+  {
+    symbol: "MANA", // decentraland
+    icon: "https://bin.bnbstatic.com/static/assets/logos/MANA.png",
+  },
+  {
+    symbol: "GRT", // the-graph
+    icon: "https://bin.bnbstatic.com/static/assets/logos/GRT.png",
+  },
+  {
+    symbol: "SAND", // the-sandbox
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SAND.png",
+  },
+  {
+    symbol: "THETA", // theta-network
+    icon: "https://bin.bnbstatic.com/static/assets/logos/THETA.png",
+  },
+  {
+    symbol: "KAVA", // kava
+    icon: "https://bin.bnbstatic.com/static/assets/logos/KAVA.png",
+  },
+  {
+    symbol: "RUNE", // thorchain
+    icon: "https://bin.bnbstatic.com/static/assets/logos/RUNE.png",
+  },
+  {
+    symbol: "SNX", // synthetix-network-token
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SNX.png",
+  },
+  {
+    symbol: "INJ",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/INJ.png",
+  },
+  {
+    symbol: "SEI",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SEI.png",
+  },
+  {
+    symbol: "TIA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/TIA.png",
+  },
+  {
+    symbol: "STRK",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/STRK.png",
+  },
+  {
+    symbol: "CRV", // Curve DAO Token
+    icon: "https://bin.bnbstatic.com/static/assets/logos/CRV.png",
+  },
+  {
+    symbol: "ZEC", // Zcash
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ZEC.png",
+  },
+  {
+    symbol: "COMP", // Compound
+    icon: "https://bin.bnbstatic.com/static/assets/logos/COMP.png",
+  },
+  {
+    symbol: "MKR", // Maker
+    icon: "https://bin.bnbstatic.com/static/assets/logos/MKR.png",
+  },
+  {
+    symbol: "GALA", // Gala
+    icon: "https://bin.bnbstatic.com/static/assets/logos/GALA.png",
+  },
+  {
+    symbol: "SUI", // Sui Network
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SUI.png",
+  },
+  {
+    symbol: "WIF", // dogwifcoin
+    icon: "https://bin.bnbstatic.com/static/assets/logos/WIF.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    symbol: "PEPE", // Pepe
+    icon: "https://bin.bnbstatic.com/static/assets/logos/PEPE.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    symbol: "JUP", // Jupiter
+    icon: "https://bin.bnbstatic.com/static/assets/logos/JUP.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    symbol: "PYTH", // Pyth Network
+    icon: "https://bin.bnbstatic.com/static/assets/logos/PYTH.png", // Note: Verify if Binance has an official logo
   },
 ];

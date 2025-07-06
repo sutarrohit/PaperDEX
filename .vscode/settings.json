@@ -4,5 +4,6 @@
       "mode": "auto"
     }
   ],
-  "cSpell.words": ["redisinsight"]
+  "cSpell.words": ["redisinsight"],
+  "css.completion.triggerPropertyValueCompletion": false
 }

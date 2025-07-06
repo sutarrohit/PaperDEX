@@ -17,7 +17,6 @@ export type tokenInfoType = {
   symbol: string;
   icon: string;
 } & Partial<TokenPriceStoreType>;
-
 export const tokenInfo: tokenInfoType[] = [
   {
     id: randomUUID(),
@@ -85,7 +84,6 @@ export const tokenInfo: tokenInfoType[] = [
     symbol: "TRX",
     icon: "https://bin.bnbstatic.com/static/assets/logos/TRX.png",
   },
-
   {
     id: randomUUID(),
     name: "Litecoin",
@@ -130,14 +128,197 @@ export const tokenInfo: tokenInfoType[] = [
   },
   {
     id: randomUUID(),
-    name: "DOGE",
+    name: "Dogecoin",
     symbol: "DOGE",
     icon: "https://bin.bnbstatic.com/static/assets/logos/DOGE.png",
   },
   {
     id: randomUUID(),
-    name: "CAKE",
+    name: "PancakeSwap",
     symbol: "CAKE",
     icon: "https://bin.bnbstatic.com/static/assets/logos/CAKE.png",
+  },
+
+  {
+    id: randomUUID(),
+    name: "Filecoin",
+    symbol: "FIL",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/FIL.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Stellar",
+    symbol: "XLM",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/XLM.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Ethereum Classic",
+    symbol: "ETC",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ETC.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Algorand",
+    symbol: "ALGO",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ALGO.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Arbitrum",
+    symbol: "ARB",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ARB.png",
+  },
+  {
+    id: randomUUID(),
+    name: "VeChain",
+    symbol: "VET",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/VET.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Internet Computer",
+    symbol: "ICP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ICP.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Aave",
+    symbol: "AAVE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AAVE.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Axie Infinity",
+    symbol: "AXS",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/AXS.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Decentraland",
+    symbol: "MANA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/MANA.png",
+  },
+  {
+    id: randomUUID(),
+    name: "The Graph",
+    symbol: "GRT",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/GRT.png",
+  },
+  {
+    id: randomUUID(),
+    name: "The Sandbox",
+    symbol: "SAND",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SAND.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Theta Network",
+    symbol: "THETA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/THETA.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Kava",
+    symbol: "KAVA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/KAVA.png",
+  },
+  {
+    id: randomUUID(),
+    name: "THORChain",
+    symbol: "RUNE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/RUNE.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Synthetix",
+    symbol: "SNX",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SNX.png",
+  },
+
+  {
+    id: randomUUID(),
+    name: "Injective",
+    symbol: "INJ",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/INJ.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Sei Network",
+    symbol: "SEI",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SEI.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Celestia",
+    symbol: "TIA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/TIA.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Starknet ",
+    symbol: "strk",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/STRK.png",
+  },
+
+  {
+    id: randomUUID(),
+    name: "Curve DAO Token",
+    symbol: "CRV",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/CRV.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Zcash",
+    symbol: "ZEC",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/ZEC.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Compound",
+    symbol: "COMP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/COMP.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Maker",
+    symbol: "MKR",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/MKR.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Gala",
+    symbol: "GALA",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/GALA.png",
+  },
+  {
+    id: randomUUID(),
+    name: "Sui Network",
+    symbol: "SUI",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/SUI.png",
+  },
+  {
+    id: randomUUID(),
+    name: "dogwifcoin",
+    symbol: "WIF",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/WIF.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    id: randomUUID(),
+    name: "Pepe",
+    symbol: "PEPE",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/PEPE.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    id: randomUUID(),
+    name: "Jupiter",
+    symbol: "JUP",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/JUP.png", // Note: Verify if Binance has an official logo
+  },
+  {
+    id: randomUUID(),
+    name: "Pyth Network",
+    symbol: "PYTH",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/PYTH.png", // Note: Verify if Binance has an official logo
   },
 ];
