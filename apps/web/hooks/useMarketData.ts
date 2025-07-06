@@ -5,10 +5,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { PaginationState } from "@tanstack/react-table";
 import React from "react";
 
-export const useMarketData = () => {
+export const useMarketData = (isLandingPage = false) => {
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 20,
+    pageSize: isLandingPage ? 10 : 20,
   });
 
   const {

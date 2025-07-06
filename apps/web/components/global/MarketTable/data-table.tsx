@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({ columns, isLandingPage = false }: Dat
   const router = useRouter();
 
   const queryClient = getQueryClient();
-  const { pagination, setPagination, marketData, isLoading } = useMarketData();
+  const { pagination, setPagination, marketData, isLoading } = useMarketData(isLandingPage);
 
   React.useEffect(() => {
     const socket = new WebSocket(`${process.env.NEXT_PUBLIC_ORDER_SERVICE_WSS}/stream/price`);

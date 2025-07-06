@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsup ./src",
-    "start": "nodemon dist/server.js",
+    "start": "node dist/server.js",
     "lint": "eslint . --max-warnings 0",
     "dev": "nodemon --exec ts-node src/server.ts",
     "generate:schema": "pnpm dlx @better-auth/cli generate --output ../../packages/db/prisma/schema.prisma"

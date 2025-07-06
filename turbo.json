@@ -1,50 +1,49 @@
 {
-    "$schema": "https://turbo.build/schema.json",
-    "ui": "tui",
-    "tasks": {
-        "build": {
-            "dependsOn": ["^build", "db:generate"],
-            "inputs": ["$TURBO_DEFAULT$", ".env*", "tsconfig.json"],
-            "outputs": [".next/**", "!.next/cache/**", "dist/**"]
-        },
-        "start": {
-            "dependsOn": ["db:generate"],
-            "inputs": ["$TURBO_DEFAULT$", ".env*", "tsconfig.json"]
-        },
-        "lint": {
-            "dependsOn": ["^lint"]
-        },
-        "check-types": {
-            "dependsOn": ["^check-types"]
-        },
-        "dev": {
-            "cache": false,
-            "persistent": true
-        },
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "db:generate"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "tsconfig.json"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "start": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "tsconfig.json"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
 
-        "db:migrate:dev": {
-            "cache": false
-        },
-        "db:migrate:deploy": {
-            "cache": false
-        },
-        "db:push": {
-            "cache": false
-        },
-        "db:seed": {
-            "cache": false
-        },
-        "db:generate": {
-            "cache": false
-        },
-        "db:studio": {
-            "cache": false,
-            "persistent": true
-        },
+    "db:migrate:dev": {
+      "cache": false
+    },
+    "db:migrate:deploy": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
+    "db:seed": {
+      "cache": false
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
 
-        "generate": {
-            "dependsOn": ["^generate"],
-            "cache": false
-        }
+    "generate": {
+      "dependsOn": ["^generate"],
+      "cache": false
     }
+  }
 }
