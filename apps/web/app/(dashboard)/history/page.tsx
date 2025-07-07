@@ -22,7 +22,7 @@ const SectionData: sectionDataSchema[] = [
 
 const History = () => {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+    <div className="@container/main flex flex-1 flex-col gap-4 p-4 pt-0">
       <SectionCards data={SectionData} className="md:grid-cols-2 xl:grid-cols-3" />
 
       <div className="flex flex-col gap-2 h-full">
