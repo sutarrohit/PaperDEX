@@ -81,3 +81,41 @@ export const getUserStats: RequestHandler = catchAsync(async (req: Request, res:
     data: data,
   });
 });
+
+export const getUserDailyBalance: RequestHandler = catchAsync(async (req: Request, res: Response) => {
+  const userId = req?.user?.user?.id;
+  if (!userId) throw new AppError("User ID not found.", 404);
+
+  const data = await prisma.dailyBalance.findMany({
+    where: { userId },
+    orderBy: { date: "asc" },
+    select: {
+      date: true,
+      balance: true,
+    },
+  });
+
+  const balance = data.map((entry) => ({
+    date: entry.date.toISOString().split("T")[0],
+    totalBalance: Number(entry.balance),
+  }));
+
+  // ⛳️ If only one entry exists, add a fake one for the previous day
+  if (balance.length === 1) {
+    const current = balance[0];
+    if (current && typeof current.date === "string") {
+      const prevDate = new Date(current.date as string);
+      prevDate.setDate(prevDate.getDate() - 1); // go back one day
+
+      balance.unshift({
+        date: prevDate.toISOString().split("T")[0],
+        totalBalance: current.totalBalance,
+      });
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: balance,
+  });
+});

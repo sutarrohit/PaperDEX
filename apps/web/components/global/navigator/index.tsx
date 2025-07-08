@@ -54,8 +54,8 @@ const Navigator = ({ orientation }: MenuProps) => {
                   onClick: () => setSection(getBasePath(menuItem.path)),
                 })}
                 className={cn(
-                  "rounded-lg flex gap-2 py-1 px-4 item-center text-[12px]",
-                  section === getBasePath(menuItem.path) ? "border-[1px] border-gray-300" : "border border-transparent",
+                  "rounded-lg flex gap-2 py-1 px-4 item-center text-[12px] transition-all duration-300 ease-in-out border",
+                  section === getBasePath(menuItem.path) ? "border-gray-300" : "border-transparent",
                 )}
               >
                 {menuItem.label}

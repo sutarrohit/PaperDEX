@@ -11,7 +11,7 @@ const UserBalance = () => {
   console.log("userData?.data?.balances", userData);
 
   return (
-    <Card className="pt-0 p-0 h-full @container/card">
+    <Card className="pt-0 p-0 h-full @container/card ">
       <CardHeader className="flex items-center p-0 pt-6 px-4 h-0 font-semibold">Total Balance</CardHeader>
       <CardContent className=" h-full p-4 mt-0 border-t overflow-auto hide-scrollbar">
         {userIsLoading ? (
@@ -46,11 +46,14 @@ const UserBalance = () => {
                     <div key={index} className="py-2 flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
                         <Image src={token?.icon} alt="icon" width={40} height={40} className="rounded-full w-8 h-8" />
-                        <span className="text-[14px] font-semibold">{token?.symbol}</span>
+                        <div className="flex gap-2 items-center">
+                          <span className="text-[14px] font-semibold">{token?.name}</span>
+                          <span className="text-[10px] font-semibold text-[#787676]">{token?.symbol}</span>
+                        </div>
                       </div>
 
                       <div className="flex gap-2 items-center">
-                        <span>
+                        <span className="text-[14px] font-semibold">
                           {Number(token?.balance)?.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
                           })}

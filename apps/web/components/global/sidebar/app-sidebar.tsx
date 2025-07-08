@@ -32,7 +32,7 @@ export const dashboardData = {
     },
     {
       name: "User Info",
-      url: "/user-info",
+      url: "#",
       icon: UserSearch,
     },
   ],
