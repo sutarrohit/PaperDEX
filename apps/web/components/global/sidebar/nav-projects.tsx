@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -35,6 +36,10 @@ export function NavProjects({
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>
+
+                {item.name === "User Info" && (
+                  <Badge className="text-[10px] px-1 bg-black/40 text-white">coming soon</Badge>
+                )}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -22,7 +22,8 @@ model User {
   accounts      Account[]
   wallet        Wallet?   @relation("UserWallet")
 
-  orders Order[]
+  orders       Order[]
+  DailyBalance DailyBalance[]
 
   @@map("users")
 }
@@ -99,6 +100,17 @@ model TokenBalance {
 
   @@unique([walletId, symbol])
   @@map("token_balances")
+}
+
+model DailyBalance {
+  id      String   @id @default(uuid())
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  date    DateTime @default(now()) @db.Date
+  balance Decimal  @db.Decimal(38, 18)
+
+  @@unique([userId, date])
+  @@map("daily_balances")
 }
 
 // Represents an order placed by a user (buy/sell). 

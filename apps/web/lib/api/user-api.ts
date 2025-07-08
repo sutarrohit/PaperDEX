@@ -34,3 +34,20 @@ export const getUserStats = async () => {
     return { status: "error", data: [] };
   }
 };
+
+export const getDailyBalance = async () => {
+  try {
+    const response = await fetch(`${ORDER_SERVICE_URL}/api/v1/user/user-daily-balance`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error("Failed to fetch market data:", error);
+    return { status: "error", data: [] };
+  }
+};
