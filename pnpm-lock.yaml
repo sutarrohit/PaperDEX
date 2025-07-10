@@ -139,7 +139,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@tailwindcss/postcss':
-        specifier: ^4
+        specifier: ^4.0.14
         version: 4.0.14
       '@tanstack/eslint-plugin-query':
         specifier: ^5.74.7

@@ -27,6 +27,8 @@ dotenv.config();
 
 const app = express();
 
+console.log("test2");
+
 app.use(
   cors({
     origin: [process.env.NEXT_PUBLIC_CLIENT_SERVICE!],

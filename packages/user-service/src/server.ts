@@ -26,6 +26,8 @@ app.use(
   }),
 );
 
+console.log("test2");
+
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(cookieParser());

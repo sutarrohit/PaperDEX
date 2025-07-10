@@ -52,7 +52,7 @@
     "@eslint/eslintrc": "^3",
     "@paperdex/eslint-config": "workspace:*",
     "@paperdex/typescript-config": "workspace:*",
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.0.14",
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@tanstack/react-query-devtools": "^5.75.4",
     "@types/node": "^20",
