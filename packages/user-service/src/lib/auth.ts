@@ -10,12 +10,13 @@ dotenv.config();
 
 const NEXT_PUBLIC_CLIENT_SERVICE = process.env.NEXT_PUBLIC_CLIENT_SERVICE!;
 const NEXT_PUBLIC_USER_SERVICE = process.env.NEXT_PUBLIC_USER_SERVICE!;
+const NEXT_PUBLIC_ORDER_SERVICE = process.env.NEXT_PUBLIC_ORDER_SERVICE!;
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   appName: "PaperDEX",
 
   baseURL: `${NEXT_PUBLIC_USER_SERVICE}/api/auth`,
-  trustedOrigins: [NEXT_PUBLIC_CLIENT_SERVICE],
+  trustedOrigins: [NEXT_PUBLIC_CLIENT_SERVICE, NEXT_PUBLIC_USER_SERVICE, NEXT_PUBLIC_ORDER_SERVICE],
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -23,6 +24,13 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
 
   advanced: {
     generateId: false,
+
+    advanced: {
+      crossSubDomainCookies: {
+        enabled: true,
+        domain: ".paperdex.in",
+      },
+    },
   },
 
   session: {
