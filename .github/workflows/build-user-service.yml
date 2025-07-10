@@ -5,7 +5,7 @@ name: Build and Push User Service to Docker Hub
 # - and the changes affect files under packages/user-service/ or its Dockerfile
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main", "dev", "test-deploy"]
     paths:
       - "packages/user-service/**"
       - "packages/user-service/Dockerfile"
