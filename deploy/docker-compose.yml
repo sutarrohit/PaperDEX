@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  order-service:
+    image: rssutardev/paperdex:order-service-dev-latest
+    container_name: order-service
+    restart: always
+    ports:
+      - 4002:4002
+    networks:
+      - paperdex_network
+    environment:
+      NODE_ENV: ${DOCKER_NODE_ENV}
+      USER_SERVICE_PORT: ${DOCKER_USER_SERVICE_PORT}
+      BETTER_AUTH_SECRET: ${DOCKER_BETTER_AUTH_SECRET}
+      GOOGLE_CLIENT_ID: ${DOCKER_GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${DOCKER_GOOGLE_CLIENT_SECRET}
+      RESEND_API_KEY: ${DOCKER_RESEND_API_KEY}
+      EMAIL_FROM: ${DOCKER_EMAIL_FROM}
+      BETTER_AUTH_URL: ${DOCKER_BETTER_AUTH_URL}
+      NEXT_PUBLIC_CLIENT_SERVICE: ${DOCKER_NEXT_PUBLIC_CLIENT_SERVICE}
+      NEXT_PUBLIC_USER_SERVICE: ${DOCKER_NEXT_PUBLIC_USER_SERVICE}
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      DIRECT_URL: ${DOCKER_DIRECT_URL}
+      REDIS_URL: ${DOCKER_REDIS_URL}
+
+  user-service:
+    image: rssutardev/paperdex:order-service-dev-latest
+    container_name: user-service
+    restart: always
+    ports:
+      - 4001:4001
+    networks:
+      - paperdex_network
+    environment:
+      NODE_ENV: ${DOCKER_NODE_ENV}
+      USER_SERVICE_PORT: ${DOCKER_USER_SERVICE_PORT}
+      BETTER_AUTH_SECRET: ${DOCKER_BETTER_AUTH_SECRET}
+      GOOGLE_CLIENT_ID: ${DOCKER_GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${DOCKER_GOOGLE_CLIENT_SECRET}
+      RESEND_API_KEY: ${DOCKER_RESEND_API_KEY}
+      EMAIL_FROM: ${DOCKER_EMAIL_FROM}
+      BETTER_AUTH_URL: ${DOCKER_BETTER_AUTH_URL}
+      NEXT_PUBLIC_CLIENT_SERVICE: ${DOCKER_NEXT_PUBLIC_CLIENT_SERVICE}
+      NEXT_PUBLIC_USER_SERVICE: ${DOCKER_NEXT_PUBLIC_USER_SERVICE}
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      DIRECT_URL: ${DOCKER_DIRECT_URL}
+      REDIS_URL: ${DOCKER_REDIS_URL}
+
+networks:
+  paperdex_network:
+    driver: bridge
