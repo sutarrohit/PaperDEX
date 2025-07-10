@@ -41,6 +41,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --primary-theme-black: var(--primary-theme-black);
+  --primary-theme-gray: var(--primary-theme-gray);
+  --primary-theme-darkgray: var(--primary-theme-darkGray);
+  --primary-theme-text-gray: var(--theme-textGray);
+  --primary-theme-text-white: var(--primary-theme-textWhite);
+  --primary-theme-a: oklch(0.6 0.118 184.704);
 }
 
 :root {
@@ -76,6 +83,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --primary-theme-black: #09090b;
+  --primary-theme-gray: #27272a;
+  --primary-theme-darkGray: #27272a;
+  --theme-textGray: #b4b0ae;
+  --primary-theme-textWhite: #f7ece9;
+
+  --bg-card: #161616;
+  --card-text: #6a6a6a;
+  --tasty-orange: #fe8a1d;
 }
 
 .dark {
@@ -110,6 +127,16 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --primary-theme-black: #09090b;
+  --primary-theme-gray: #27272a;
+  --primary-theme-darkGray: #27272a;
+  --theme-textGray: #b4b0ae;
+  --primary-theme-textWhite: #f7ece9;
+
+  --bg-card: #161616;
+  --card-text: #6a6a6a;
+  --tasty-orange: #fe8a1d;
 }
 
 @layer base {
@@ -118,5 +145,91 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* For webkit browsers like Chrome, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Common */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE 10+ */
+  overflow: auto;
+}
+
+.radial--blur {
+  -webkit-backdrop-filter: blur(100px);
+  filter: blur(100px);
+}
+
+.backdrop--blur__safari {
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.radial {
+  background-image: radial-gradient(ellipse farthest-side, white, #716768, black);
+  background-size: 100% 90%;
+  background-repeat: no-repeat;
+}
+
+.text-radial {
+  background-image: radial-gradient(ellipse farthest-side, rgba(113, 103, 104, 0.2) 30%, black 70%);
+  background-size: 100% 50%;
+  background-repeat: no-repeat;
+}
+
+.text-radial--circle {
+  background-image: radial-gradient(circle farthest-side, rgba(113, 103, 104, 0.35) 20%, black 70%);
+  background-size: 50% 70%;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Chart Loader Animation */
+/* From Uiverse.io by Shoh2008 */
+.loader {
+  width: 45px;
+  height: 40px;
+  background:
+    linear-gradient(#0000 calc(1 * 100% / 6), #fff 0 calc(3 * 100% / 6), #0000 0),
+    linear-gradient(#0000 calc(2 * 100% / 6), #fff 0 calc(4 * 100% / 6), #0000 0),
+    linear-gradient(#0000 calc(3 * 100% / 6), #fff 0 calc(5 * 100% / 6), #0000 0);
+  background-size: 10px 400%;
+  background-repeat: no-repeat;
+  animation: matrix 1s infinite linear;
+}
+
+@keyframes matrix {
+  0% {
+    background-position:
+      0% 100%,
+      50% 100%,
+      100% 100%;
+  }
+
+  100% {
+    background-position:
+      0% 0%,
+      50% 0%,
+      100% 0%;
   }
 }

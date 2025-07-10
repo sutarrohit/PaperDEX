@@ -3,5 +3,7 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "cSpell.words": ["redisinsight"],
+  "css.completion.triggerPropertyValueCompletion": false
 }

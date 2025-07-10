@@ -1,0 +1,42 @@
+{
+    "name": "paperdex-container",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+
+    // The optional 'workspaceFolder' property is the path VS Code should open by default when
+    // connected. This is typically a file mount in .devcontainer/docker-compose.yml
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+    // Features to add to the dev container
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [],
+
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "eamodio.gitlens", 
+                "streetsidesoftware.code-spell-checker",
+                "esbenp.prettier-vscode", 
+                "dsznajder.es7-react-js-snippets",
+                "mhutchie.git-graph", 
+                "mylesmurphy.prettify-ts",
+                "bradlc.vscode-tailwindcss", 
+                "dbaeumer.vscode-eslint", 
+                "prisma.prisma",
+                "solomonkinard.git-blame"
+            ],
+            "settings": {}
+        }
+    },
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+"postCreateCommand": ["zsh"]
+}

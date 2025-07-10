@@ -1,0 +1,45 @@
+{
+  "name": "@paperdex/user-service",
+  "version": "1.0.0",
+  "private": "true",
+  "exports": {
+    ".": "./src/lib/auth.ts",
+    "./fromNodeHeaders": "./src/lib/authExports.ts"
+  },
+  "scripts": {
+    "build": "tsup ./src",
+    "start": "node dist/server.js",
+    "lint": "eslint . --max-warnings 0",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "generate:schema": "pnpm dlx @better-auth/cli generate --output ../../packages/db/prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@paperdex/db": "workspace:*",
+    "@paperdex/lib": "workspace:*",
+    "better-auth": "^1.2.5",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "morgan": "^1.10.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "node-cron": "^4.2.0",
+    "tsup": "^8.0.2"
+  },
+  "devDependencies": {
+    "@paperdex/eslint-config": "workspace:*",
+    "@paperdex/typescript-config": "workspace:*",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.14.0",
+    "@types/uuid": "^10.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

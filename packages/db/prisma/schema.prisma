@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Represents a registered user in the application.
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  wallet        Wallet?   @relation("UserWallet")
+
+  orders       Order[]
+  DailyBalance DailyBalance[]
+
+  @@map("users")
+}
+
+// Represents a user's login session with metadata.
+model Session {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@map("sessions")
+}
+
+// Represents external authentication accounts linked to a user.
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@map("accounts")
+}
+
+// Stores verification codes (e.g., for email or password reset).
+model Verification {
+  id         String   @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, value])
+  @@map("verifications")
+}
+
+// Represents a user's wallet for managing balances and transactions.
+model Wallet {
+  id           String         @id @default(uuid())
+  balances     TokenBalance[]
+  user         User           @relation("UserWallet", fields: [userId], references: [id], onDelete: Cascade)
+  userId       String         @unique
+  transactions Transaction[]
+
+  @@map("wallets")
+}
+
+// Represents the balance of a specific token in a wallet.
+model TokenBalance {
+  id       String  @id @default(uuid())
+  name     String
+  symbol   String
+  balance  Decimal @default(0)
+  icon     String
+  wallet   Wallet? @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  walletId String?
+
+  @@unique([walletId, symbol])
+  @@map("token_balances")
+}
+
+model DailyBalance {
+  id      String   @id @default(uuid())
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  date    DateTime @default(now()) @db.Date
+  balance Decimal  @db.Decimal(38, 18)
+
+  @@unique([userId, date])
+  @@map("daily_balances")
+}
+
+// Represents an order placed by a user (buy/sell). 
+model Order {
+  id             String         @id @default(uuid())
+  user           User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String?
+  side           OrderSide
+  type           OrderType
+  mode           OrderMode
+  status         OrderStatus    @default(PENDING)
+  symbol         String
+  quantity       Decimal        @db.Decimal(38, 18)
+  price          Decimal?       @db.Decimal(38, 18)
+  priceDirection PriceDirection
+  filledQuantity Decimal        @default(0) @db.Decimal(38, 18)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("orders")
+}
+
+// Represents a financial transaction linked to a wallet.
+model Transaction {
+  id        String          @id @default(uuid())
+  wallet    Wallet          @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  walletId  String
+  symbol    String
+  amount    Decimal         @db.Decimal(38, 18)
+  type      TransactionType
+  createdAt DateTime        @default(now())
+
+  @@map("transactions")
+}
+
+// Represents a trading market (e.g., BTC/USDT).
+model Market {
+  id       String  @id @default(uuid())
+  base     String // (e.g, BTC in BTC/USDT).
+  quote    String // (e.g, USDT in BTC/USDT).
+  symbol   String  @unique // (e.g, BTC/USDT).
+  isActive Boolean @default(true)
+
+  @@map("markets")
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+  TRADE
+}
+
+enum OrderType {
+  MARKET
+  LIMIT
+  STOP_LIMIT
+}
+
+enum OrderSide {
+  BUY
+  SELL
+}
+
+enum PriceDirection {
+  UP
+  DOWN
+}
+
+enum OrderStatus {
+  PENDING
+  PARTIALLY_FILLED
+  FILLED
+  CANCELED
+  REJECTED
+}
+
+enum OrderMode {
+  SPOT
+  FUTURE
+  OPTIONS
+}

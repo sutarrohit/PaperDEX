@@ -1,0 +1,9 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+.env
+dist
+
+docker-compose.yml

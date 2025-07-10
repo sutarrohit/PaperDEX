@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "jsx": "react"
+  },
+  "extends": "@paperdex/typescript-config/base.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../db/src/constants/tradeMarkets.ts"],
+  "exclude": ["node_modules"]
+}
