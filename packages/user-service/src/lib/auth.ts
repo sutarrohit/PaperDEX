@@ -4,6 +4,7 @@ import { prisma } from "@paperdex/db";
 import { verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib/template";
 import { sendEmail } from "@paperdex/lib/sendEmail";
 import { openAPI } from "better-auth/plugins";
+import { nextCookies } from "better-auth/next-js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -49,7 +50,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     },
   },
 
-  plugins: [openAPI()],
+  plugins: [openAPI(), nextCookies()],
 
   emailAndPassword: {
     enabled: true,

@@ -71,6 +71,7 @@ services:
   #     DATABASE_URL: ${DOCKER_DATABASE_URL}
   #     DIRECT_URL: ${DOCKER_DIRECT_URL}
   #     REDIS_URL: ${DOCKER_REDIS_URL}
+  #     DOCKER_NEXT_PUBLIC_ORDER_SERVICE: ${NEXT_PUBLIC_ORDER_SERVICE}
 
   # user-service:
   #   container_name: user-service
@@ -102,6 +103,7 @@ services:
   #     DATABASE_URL: ${DOCKER_DATABASE_URL}
   #     DIRECT_URL: ${DOCKER_DIRECT_URL}
   #     REDIS_URL: ${DOCKER_REDIS_URL}
+  #     DOCKER_NEXT_PUBLIC_ORDER_SERVICE: ${NEXT_PUBLIC_ORDER_SERVICE}
 
 volumes:
   postgres_database:
