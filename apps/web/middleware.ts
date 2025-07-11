@@ -49,45 +49,49 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-const authRoutes = ["/sign-in", "/sign-up", "/reset-password", "/forgot-password"];
-const protectedRoutes = ["/dashboard", "/trade", "/market"];
+// const authRoutes = ["/sign-in", "/sign-up", "/reset-password", "/forgot-password"];
+// const protectedRoutes = ["/dashboard", "/trade", "/market"];
 
 export default async function authMiddleware(request: NextRequest) {
-  const pathName = request.nextUrl.pathname;
+  // const pathName = request.nextUrl.pathname;
 
-  const isAuthRoute = authRoutes.some((route) => pathName.startsWith(route));
-  const isProtectedRoute = protectedRoutes.some((route) => pathName.startsWith(route));
+  console.log("request----------", request.body);
+
+  // const isAuthRoute = authRoutes.some((route) => pathName.startsWith(route));
+  // const isProtectedRoute = protectedRoutes.some((route) => pathName.startsWith(route));
 
   const hasSessionCookie = getSessionCookie(request);
   const sessionExists = hasSessionCookie;
 
-  if (!sessionExists) {
-    // User is not logged in / session cookie not present
-    if (isProtectedRoute) {
-      const pathname = request.nextUrl.pathname;
-      const filteredSearchParams = new URLSearchParams(request.nextUrl.search);
-      filteredSearchParams.delete("redirect");
+  console.log("================sessionExists============================", sessionExists);
 
-      const searchString = filteredSearchParams?.toString();
-      const redirectTo = searchString ? `${pathname}?${searchString}` : pathname;
+  // if (!sessionExists) {
+  //   // User is not logged in / session cookie not present
+  //   if (isProtectedRoute) {
+  //     const pathname = request.nextUrl.pathname;
+  //     const filteredSearchParams = new URLSearchParams(request.nextUrl.search);
+  //     filteredSearchParams.delete("redirect");
 
-      const signInUrl = new URL("/sign-in", request.url);
-      signInUrl.searchParams.set("redirect", redirectTo);
+  //     const searchString = filteredSearchParams?.toString();
+  //     const redirectTo = searchString ? `${pathname}?${searchString}` : pathname;
 
-      // Add a header to prevent caching issues in Next.js middleware
-      const response = NextResponse.redirect(signInUrl);
-      response.headers.set("x-middleware-cache", "no-cache");
-      return response;
-    }
+  //     const signInUrl = new URL("/sign-in", request.url);
+  //     signInUrl.searchParams.set("redirect", redirectTo);
 
-    return NextResponse.next();
-  }
+  //     // Add a header to prevent caching issues in Next.js middleware
+  //     const response = NextResponse.redirect(signInUrl);
+  //     response.headers.set("x-middleware-cache", "no-cache");
+  //     return response;
+  //   }
 
-  if (isAuthRoute) {
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
-    response.headers.set("x-middleware-cache", "no-cache"); // Prevent caching of this redirect
-    return response;
-  }
+  //   return NextResponse.next();
+  // }
+
+  // if (isAuthRoute) {
+  //   const response = NextResponse.redirect(new URL("/dashboard", request.url));
+  //   response.headers.set("x-middleware-cache", "no-cache"); // Prevent caching of this redirect
+  //   return response;
+  // }
 
   return NextResponse.next();
 }
