@@ -46,6 +46,8 @@ app.listen(PORT, () => {
   console.log("Auth Server started on port", PORT);
 });
 
+console.log("Test");
+
 process.on("unhandledRejection", (error: Error) => {
   console.log(error.name, error.message);
   console.log("unhandledRejection shutting down the application");
