@@ -2,7 +2,7 @@ import { Request, Response, RequestHandler } from "express";
 import { prisma } from "@paperdex/db";
 
 import { AppError, catchAsync } from "@paperdex/lib";
-import { calculateTokenBalance } from "../services/totalBalance";
+import { calculateTokenBalance, getTopHoldingToken } from "../services/totalBalance";
 
 export const getUserAccount: RequestHandler = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.user?.id;
@@ -117,5 +117,17 @@ export const getUserDailyBalance: RequestHandler = catchAsync(async (req: Reques
   res.status(200).json({
     status: "success",
     data: balance,
+  });
+});
+
+export const getDashboardStats: RequestHandler = catchAsync(async (req: Request, res: Response) => {
+  const userId = req?.user?.user?.id;
+  if (!userId) throw new AppError("User ID not found.", 404);
+
+  const topToken = await getTopHoldingToken(userId);
+
+  res.status(200).json({
+    status: "success",
+    data: topToken,
   });
 });

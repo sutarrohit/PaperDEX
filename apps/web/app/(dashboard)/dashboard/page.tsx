@@ -1,5 +1,6 @@
 import { BalanceChart } from "./_components/balance-chart";
 import UserBalance from "./_components/user-balance.tsx";
+import UserStats from "./_components/user-stats";
 
 const Dashboard = () => {
   return (
@@ -12,7 +13,7 @@ const Dashboard = () => {
 
           <div className="bg-[#161616] lg:col-span-2 h-[500px] lg:h-full rounded-xl border">
             {/* h-fit lg:h-full*/}
-            <>chart1</>
+            <UserStats />
           </div>
 
           <div className="bg-[#161616] lg:col-span-2 lg:row-span-2 rounded-xl h-[500px] lg:h-full border">

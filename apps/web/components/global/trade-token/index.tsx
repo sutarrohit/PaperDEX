@@ -55,7 +55,7 @@ const TradeTokenHeading = ({ tokenPair }: Props) => {
         {!data ? (
           <div>Data Not available</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-6 py-3 px-4 md:px-2 items-center justify-end gap-10 md:gap-1">
+          <div className="grid grid-cols-2 md:grid-cols-6 py-3 px-4 md:px-2 items-center justify-end gap-4 md:gap-6 lg:gap-8 ">
             <div className="flex gap-3 items-center">
               {data?.icon ? (
                 <Image

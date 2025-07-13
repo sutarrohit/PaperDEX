@@ -19,59 +19,6 @@ export type TopCoinSchema = {
   data: TokenCategory[];
 };
 
-// const tokenData: TopCoinSchema = {
-//   status: "success",
-//   data: [
-//     {
-//       title: "Top Volume",
-//       token: [
-//         {
-//           symbol: "BTC",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/BTC.png",
-//           price: "10295.47292",
-//           change: "2.5",
-//         },
-//         {
-//           symbol: "ETH",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/ETH.png",
-//           price: "10295",
-//           change: "2.5",
-//         },
-//         {
-//           symbol: "SOL",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/SOL.png",
-//           price: "10295",
-//           change: "2.5",
-//         },
-//       ],
-//     },
-
-//     {
-//       title: "Top Gainer",
-//       token: [
-//         {
-//           symbol: "BTC",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/BTC.png",
-//           price: "10295.47292",
-//           change: "2.5",
-//         },
-//         {
-//           symbol: "ETH",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/ETH.png",
-//           price: "10295",
-//           change: "2.5",
-//         },
-//         {
-//           symbol: "SOL",
-//           icons: "https://bin.bnbstatic.com/static/assets/logos/SOL.png",
-//           price: "10295",
-//           change: "2.5",
-//         },
-//       ],
-//     },
-//   ],
-// };
-
 const TopCoins = () => {
   const { marketData, isLoading } = useMarketData();
 

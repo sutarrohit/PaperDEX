@@ -55,7 +55,7 @@ const Navigator = ({ orientation }: MenuProps) => {
                 })}
                 className={cn(
                   "rounded-lg flex gap-2 py-1 px-4 item-center text-[12px] transition-all duration-300 ease-in-out border",
-                  section === getBasePath(menuItem.path) ? "border-gray-300" : "border-transparent",
+                  section === getBasePath(menuItem.path) ? "border-orange-500 font-bold" : "border-transparent",
                 )}
               >
                 {menuItem.label}

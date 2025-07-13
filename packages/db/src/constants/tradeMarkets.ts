@@ -49,6 +49,7 @@ const tradeMarkets = [
   { base: "PEPE", quote: "USDT", symbol: "PEPE/USDT" }, // Pepe
   { base: "JUP", quote: "USDT", symbol: "JUP/USDT" }, // Jupiter
   { base: "PYTH", quote: "USDT", symbol: "PYTH/USDT" }, // Pyth Network
+  { base: "DAI", quote: "USDT", symbol: "DAI/USDT" }, // DAI token
 ];
 
 export { tradeMarkets };

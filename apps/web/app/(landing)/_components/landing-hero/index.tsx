@@ -5,6 +5,7 @@ import { BadgePlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const LandingHero = async () => {
   const headersList = await headers();
@@ -36,9 +37,18 @@ const LandingHero = async () => {
       </BackdropGradient>
 
       <div className="flex md:justify-center gap-5 mt-8">
-        <Button variant="outline" className="rounded-xl bg-transparent text-[14px] cursor-pointer">
-          Watch Demo
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" className="rounded-xl">
+              Watch Demo
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="py-2">Coming Soon</TooltipContent>
+        </Tooltip>
+
+        {/* <Button variant="outline" className="rounded-xl bg-transparent text-[14px] cursor-pointer">
+              Watch Demo
+            </Button> */}
 
         <Link href={`${!sessionToken ? "/market?redirect=market" : "/market"}`}>
           <Button className="rounded-xl text-[14px] flex gap-2 w-full cursor-pointer">

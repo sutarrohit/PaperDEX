@@ -8,8 +8,6 @@ import Image from "next/image";
 const UserBalance = () => {
   const { userData, userIsLoading, userIsError } = useDashboard();
 
-  console.log("userData?.data?.balances", userData);
-
   return (
     <Card className="pt-0 p-0 h-full @container/card ">
       <CardHeader className="flex items-center p-0 pt-6 px-4 h-0 font-semibold">Total Balance</CardHeader>

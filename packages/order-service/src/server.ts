@@ -17,6 +17,8 @@ import { runMatcher } from "./classes/matchingEngine";
 import { WebSocketServer } from "ws";
 import { handleOrderbookStream, handlePriceStream, handleTokenTradeStream } from "./services/websockets";
 import userRoutes from "./routes/userRoutes";
+import { updateDailyBalance } from "./lib/dailyBalance";
+import nodeCron from "node-cron";
 
 process.on("uncaughtException", (error: Error) => {
   console.log(error, "uncaughtException shutting down the application");
@@ -93,6 +95,17 @@ server.listen(PORT, () => {
   WSserver();
   orderBook();
   runMatcher();
+
+  // ✅ Run daily balance cron job every day at midnight (UTC)
+  nodeCron.schedule("0 0 * * *", async () => {
+    try {
+      console.log("Running daily balance update...");
+      await updateDailyBalance();
+      console.log("Daily balance update completed.");
+    } catch (error) {
+      console.error("Error updating daily balances:", error);
+    }
+  });
 });
 
 process.on("unhandledRejection", (error: Error) => {

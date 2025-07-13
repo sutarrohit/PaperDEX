@@ -199,4 +199,8 @@ export const tokenInfo = [
     symbol: "PYTH", // Pyth Network
     icon: "https://bin.bnbstatic.com/static/assets/logos/PYTH.png", // Note: Verify if Binance has an official logo
   },
+  {
+    symbol: "DAI", // Pyth Network
+    icon: "https://bin.bnbstatic.com/static/assets/logos/DAI.png", // Note: Verify if Binance has an official logo
+  },
 ];

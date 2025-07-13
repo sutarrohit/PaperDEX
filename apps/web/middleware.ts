@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
 const authRoutes = ["/sign-in", "/sign-up", "/reset-password", "/forgot-password"];
-const protectedRoutes = ["/dashboard", "/trade", "/market"];
+const protectedRoutes = ["/dashboard", "/trade", "/market", "/history"];
 
 export default async function authMiddleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
@@ -13,8 +13,6 @@ export default async function authMiddleware(request: NextRequest) {
 
   const hasSessionCookie = getSessionCookie(request);
   const sessionExists = hasSessionCookie;
-
-  console.log("==========sessionExists=========", sessionExists);
 
   if (!sessionExists) {
     // User is not logged in / session cookie not present
