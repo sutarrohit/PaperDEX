@@ -27,7 +27,7 @@ services:
       REDIS_URL: ${REDIS_URL}
 
   user-service:
-    image: rssutardev/paperdex:order-service-dev-latest
+    image: rssutardev/paperdex:user-service-dev-latest
     container_name: user-service
     restart: always
     ports:

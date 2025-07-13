@@ -1,8 +1,5 @@
 name: Build and Push Order Service to Docker Hub
 
-# Trigger the workflow only when:
-# - a push is made to the 'main' or 'dev' branches
-# - and the changes affect files under packages/order-service/ or its Dockerfile
 on:
   push:
     branches: ["main", "dev"]
@@ -10,7 +7,6 @@ on:
       - "packages/order-service/**"
       - "packages/order-service/Dockerfile"
 
-# Set environment variables used throughout the job
 env:
   DOCKER_HUB_REPO: rssutardev/paperdex
 
@@ -30,29 +26,28 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      # Step 3: Set up Docker Buildx (enables advanced Docker build capabilities like caching, multi-platform builds)
+      # Step 3: Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 3.5: Set image tag dynamically based on branch name
+      # Step 4: Set image tag based on the current branch
       - name: Set image tag based on branch
         id: set-tag
         run: |
           TAG="order-service-${GITHUB_REF_NAME}-latest"
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
 
-      # Step 4: Build the Docker image and push it to Docker Hub
-      - name: Build and push Docker image
+      # Step 5: Build and push Docker image with NO cache
+      - name: Build and push Docker image (no cache)
         uses: docker/build-push-action@v5
         with:
-          context: . # Build context (project root)
+          context: . # Root of monorepo
           file: packages/order-service/Dockerfile
-          push: true # Push the image after building
+          push: true
+          no-cache: true # 🔥 Build fresh every time
           tags: ${{ env.DOCKER_HUB_REPO }}:${{ steps.set-tag.outputs.TAG }}
-          cache-from: type=gha # Use GitHub Actions cache
-          cache-to: type=gha,mode=max # Store cache back for future runs
 
-      # Step 5: Pull and run the image to verify that it was built correctly
+      # Step 6: Verify the image was built correctly
       - name: Verify image
         run: |
           docker pull ${{ env.DOCKER_HUB_REPO }}:${{ steps.set-tag.outputs.TAG }}
