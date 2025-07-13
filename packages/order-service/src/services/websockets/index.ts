@@ -137,7 +137,6 @@ export const handleTokenTradeStream = (wss: WebSocketServer) => {
     const normalizedToken = tokenPair.split("_").join("");
     clients.set(ws, normalizedToken);
 
-    console.log(`Client connected to /stream/tokenTrade for token: ${tokenPair}`);
     ws.send(JSON.stringify({ message: `Subscribed to ${tokenPair} token trade stream.` }));
 
     ws.on("close", () => {

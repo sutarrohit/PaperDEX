@@ -4,52 +4,40 @@ import { v4 as uuidv4 } from "uuid";
 const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 export const prisma: PrismaClient = globalForPrisma.prisma ?? new PrismaClient();
 
-const wallet = {
-  create: {
-    id: uuidv4(),
-    balances: {
-      create: [
-        {
-          id: uuidv4(),
-          name: "Tether USD",
-          symbol: "USDT",
-          balance: 10000,
-          icon: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png",
-        },
-      ],
-    },
-  },
-};
-
-// Apply the middleware *after* the instance is potentially created
-prisma.$use(async (params, next) => {
-  // Handle User creation
-  if (params.model === "User" && params.action === "create") {
-    // Check if wallet data is already being provided
-    if (!params.args.data?.wallet && !params.args.data?.walletId) {
-      // If not, modify the arguments to include creating a new wallet
-      if (params.args?.data) {
-        params.args.data = {
-          ...params.args.data,
-          wallet: wallet,
-        };
-      } else if (params.args) {
-        params.args.data = {
-          wallet: wallet,
-        };
-      } else {
-        params.args = {
-          data: {
-            wallet: wallet,
+/**
+ * Generates a wallet with a USDT balance.
+ */
+function generateWallet() {
+  return {
+    create: {
+      balances: {
+        create: [
+          {
+            name: "Tether USD",
+            symbol: "USDT",
+            balance: 10000,
+            icon: "https://bin.bnbstatic.com/static/assets/logos/USDT.png",
           },
-        };
-      }
+        ],
+      },
+    },
+  };
+}
+
+// Middleware to attach wallet + create initial daily balance
+prisma.$use(async (params, next) => {
+  if (params.model === "User" && params.action === "create") {
+    // Attach wallet if not provided
+    if (!params.args.data?.wallet && !params.args.data?.walletId) {
+      params.args.data = {
+        ...params.args.data,
+        wallet: generateWallet(), // ✅ fix: call the function
+      };
     }
 
-    // Execute the original operation
     const result = await next(params);
 
-    // After user is created, create DailyBalance record
+    // Create DailyBalance after user is created
     if (result) {
       await prisma.dailyBalance.create({
         data: {

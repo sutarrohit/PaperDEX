@@ -106,15 +106,16 @@ const User = ({ sidebar = false }: { sidebar?: boolean }) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() =>
-            signOut({
+          onClick={async () => {
+            await signOut({
               fetchOptions: {
                 onSuccess: () => {
-                  router.push("/"); // redirect to login page
+                  router.replace("/");
+                  router.refresh();
                 },
               },
-            })
-          }
+            });
+          }}
         >
           <LogOut />
           Log out
