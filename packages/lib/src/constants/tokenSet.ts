@@ -49,6 +49,7 @@ export const supportedTokens = [
   "PEPEUSDT", // Pepe
   "JUPUSDT", // Jupiter
   "PYTHUSDT", // Pyth Network
+  "DAIUSDT",
 ];
 
 const allTokens = [...supportedTokens];
@@ -66,7 +67,6 @@ const volumeMcap =
   "bitcoin,ethereum,binancecoin,tether,dai,solana,cardano,ripple,polkadot,chainlink,avalanche-2,tron,litecoin,shiba-inu,uniswap,cosmos,near,aptos,optimism,doge,pancakeswap-token," +
   "filecoin,stellar,ethereum-classic,algorand,arbitrum,vechain,internet-computer,aave,axie-infinity," +
   "decentraland,the-graph,the-sandbox,theta-token,kava,thorchain,havven,injective-protocol,sei-network,celestia,Starknet" +
-  // ==============Additional 10 tokens=====================
-  "curve-dao-token,zcash,compound-governance-token,maker,gala,Sui,dogwifcoin,Pepe,Jupiter,pyth-network";
+  "curve-dao-token,zcash,compound-governance-token,maker,gala,Sui,dogwifcoin,Pepe,Jupiter,pyth-network,dai";
 
 export { tokenSet, klineSet_1h, klineSet_1d, klineSet_1w, volumeMcap, orderBookSet, tokenArraySet };

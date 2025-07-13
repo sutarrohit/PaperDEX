@@ -11,13 +11,16 @@ export const getTokenMarketData: RequestHandler = catchAsync(async (req: Request
   const pageIndex = rawPageIndex ? parseInt(rawPageIndex as string) : 1;
   const pageSize = rawPageSize ? parseInt(rawPageSize as string) : 20;
 
+  // Exclude USDT and DAI
+  const filteredTokenInfo = tokenInfo.filter((token) => token.symbol !== "USDT" && token.symbol !== "DAI");
+
   let paginatedTokenInfo;
 
   if (isNaN(pageIndex) || isNaN(pageSize) || pageIndex < 1 || pageSize < 1) {
-    paginatedTokenInfo = tokenInfo;
+    paginatedTokenInfo = filteredTokenInfo;
   } else {
     const skip = (pageIndex - 1) * pageSize;
-    paginatedTokenInfo = tokenInfo.slice(skip, skip + pageSize);
+    paginatedTokenInfo = filteredTokenInfo.slice(skip, skip + pageSize);
   }
 
   // Add price data to tokens
@@ -38,10 +41,10 @@ export const getTokenMarketData: RequestHandler = catchAsync(async (req: Request
   res.status(200).json({
     status: "success",
     data: updatedTokenInfo,
-    size: tokenInfo.length,
+    size: filteredTokenInfo.length,
     currentPage: pageIndex,
     pageSize: pageSize,
-    totalPages: Math.ceil(tokenInfo.length / pageSize),
+    totalPages: Math.ceil(filteredTokenInfo.length / pageSize),
   });
 });
 
