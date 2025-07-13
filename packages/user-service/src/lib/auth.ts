@@ -66,10 +66,8 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
 
   // Ensure nextCookies() is applied correctly here.
   // If this config is strictly for the backend (Express), you'd typically NOT include nextCookies() here.
-  // If this is a shared config used by both frontend/backend, or specifically for Next.js API Routes/Server Actions,
-  // then including it here is correct.
   plugins: [
-    openAPI(),
+    // openAPI(),
     nextCookies(), // Important for Next.js environments to handle cookies correctly
   ],
 
