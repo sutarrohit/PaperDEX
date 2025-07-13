@@ -8,9 +8,6 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import { AppError, globalErrorHandler, healthCheck } from "@paperdex/lib";
 
-import cron from "node-cron";
-import { updateDailyBalance } from "./lib/dailyBalance";
-
 process.on("uncaughtException", (error: Error) => {
   console.log(error, "uncaughtException shutting down the application");
   process.exit(1);
@@ -47,17 +44,6 @@ app.use(globalErrorHandler);
 const PORT = process.env.USER_SERVICE_PORT || 4001;
 app.listen(PORT, () => {
   console.log("Auth Server started on port", PORT);
-
-  // ✅ Run daily balance cron job every day at midnight (UTC)
-  cron.schedule("0 0 * * *", async () => {
-    try {
-      console.log("Running daily balance update...");
-      await updateDailyBalance();
-      console.log("Daily balance update completed.");
-    } catch (error) {
-      console.error("Error updating daily balances:", error);
-    }
-  });
 });
 
 process.on("unhandledRejection", (error: Error) => {

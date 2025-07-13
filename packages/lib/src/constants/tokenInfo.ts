@@ -321,4 +321,11 @@ export const tokenInfo: tokenInfoType[] = [
     symbol: "PYTH",
     icon: "https://bin.bnbstatic.com/static/assets/logos/PYTH.png", // Note: Verify if Binance has an official logo
   },
+
+  {
+    id: randomUUID(),
+    name: "Dai",
+    symbol: "DAI",
+    icon: "https://bin.bnbstatic.com/static/assets/logos/DAI.png", // Note: Verify if Binance has an official logo
+  },
 ];

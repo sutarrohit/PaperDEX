@@ -52,8 +52,11 @@ export const handlePriceStream = (wss: WebSocketServer) => {
 
       if (socket.readyState !== socket.OPEN) continue;
 
+      // Exclude USDT and DAI
+      const filteredTokenInfo = tokenInfo.filter((token) => token.symbol !== "USDT" && token.symbol !== "DAI");
+
       const skip = (pageIndex - 1) * pageSize;
-      const paginatedTokenInfo = tokenInfo?.slice(skip, skip + pageSize);
+      const paginatedTokenInfo = filteredTokenInfo.slice(skip, skip + pageSize);
 
       const updatedTokenInfo = paginatedTokenInfo.map((token) => {
         const priceInfo = TokenPriceStore?.find((data) => data.token === getTokenName(token.symbol));
@@ -68,7 +71,7 @@ export const handlePriceStream = (wss: WebSocketServer) => {
         };
       });
 
-      const totalPages = Math.ceil(tokenInfo.length / pageSize);
+      const totalPages = Math.ceil(filteredTokenInfo.length / pageSize);
 
       socket.send(JSON.stringify({ data: updatedTokenInfo, totalPages }));
     }

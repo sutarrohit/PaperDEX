@@ -5,7 +5,7 @@ import { RedisSet } from "./createOrder";
 import { getTokenPrice } from "../store/tokenPriceStore";
 import { SettleOrders } from "./settleOrder";
 import { OrderWithUserIdANDOrderId } from "../utils/schema.ts/orderSchema";
-import { supportedTokens } from "@paperdex/lib";
+import { matchEngineTokens } from "@paperdex/lib";
 
 class MatchEngine {
   static async matchOrders(symbol: string) {
@@ -18,7 +18,6 @@ class MatchEngine {
     const tokenPriceObj = getTokenPrice([tokenName])[0];
 
     if (!tokenPriceObj || tokenPriceObj.price === undefined) return;
-
     const currentPrice = tokenPriceObj.price;
 
     await Promise.all([
@@ -30,6 +29,8 @@ class MatchEngine {
   private static async processOrders(orders: OrderWithUserIdANDOrderId[], currentPrice: number, side: "BUY" | "SELL") {
     for (const order of orders) {
       if (order.price === undefined || order.price === null) continue;
+
+      console.log(`${side} order comparing for:`, order);
 
       const shouldSettle = order.priceDirection === "UP" ? currentPrice >= order.price : currentPrice <= order.price;
 
@@ -46,7 +47,7 @@ class MatchEngine {
 export async function runMatcher() {
   while (true) {
     await Promise.all(
-      supportedTokens.map(async (pair) => {
+      matchEngineTokens.map(async (pair) => {
         try {
           await MatchEngine.matchOrders(pair);
         } catch (err) {

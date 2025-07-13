@@ -125,6 +125,10 @@ export const getColumns = (orderStatus: string): ColumnDef<TradeOrder>[] => [
         day: "2-digit",
         month: "short",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit", // optional
+        hour12: true,
       });
 
       return row.original.status === "FILLED" ? (
