@@ -11,4 +11,5 @@ export default defineConfig({
   loader: { ".json": "copy" },
   minify: true,
   sourcemap: true,
+  external: ["next/headers"],
 });
