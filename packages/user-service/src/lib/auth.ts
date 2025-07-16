@@ -3,7 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@paperdex/db";
 import { verifyEmailTemplate, resetPasswordTemplate } from "@paperdex/lib/template";
 import { sendEmail } from "@paperdex/lib/sendEmail";
-import { openAPI } from "better-auth/plugins";
+// import { openAPI } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js"; // Important for Next.js environments
 import dotenv from "dotenv";
 
