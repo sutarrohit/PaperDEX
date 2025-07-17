@@ -24,14 +24,31 @@ It supports **market** and **limit** order types and fetches real-time order boo
 
 ## Monorepo Structure
 ```
-
 PaperDEX/
+├── .devcontainer/            # Devcontainer config for VS Code remote development
+├── .github/                  # GitHub workflows and issue templates
+├── vscode/                   # VS Code settings
 ├── apps/
-│ └── web/ # Frontend (Next.js or your framework of choice)
-├── packages/
-│ ├── user-service/ # Express-based Auth API
-│ ├── order-service/ # Handles order placement
-│ └── db/ # Shared Prisma client and schema
+│   └── web/                  # Frontend application built with Next.js
+├── deploy/                   # Deployment-related files/scripts
+├── packages/                 # Shared and backend services
+│   ├── db/                   # Prisma schema and database utilities
+│   ├── eslint-config/        # Shared ESLint configuration
+│   ├── lib/                  # Shared libraries (e.g., utils, email, error handlers)
+│   ├── order-service/        # Microservice for order management and matching engine
+│   ├── typescript-config/    # Shared TypeScript configurations
+│   └── user-service/         # Microservice for user authentication and management
+├── .dockerignore             # Specifies files to ignore in Docker build context
+├── .env.example              # Example environment variables file
+├── .gitignore                # Specifies files to ignore in Git
+├── .npmrc                    # NPM configuration file
+├── .prettierrc               # Prettier configuration file
+├── docker-compose.yml        # Docker Compose config for running services
+├── package.json              # Root package metadata and scripts
+├── pnpm-lock.yaml            # Lockfile for reproducible installs (pnpm)
+├── pnpm-workspace.yaml       # Workspace definitions for monorepo (pnpm)
+├── README.md                 # Project documentation
+├── turbo.json                # Turborepo configuration
 
 ````
 
