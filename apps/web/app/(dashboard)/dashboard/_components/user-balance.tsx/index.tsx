@@ -8,9 +8,26 @@ import Image from "next/image";
 const UserBalance = () => {
   const { userData, userIsLoading, userIsError } = useDashboard();
 
+  const formatTokenBalance = (balance: string, symbol: string): string => {
+    const num = Number(balance);
+
+    if (isNaN(num)) return "0";
+
+    if (symbol === "USDT") {
+      return num.toLocaleString("en-US", {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      });
+    }
+
+    return num.toLocaleString("en-US", {
+      maximumFractionDigits: 8,
+    });
+  };
+
   return (
     <Card className="pt-0 p-0 h-full @container/card ">
-      <CardHeader className="flex items-center p-0 pt-6 px-4 h-0 font-semibold">Total Balance</CardHeader>
+      <CardHeader className="flex items-center p-0 pt-6 px-4 h-0 font-semibold">Token Balance</CardHeader>
       <CardContent className=" h-full p-4 mt-0 border-t overflow-auto hide-scrollbar">
         {userIsLoading ? (
           <div className="w-full h-full flex justify-center items-center">
@@ -52,9 +69,9 @@ const UserBalance = () => {
 
                       <div className="flex gap-2 items-center">
                         <span className="text-[14px] font-semibold">
-                          {Number(token?.balance)?.toLocaleString("en-US", {
-                            maximumFractionDigits: 2,
-                          })}
+                          <span className="text-[14px] font-semibold">
+                            {formatTokenBalance(token?.balance, token?.symbol)}
+                          </span>
                         </span>
 
                         <span className="text-[10px] text-[#787676] font-bold">{token?.symbol}</span>
