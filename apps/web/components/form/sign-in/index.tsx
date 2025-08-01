@@ -68,7 +68,10 @@ const SignInForm = () => {
       </div>
 
       <div className="w-full space-y-[18px]">
-        <Button type="submit" className="rounded-md cursor-pointer mt-1 w-full">
+        <Button
+          type="submit"
+          className="rounded-md cursor-pointer mt-1 w-full bg-orange-500 hover:bg-orange-600 text-white"
+        >
           <Loader loading={isPending}>Login</Loader>
         </Button>
 
@@ -76,7 +79,7 @@ const SignInForm = () => {
 
         <Separator orientation="horizontal" className="bg-[#27272a]" />
         <Link href={`${redirect ? `/sign-up?redirect=${redirect}` : "/sign-up"}`}>
-          <Button className="cursor-pointer w-full rounded-md">Create an Account</Button>
+          <Button className="cursor-pointer w-full rounded-md ">Create an Account</Button>
         </Link>
       </div>
     </form>

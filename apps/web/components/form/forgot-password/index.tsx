@@ -34,7 +34,10 @@ const ForgotPasswordForm = () => {
       </div>
 
       <div className="w-full space-y-[18px]">
-        <Button type="submit" className="rounded-md cursor-pointer mt-1 w-full">
+        <Button
+          type="submit"
+          className="rounded-md cursor-pointer mt-1 w-full bg-orange-500 hover:bg-orange-600 text-white"
+        >
           <Loader loading={isPending}>Send Reset Link</Loader>
         </Button>
       </div>
