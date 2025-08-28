@@ -17,7 +17,7 @@ const LoginWithGoogle = ({ redirect }: { redirect: string | null }) => {
           await authClient.signIn.social(
             {
               provider: "google",
-              callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
+              callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/market"}`,
             },
             {
               onRequest: () => {
