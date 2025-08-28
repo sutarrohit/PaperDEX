@@ -37,7 +37,7 @@ export default async function authMiddleware(request: NextRequest) {
   }
 
   if (isAuthRoute) {
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    const response = NextResponse.redirect(new URL("/market", request.url));
     response.headers.set("x-middleware-cache", "no-cache"); // Prevent caching of this redirect
     return response;
   }

@@ -4,7 +4,7 @@ export const signInApi = async (email: string, password: string, redirect: strin
   const { data, error } = await authClient.signIn.email({
     email,
     password,
-    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/dashboard"}`,
+    callbackURL: `${process.env.NEXT_PUBLIC_WEB_SERVICE}${redirect ? redirect : "/market"}`,
   });
 
   if (error) throw new Error(error?.message || "failed to sign in");
