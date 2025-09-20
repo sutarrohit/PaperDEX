@@ -185,10 +185,18 @@ export function BalanceChart() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              interval={0}
+              interval={
+                timeRange === "7d"
+                  ? 0 // Show all 7 points
+                  : timeRange === "30d"
+                    ? Math.ceil((filteredData?.length || 0) / 10) - 1 // Show ~10 points for 30 days
+                    : Math.ceil((filteredData?.length || 0) / 12) - 1 // Show ~12 points for 90 days
+              }
               minTickGap={isLargeScreen ? 32 : 4}
               allowDuplicatedCategory={false}
               tickFormatter={(value) => {
+                console.log("value", value);
+
                 const date = new Date(value);
                 return date.toLocaleDateString("en-US", {
                   month: "short",
