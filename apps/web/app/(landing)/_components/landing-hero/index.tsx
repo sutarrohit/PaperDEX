@@ -51,7 +51,7 @@ const LandingHero = async () => {
             </Button> */}
 
         <Link href={`${!sessionToken ? "/market?redirect=market" : "/market"}`}>
-          <Button className="rounded-xl text-[14px] flex gap-2 w-full cursor-pointer">
+          <Button className="rounded-xl text-[14px] flex gap-2 w-full cursor-pointer text-white bg-orange-500 hover:bg-orange-600">
             <BadgePlus /> Go to Market
           </Button>
         </Link>
