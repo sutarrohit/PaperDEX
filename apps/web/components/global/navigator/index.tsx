@@ -44,7 +44,7 @@ const Navigator = ({ orientation }: MenuProps) => {
   switch (orientation) {
     case "desktop":
       return (
-        <Card className="bg-clip-padding backdrop-blur__safari bg-opacity-20 p-1 sm:flex hidden rounded-lg  bg-[#27272A]/20 border backdrop-filter backdrop-blur-3xl backdrop-saturate-150 supports-[backdrop-filter]:backdrop-blur-3xl">
+        <Card className="bg-clip-padding backdrop-blur__safari bg-opacity-20 p-1 sm:flex hidden rounded-[13px]  bg-[#27272A]/20 border backdrop-filter backdrop-blur-3xl backdrop-saturate-150 supports-[backdrop-filter]:backdrop-blur-3xl">
           <CardContent className="px-0 flex gap-0 sm:gap-1 items-center">
             {LANDING_PAGE_MENU.map((menuItem) => (
               <Link
@@ -54,7 +54,7 @@ const Navigator = ({ orientation }: MenuProps) => {
                   onClick: () => setSection(getBasePath(menuItem.path)),
                 })}
                 className={cn(
-                  "rounded-lg flex gap-2 py-1 px-4 item-center text-[12px] transition-all duration-300 ease-in-out border",
+                  "rounded-[11px] flex gap-2 py-1 px-4 item-center text-[12px] transition-all duration-300 ease-in-out border",
                   section === getBasePath(menuItem.path) ? "border-orange-500 font-bold" : "border-transparent",
                 )}
               >
