@@ -42,7 +42,7 @@ const ResetPasswordForm = () => {
           <Input
             id={`input-password`}
             type="password"
-            placeholder={"Enter you new password"}
+            placeholder={"Enter your new password"}
             className="bg-themeBlack border-themeGray text-themeTextGray"
             {...register("password")}
           />
