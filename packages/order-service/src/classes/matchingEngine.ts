@@ -30,12 +30,12 @@ class MatchEngine {
     for (const order of orders) {
       if (order.price === undefined || order.price === null) continue;
 
-      console.log(`${side} order comparing for:`, order);
+      // console.log(`${side} order comparing for:`, order);
 
       const shouldSettle = order.priceDirection === "UP" ? currentPrice >= order.price : currentPrice <= order.price;
 
       if (shouldSettle) {
-        console.log(`${side} order settled for:`, order);
+        // console.log(`${side} order settled for:`, order);
         const settleOrder = new SettleOrders();
         await settleOrder.settleSpotOrder(order);
         await RedisSet.removeOrder(order);

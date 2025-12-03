@@ -48,6 +48,7 @@ app.use("/api/v1/token", tokenRoutes);
 app.use("/api/v1/user", userRoutes);
 
 app.get("/api/v1/health", healthCheck("Order Service is up and running"));
+
 app.all("*splat", (req, res, next) => {
   const err = new AppError(`Can't find ${req.originalUrl} on this server`, 404);
   next(err);
@@ -90,6 +91,7 @@ handleOrderbookStream(wssOrderbook);
 handleTokenTradeStream(wssTokenTrade);
 
 const PORT = process.env.ORDER_SERVICE_PORT || 4002;
+
 server.listen(PORT, () => {
   console.log("Order Server started on port", PORT);
   WSserver();

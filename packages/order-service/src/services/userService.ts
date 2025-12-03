@@ -9,8 +9,6 @@ type UserWithWalletAndBalances = User & {
   };
 };
 
-console.log("Test");
-
 export const getUserDetails = async (userId: string): Promise<UserWithWalletAndBalances> => {
   const { data, error } = await tryCatch(
     prisma.user.findUnique({
