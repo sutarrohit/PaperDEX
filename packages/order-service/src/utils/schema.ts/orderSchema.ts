@@ -3,7 +3,7 @@ import { z } from "zod";
 export const OrderSchema = z
   .object({
     side: z.enum(["BUY", "SELL"]),
-    type: z.enum(["MARKET", "LIMIT"]),
+    type: z.enum(["MARKET", "LIMIT", "STOP_LIMIT"]),
     mode: z.enum(["SPOT", "FUTURE", "OPTIONS"]),
     symbol: z.string(),
     quantity: z.number().positive(),

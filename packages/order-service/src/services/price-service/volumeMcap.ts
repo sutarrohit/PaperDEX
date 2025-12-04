@@ -1,6 +1,22 @@
 import { getTokenName } from "@paperdex/lib";
 import { TokenPriceStore } from "../../store/tokenPriceStore";
 
+import fs from "fs";
+import path from "path";
+
+// ✅ Error log file path
+const LOG_FILE = path.join(process.cwd(), "volume-ws-errors.txt");
+
+// ✅ Helper function to append errors
+function logErrorToFile(message: string, error?: unknown) {
+  const time = new Date().toISOString();
+  const fullMessage = `[${time}] ${message}\n${error ? JSON.stringify(error, null, 2) : ""}\n\n`;
+
+  fs.appendFile(LOG_FILE, fullMessage, (err) => {
+    if (err) console.error("Failed to write error log:", err);
+  });
+}
+
 type CoinMarket = {
   id: string;
   symbol: string;
@@ -53,5 +69,6 @@ export const fetchVolumeMcap = async (volumeMcap: string) => {
     });
   } catch (error) {
     console.log("fetchVolumeMcap Error:", error);
+    logErrorToFile("fetchVolumeMcap Error", error);
   }
 };
