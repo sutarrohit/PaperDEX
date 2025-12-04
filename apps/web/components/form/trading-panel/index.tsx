@@ -65,7 +65,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
               <div className="relative w-full flex gap-2 p-1.5">
                 {/* Sliding active background */}
                 <div
-                  className={`absolute top-1 left-1 w-[49%] h-[calc(100%-8px)] rounded-[6px] bg-orange-500 transition-all duration-150 ${
+                  className={`absolute top-1 left-1 w-[49%] h-[calc(100%-8px)] rounded-[6px]  ${field.value === "SELL" ? "bg-[#EA3943]/80" : "bg-[#16C784]/80"}  transition-all duration-150 ${
                     field.value === "SELL" ? "translate-x-full" : ""
                   }`}
                 />
@@ -209,7 +209,7 @@ const TradingPanelForm = ({ tokenPair, mode }: { tokenPair: string; mode: string
 
       <Button
         type="submit"
-        className=" cursor-pointer mt-4 w-full bg-orange-500 hover:bg-orange-500/80 text-white h-10"
+        className={`cursor-pointer mt-4 w-full  ${watch("side") === "SELL" ? "bg-[#EA3943]/70 hover:bg-[#EA3943]/90" : "bg-[#16C784]/70 hover:bg-[#16C784]/90"}  text-white h-[38px]`}
       >
         <Loader loading={isPending}>Place Order</Loader>
       </Button>

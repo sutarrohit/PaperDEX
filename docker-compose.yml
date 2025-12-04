@@ -1,35 +1,35 @@
 name: paperDEX
 
 services:
-  postgresDB:
-    container_name: postgresDB
-    image: postgres:17
-    volumes:
-      - postgres_database:/var/lib/postgresql/data
-    networks:
-      - paperdex_network
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: paperdex
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
+  # postgresDB:
+  #   container_name: postgresDB
+  #   image: postgres:17
+  #   volumes:
+  #     - postgres_database:/var/lib/postgresql/data
+  #   networks:
+  #     - paperdex_network
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: paperdex
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 10s
+  #     retries: 5
 
-  redis:
-    container_name: redis
-    image: redis:7.2
-    ports:
-      - "6379:6379"
-    networks:
-      - paperdex_network
-    volumes:
-      - redis_data:/data
-    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+  # redis:
+  #   container_name: redis
+  #   image: redis:7.2
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - paperdex_network
+  #   volumes:
+  #     - redis_data:/data
+  #   command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
 
   redisinsight:
     container_name: redisinsight

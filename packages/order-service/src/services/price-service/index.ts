@@ -1,9 +1,8 @@
 import { fetchKline } from "./kline";
 import { fetchTokenPrices } from "./priceService";
-import { tokenSet, klineSet_1h, klineSet_1d, klineSet_1w } from "@paperdex/lib";
 
-// import { tokenSet, klineSet_1h, klineSet_1d, klineSet_1w, volumeMcap } from "@paperdex/lib";
-// import { fetchVolumeMcap } from "./volumeMcap";
+import { tokenSet, klineSet_1h, klineSet_1d, klineSet_1w, volumeMcap } from "@paperdex/lib";
+import { fetchVolumeMcap } from "./volumeMcap";
 
 export const WSserver = () => {
   fetchTokenPrices(tokenSet);
@@ -11,7 +10,7 @@ export const WSserver = () => {
   fetchKline(klineSet_1d, "change_1d");
   fetchKline(klineSet_1w, "change_1w");
 
-  // setInterval(() => {
-  //   fetchVolumeMcap(volumeMcap);
-  // }, 40000);
+  setInterval(() => {
+    fetchVolumeMcap(volumeMcap);
+  }, 40000);
 };
