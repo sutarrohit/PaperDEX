@@ -1,6 +1,8 @@
 import WebSocket from "ws";
 import { TokenPriceStore } from "../../store/tokenPriceStore";
 import { IntervalKey } from "@paperdex/lib";
+import path from "path";
+import fs from "fs";
 
 interface BinanceKline {
   e: "kline"; // Event type
@@ -31,6 +33,19 @@ interface BinanceKline {
 interface BinanceWSMessage {
   stream: string;
   data: BinanceKline;
+}
+
+// ✅ Error log file path
+const LOG_FILE = path.join(process.cwd(), "binance-ws-errors.txt");
+
+// ✅ Helper function to append errors
+function logErrorToFile(message: string, error?: unknown) {
+  const time = new Date().toISOString();
+  const fullMessage = `[${time}] ${message}\n${error ? JSON.stringify(error, null, 2) : ""}\n\n`;
+
+  fs.appendFile(LOG_FILE, fullMessage, (err) => {
+    if (err) console.error("Failed to write error log:", err);
+  });
 }
 
 const wsConnections: Map<string, WebSocket> = new Map();
@@ -71,6 +86,7 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
 
   ws.on("error", (error: Error) => {
     console.error(`[${interval}] Binance WS error:`, error);
+    logErrorToFile("Kline Error", error);
     ws.close();
   });
 
@@ -108,6 +124,7 @@ export const fetchKline = (klineSets: string, interval: IntervalKey) => {
       }
     } catch (error) {
       console.error(`[${interval}] Failed to parse message:`, error);
+      logErrorToFile("WebSocket Error", error);
     }
   });
 };
