@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: "https://paperdex.s3.ap-south-1.amazonaws.com/favicon.ico",
+      url: "https://raw.githubusercontent.com/sutarrohit/PaperDEX/main/apps/web/app/favicon.ico",
     },
   ],
   openGraph: {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
       "Trade Bitcoin, Ethereum, and 100+ cryptos in real-time without spending a dime. Sign up, get demo money, and start your risk-free trading journey today!",
     images: [
       {
-        url: "https://paperdex.s3.ap-south-1.amazonaws.com/og-image-optimised.jpg",
+        url: "https://raw.githubusercontent.com/sutarrohit/PaperDEX/main/apps/web/public/landing/og-image-optimized.jpg",
         width: 1200,
         height: 630,
         alt: "PaperDEX - Trade Cryptocurrencies Risk-Free",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       "Trade Bitcoin, Ethereum, and 100+ cryptos in real-time without spending a dime. Sign up, get demo money, and start your risk-free trading journey today!",
     images: [
       {
-        url: "https://paperdex.s3.ap-south-1.amazonaws.com/og-image-optimised.jpg",
+        url: "https://raw.githubusercontent.com/sutarrohit/PaperDEX/main/apps/web/public/landing/og-image-optimized.jpg",
         width: 1200,
         height: 630,
         alt: "PaperDEX - Trade Cryptocurrencies Risk-Free",
