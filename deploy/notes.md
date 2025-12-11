@@ -203,3 +203,144 @@ sudo certbot renew --dry-run
 
 - [https://userService.paperdex.in](https://userService.paperdex.in) → your user service
 - [https://orderService.paperdex.in](https://orderService.paperdex.in) → your order service
+
+---
+
+---
+
+# HTTP config
+
+```bash
+events {
+    # Sets the maximum number of simultaneous connections that can be opened by a worker process.
+    worker_connections 1024;
+}
+
+http {
+    # Include standard mime types so browsers understand file formats
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    # Optimization: sendfile is usually good to have on
+    sendfile        on;
+
+    # SERVER 1: User Service
+    server {
+        listen 80;
+        server_name user-service.paperdex.in;
+
+        location / {
+            proxy_pass http://127.0.0.1:4001; # Use 127.0.0.1 instead of localhost for reliability
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+
+    # SERVER 2: Order Service
+    server {
+        listen 80;
+        server_name order-service.paperdex.in;
+
+        location / {
+            proxy_pass http://127.0.0.1:4002;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+```
+
+# HTTPS config
+
+```bash
+events {
+    # Sets the maximum number of simultaneous connections that can be opened by a worker process.
+    worker_connections 1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+
+    # ------------------------------------------------------------
+    # WEBSOCKET SUPPORT: Map block required for connection upgrades
+    # ------------------------------------------------------------
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        ''      close;
+    }
+
+    # SERVER 1: User Service (No changes needed here usually, unless it also has WS)
+    server {
+        server_name user-service.paperdex.in;
+
+        location / {
+            proxy_pass http://127.0.0.1:4001;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        listen 443 ssl;
+        ssl_certificate /etc/letsencrypt/live/user-service.paperdex.in/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/user-service.paperdex.in/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf;
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    }
+
+    # SERVER 2: Order Service (FIXED FOR WEBSOCKETS)
+    server {
+        server_name order-service.paperdex.in;
+
+        location / {
+            proxy_pass http://127.0.0.1:4002;
+
+            # Standard Proxy Headers
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            # --- WEBSOCKET HEADERS START ---
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+
+            # Prevent Nginx from killing the connection if idle for > 60s
+            proxy_read_timeout 3600;
+            proxy_send_timeout 3600;
+            # --- WEBSOCKET HEADERS END ---
+        }
+
+        listen 443 ssl;
+        # Note: Ensure this path points to the correct certificate for order-service!
+        # You had it pointing to user-service in your snippet.
+        ssl_certificate /etc/letsencrypt/live/user-service.paperdex.in/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/user-service.paperdex.in/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf;
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    }
+
+    # HTTP Redirect Blocks (Keep these at the bottom)
+    server {
+        if ($host = user-service.paperdex.in) {
+            return 301 https://$host$request_uri;
+        }
+        listen 80;
+        server_name user-service.paperdex.in;
+        return 404;
+    }
+
+    server {
+        if ($host = order-service.paperdex.in) {
+            return 301 https://$host$request_uri;
+        }
+        listen 80;
+        server_name order-service.paperdex.in;
+        return 404;
+    }
+}
+```
