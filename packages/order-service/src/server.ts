@@ -1,22 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import http from "http";
-import express from "express";
-import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import helmet from "helmet";
-import morgan from "morgan";
-import cors from "cors";
-import { globalErrorHandler, AppError, healthCheck } from "@paperdex/lib";
 import { WSserver } from "./services/price-service";
 
-import orderRoutes from "./routes/ordersRoute";
-import tokenRoutes from "./routes/tokenRoutes";
 import { orderBook } from "./services/price-service/orderBook";
 import { runMatcher } from "./classes/matchingEngine";
 
 import { WebSocketServer } from "ws";
 import { handleOrderbookStream, handlePriceStream, handleTokenTradeStream } from "./services/websockets";
-import userRoutes from "./routes/userRoutes";
 import { updateDailyBalance } from "./lib/dailyBalance";
 import nodeCron from "node-cron";
 
@@ -27,35 +17,9 @@ process.on("uncaughtException", (error: Error) => {
 
 dotenv.config();
 
-const app = express();
+import app from "./app";
 
-app.use(
-  cors({
-    origin: [process.env.NEXT_PUBLIC_CLIENT_SERVICE!],
-    credentials: true,
-  }),
-);
-
-app.use(cookieParser());
-app.use(express.json());
-
-// To secure HTTP header & HTTP request logger middleware
-app.use(helmet());
-if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
-
-app.use("/api/v1/order", orderRoutes);
-app.use("/api/v1/token", tokenRoutes);
-app.use("/api/v1/user", userRoutes);
-
-app.get("/api/v1/health", healthCheck("Order Service is up and running"));
-
-app.all("*splat", (req, res, next) => {
-  const err = new AppError(`Can't find ${req.originalUrl} on this server`, 404);
-  next(err);
-});
-
-// Global Error Handling
-app.use(globalErrorHandler);
+// ... other imports
 
 // Create HTTP server
 const server = http.createServer(app);
