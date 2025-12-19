@@ -1,7 +1,7 @@
 {
   "extends": "@paperdex/typescript-config/base.json",
   "include": ["types/**/*.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", "tsup.config.ts"],
+  "exclude": ["node_modules", "dist", "tsup.config.ts", "vitest.config.ts", "tests"],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
