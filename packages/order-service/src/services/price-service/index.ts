@@ -12,5 +12,5 @@ export const WSserver = () => {
 
   setInterval(() => {
     fetchVolumeMcap(volumeMcap);
-  }, 40000);
+  }, 600000); // 10 Min
 };

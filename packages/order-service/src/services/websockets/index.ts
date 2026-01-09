@@ -75,7 +75,7 @@ export const handlePriceStream = (wss: WebSocketServer) => {
 
       socket.send(JSON.stringify({ data: updatedTokenInfo, totalPages }));
     }
-  }, 1000);
+  }, 5000);
 };
 
 export const handleOrderbookStream = (wss: WebSocketServer) => {
@@ -118,7 +118,7 @@ export const handleOrderbookStream = (wss: WebSocketServer) => {
         }
       }
     }
-  }, 1000);
+  }, 5000);
 };
 
 export const handleTokenTradeStream = (wss: WebSocketServer) => {
@@ -161,5 +161,5 @@ export const handleTokenTradeStream = (wss: WebSocketServer) => {
         client.send(JSON.stringify({ data }));
       }
     }
-  }, 1000);
+  }, 5000);
 };
